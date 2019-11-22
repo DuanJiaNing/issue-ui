@@ -1,0 +1,33 @@
+.tap-bar {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	background-color: whitesmoke;
+	box-shadow: 0px 0px 20px lightgray;
+	height: 50px;
+	/* border-radius: 5%; */
+}
+
+.tap-bar .add {
+	position: relative;
+	top: -20px;
+	background-color: #1aad19;
+	box-sizing: border-box;
+	height: 55px;
+	width: 55px;
+	margin: 0px auto;
+	border-radius: 50%;
+	z-index: 10;
+}
+
+.tab image {
+	width: 40px;
+	height: 40px;
+}
+
+.tab {
+	color: #999;
+	line-height: 100%;
+	padding-top: 7px;
+}
