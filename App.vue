@@ -1,6 +1,4 @@
-<script>
-	import config from 'config.js'
-	
+<script>	
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')

@@ -1,3 +1,14 @@
-page{
+@font-face {
+	font-family: sanhucyyuan;
+	src: url('~@/static/font/三极粗圆简体.ttf');
+}
+
+page {
 	background-color: whitesmoke;
+	font-family: sanhucyyuan;
+	letter-spacing: 1px;
+}
+
+.content {
+	padding: 30upx;
 }
