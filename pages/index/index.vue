@@ -5,10 +5,15 @@
 				<view class="uni-flex uni-row top-bar">
 					<topic-type class="top-bar-item" :topicType="types[status.topicTypeIndex]"></topic-type>
 				</view>
-				<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name"></search>
+				<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
+				 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord"></search>
+				<view class="topic-list">
+					<topic-item class="topic-item" v-for="(item, index) in topicList" :item="item" :key="index"></topic-item>
+				</view>
+
 			</block>
 			<block v-else>
-				me-show111111111212
+				me
 			</block>
 		</view>
 		<tab-bar @switchTab="switchTab" :tab="status.tab"></tab-bar>
@@ -19,13 +24,15 @@
 	import tabBar from '@/components/tabBar.vue'
 	import topicType from '@/components/topicType.vue'
 	import search from '@/components/search.vue'
+	import topicItem from '@/components/topicItem.vue'
 	import config from '../../config.js'
 
 	export default {
 		components: {
 			tabBar,
 			topicType,
-			search
+			search,
+			topicItem
 		},
 		computed: {
 			types() {
@@ -33,13 +40,16 @@
 			},
 			sortTypes() {
 				return config.sortTypes
+			},
+			topicList() {
+				return config.topicList
 			}
 		},
 		onLoad(option) {
 			if (option.searchKeyWord) {
-				this.status.keyWorld = option.searchKeyWord
+				this.status.search.keyWorld = option.searchKeyWord
 			} else {
-				this.status.keyWorld = "搜索"
+				this.status.search.keyWorld = "搜索"
 			}
 
 			if (option.sortTypeIndex) {
@@ -55,6 +65,23 @@
 			}
 		},
 		methods: {
+			clearSearchKeyWord() {
+				this.status.search.keyWorld = "搜索"
+			},
+			showSortOption() {
+				let stypeName = new Array()
+				config.sortTypes.forEach(st => {
+					stypeName.push(st.name)
+				})
+
+				uni.showActionSheet({
+					title: '请选择排序方式',
+					itemList: stypeName,
+					success: (e) => {
+						this.status.search.sortTypeIndex = e.tapIndex
+					}
+				})
+			},
 			switchTab(tab) {
 				this.status.tab = tab
 				switch (tab) {
@@ -67,9 +94,6 @@
 						if (this.status.homeShow) {
 							this.status.homeShow = false
 						}
-						break
-					case 'add':
-						// TODO
 						break
 					default:
 						// should not happen
@@ -110,6 +134,15 @@
 	}
 
 	.search {
+		margin-top: 20upx;
+	}
+
+	.topic-list {
+		margin-top: 60upx;
+	}
+
+	.topic-item {
+		background-color: #FFFFFF;
 		margin-top: 20upx;
 	}
 </style>
