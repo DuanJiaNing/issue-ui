@@ -1,6 +1,6 @@
 <template>
 	<view class="choice-topic-type">
-		<text v-for="(ttype,index) in types" @click="choiceType(ttype)" :key="index" :style="{'color': ttype.color}">
+		<text v-for="(ttype,index) in types" @click="choiceType(index)" :key="index" :style="{'color': ttype.color}">
 			{{ttype.name}}
 		</text>
 	</view>
@@ -15,20 +15,13 @@
 		},
 		computed: {
 			types() {
-				return [
-					config.topicTypes.hot,
-					config.topicTypes.all,
-					config.topicTypes.cool,
-					config.topicTypes.latest,
-					config.topicTypes.my
-				]
+				return config.topicTypes
 			}
 		},
 		methods: {
-			choiceType(ttype) {
-				let typeName = ttype.name
+			choiceType(topicTypeIndex) {
 				uni.reLaunch({
-					url: `/pages/index/index?topicTypeName=${ttype.name}&topicTypeColor=${ttype.color}`
+					url: `/pages/index/index?topicTypeIndex=${topicTypeIndex}`
 				});
 			}
 		}

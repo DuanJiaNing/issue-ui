@@ -1,54 +1,71 @@
 <template>
 	<view>
 		<view class="content">
-			<block v-if="homeShow">
+			<block v-if="status.homeShow">
 				<view class="uni-flex uni-row top-bar">
-					<!-- <view class="text">横向布局-两端对齐</view> -->
-					<!-- <view class="text">横向布局-两端对齐</view> -->
-					<topic-type class="topic-type" :topicType="currentTopicType"></topic-type>
-					<!-- <topic-type class="topic-type" :topicType="currentTopicType"></topic-type> -->
+					<topic-type class="top-bar-item" :topicType="types[status.topicTypeIndex]"></topic-type>
 				</view>
+				<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name"></search>
 			</block>
 			<block v-else>
-				me-show11111111
+				me-show111111111212
 			</block>
 		</view>
-		<tab-bar @switchTab="switchTab" :tab="currentTab"></tab-bar>
+		<tab-bar @switchTab="switchTab" :tab="status.tab"></tab-bar>
 	</view>
 </template>
 
 <script>
 	import tabBar from '@/components/tabBar.vue'
 	import topicType from '@/components/topicType.vue'
+	import search from '@/components/search.vue'
 	import config from '../../config.js'
 
 	export default {
 		components: {
 			tabBar,
-			topicType
+			topicType,
+			search
+		},
+		computed: {
+			types() {
+				return config.topicTypes
+			},
+			sortTypes() {
+				return config.sortTypes
+			}
 		},
 		onLoad(option) {
-			if (option.topicTypeName === undefined || option.topicTypeColor === undefined) {
-				this.currentTopicType = config.topicTypes.all
+			if (option.searchKeyWord) {
+				this.status.keyWorld = option.searchKeyWord
 			} else {
-				this.currentTopicType = {
-					name: option.topicTypeName,
-					color: option.topicTypeColor
-				}
+				this.status.keyWorld = "搜索"
+			}
+
+			if (option.sortTypeIndex) {
+				this.status.search.sortTypeIndex = option.sortTypeIndex
+			} else {
+				this.status.search.sortTypeIndex = 0
+			}
+
+			if (option.topicTypeIndex) {
+				this.status.topicTypeIndex = option.topicTypeIndex
+			} else {
+				this.status.topicTypeIndex = 0
 			}
 		},
 		methods: {
 			switchTab(tab) {
-				this.currentTab = tab
+				this.status.tab = tab
 				switch (tab) {
 					case 'home':
-						if (!this.homeShow) {
-							this.homeShow = true
+						if (!this.status.homeShow) {
+							this.status.homeShow = true
 						}
 						break
 					case 'me':
-						if (this.homeShow) {
-							this.homeShow = false
+						if (this.status.homeShow) {
+							this.status.homeShow = false
 						}
 						break
 					case 'add':
@@ -62,9 +79,15 @@
 		},
 		data() {
 			return {
-				homeShow: true,
-				currentTab: 'home',
-				currentTopicType: config.topicTypes.all
+				status: {
+					homeShow: true,
+					tab: 'home',
+					topicTypeIndex: 0,
+					search: {
+						keyWorld: "搜索",
+						sortTypeIndex: 0
+					}
+				}
 			}
 		}
 	}
@@ -78,12 +101,15 @@
 		height: 100upx;
 	}
 
-	.topic-type {
+	.top-bar-item {
 		padding: 0 20upx;
 		height: 100upx;
 		line-height: 100upx;
 		text-align: center;
-		color: #fff;
 		font-size: 60upx;
+	}
+
+	.search {
+		margin-top: 20upx;
 	}
 </style>
