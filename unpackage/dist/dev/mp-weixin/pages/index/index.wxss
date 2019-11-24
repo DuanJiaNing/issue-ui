@@ -1,0 +1,26 @@
+
+.scroll-view.data-v-ce847184 {}
+.topic-type.data-v-ce847184 {
+	padding-top: 30rpx;
+}
+.content.data-v-ce847184 {
+	/* padding-top: 30upx; */
+	padding-left: 30rpx;
+	padding-right: 30rpx;
+	/* margin-bottom: 100upx; */
+}
+
+
+.search-wrapper.data-v-ce847184 {
+	margin-top: 20rpx;
+}
+
+
+.search.data-v-ce847184 {
+	margin-top: 20rpx;
+}
+.topic-list.data-v-ce847184 {
+	margin-top: 50rpx;
+	margin-bottom: 50px;
+}
+

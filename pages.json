@@ -21,8 +21,8 @@
 	    ,{
             "path" : "pages/choiceTopicType/choiceTopicType",
             "style" : {
-				"navigationStyle":"custom",
-				"backgroundColor": "black"
+				"navigationStyle":"custom"
+				// "backgroundColor": "black"
 			}
         }
         ,{
@@ -34,10 +34,14 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/comments/comments",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#FFFFFF",
-		"backgroundColor": "#FFFFFF"
+		"navigationBarBackgroundColor": "#FFFFFF"
+		// "backgroundColor": "#FFFFFF"
 	}
 }

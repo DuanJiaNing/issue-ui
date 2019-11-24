@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/home",
+    "pages/me/me",
+    "pages/add/add",
+    "pages/choiceTopicType/choiceTopicType",
+    "pages/search/search",
+    "pages/comments/comments"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FFFFFF"
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap36.json"
+}

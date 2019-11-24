@@ -2,7 +2,10 @@
 	<view class="search">
 		<view class="search-content">
 			<block v-if="sortShow">
-				<text class="sort-type" @click="showSortOption()">o {{sortName}}</text>
+				<text class="sort-type" @click="showSortOption()">
+					{{sortName}}
+				</text>
+				<uni-icons type="arrowdown" size="10"></uni-icons>
 			</block>
 
 			<block v-if="canClear && sortShow">
@@ -10,6 +13,7 @@
 			</block>
 
 			<block v-if="canClear">
+				<!-- <uni-icons type="closeempty" size="20"></uni-icons> -->
 				<text class="clear-key-word" @click="clearSearchKeyWord()">X</text>
 			</block>
 
@@ -20,7 +24,12 @@
 </template>
 
 <script>
+	import uniIcons from '@/components/uni-icons/uni-icons.vue'
+
 	export default {
+		components: {
+			uniIcons
+		},
 		name: "search",
 		props: {
 			sortName: {
@@ -66,6 +75,11 @@
 	.key-word {
 		-webkit-flex: 1;
 		flex: 1;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		-webkit-text-overflow: ellipsis;
+		overflow: hidden;
+		font-size: 25upx;
 	}
 
 	.search-content {
@@ -89,6 +103,6 @@
 	.separ-line {
 		opacity: 0.3;
 		margin: 0px 15upx;
-		font-size: 32upx;
+		font-size: 20upx;
 	}
 </style>

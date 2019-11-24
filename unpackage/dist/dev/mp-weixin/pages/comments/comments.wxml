@@ -1,0 +1,1 @@
+<view class="container"><text>{{appear?'小球出现':'小球消失'}}</text><view class="page-section"><scroll-view class="scroll-view" scroll-y><view class="scroll-area"><text class="notice">向下滚动让小球出现</text><view class="ball"></view></view></scroll-view></view></view>

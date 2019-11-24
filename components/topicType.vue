@@ -1,13 +1,22 @@
 <template>
 	<view>
-		<navigator url="/pages/choiceTopicType/choiceTopicType" animation-type="fade-in">
-			<text :style="{'color': topicType.color}"><text class="drop-down">o</text>{{topicType.name}}</text>
+		<navigator class="navigator" url="/pages/choiceTopicType/choiceTopicType" animation-type="fade-in">
+			<uni-icons type="arrowdown" size="20" :color="topicType.them.color.secondary"></uni-icons>
+			<text :style="{color:topicType.them.color.primary}">
+				<!-- <text class="drop-down">o</text> -->
+				{{topicType.name}}
+			</text>
 		</navigator>
 	</view>
 </template>
 
 <script>
+	import uniIcons from '@/components/uni-icons/uni-icons.vue'
+
 	export default {
+		components: {
+			uniIcons
+		},
 		name: "topic-type",
 		props: {
 			topicType: {
@@ -22,9 +31,9 @@
 </script>
 
 <style scoped>
-	.drop-down {
-		margin-right: 8px;
-		opacity: 0.4;
-		font-size: 50upx;
+	text {
+		height: 100upx;
+		line-height: 100upx;
+		font-size: 60upx;
 	}
 </style>

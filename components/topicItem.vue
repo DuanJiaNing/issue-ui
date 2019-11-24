@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- {{item.title}} -->
-		<view class="uni-flex uni-row">
+		<view class="uni-flex uni-row content" :style="{'background-color': appThem.color.background.content}">
 			<view class="text uni-flex" style="width: 200upx;height: 220upx;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;">
 				<image src="../../../static/plus.png" style="width: 150upx;height: 150upx;"></image>
 			</view>
@@ -19,8 +19,15 @@
 </template>
 
 <script>
+	import config from '../config.js'
+
 	export default {
 		name: "topic-item",
+		computed: {
+			appThem() {
+				return config.appThem()
+			}
+		},
 		props: {
 			item: {
 				type: Object,
@@ -36,7 +43,11 @@
 </script>
 
 <style>
-.text {
+	.content{
+		border-radius: 10upx;
+	}
+	
+	.text {
 		margin: 15upx 10upx;
 		padding: 0 20upx;
 		background-color: #ebebeb;

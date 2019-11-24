@@ -1,6 +1,6 @@
 <template>
 	<view class="choice-topic-type">
-		<text v-for="(ttype,index) in types" @click="choiceType(index)" :key="index" :style="{'color': ttype.color}">
+		<text v-for="(ttype,index) in types" :style="{color:ttype.them.color.primary}" @click="choiceType(index)" :key="index">
 			{{ttype.name}}
 		</text>
 	</view>
@@ -30,23 +30,27 @@
 
 <style scoped>
 	page {
-		background-color: black;
-		height: 100%;
+		/* background-color: black; */
+		/* height: 100%; */
+		position: fixed;
+		min-height: 100vh;
+		display: flex;
 		width: 100%;
 	}
 
 	.choice-topic-type {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-
+		position: fixed;
 		height: 100%;
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.choice-topic-type text {
 		height: 120upx;
-		color: wheat;
+		color: white;
 		width: 100%;
 		line-height: 120upx;
 		text-align: center;

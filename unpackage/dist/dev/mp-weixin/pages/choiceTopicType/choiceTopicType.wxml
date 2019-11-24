@@ -1,0 +1,1 @@
+<view class="choice-topic-type data-v-642faa2a"><block wx:for="{{types}}" wx:for-item="ttype" wx:for-index="index" wx:key="index"><text data-event-opts="{{[['tap',[['choiceType',[index]]]]]}}" style="{{'color:'+(ttype.them.color.primary)+';'}}" bindtap="__e" class="data-v-642faa2a">{{''+ttype.name+''}}</text></block></view>

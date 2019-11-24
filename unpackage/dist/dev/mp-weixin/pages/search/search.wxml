@@ -1,0 +1,1 @@
+<view id="search"><input class="uni-input" type="text" focus placeholder="搜索" confirm-type="search" data-event-opts="{{[['confirm',[['doSearch',['$event']]]]]}}" bindconfirm="__e"/></view>
