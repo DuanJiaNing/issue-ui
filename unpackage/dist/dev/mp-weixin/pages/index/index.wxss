@@ -1,12 +1,17 @@
 
-.scroll-view.data-v-ce847184 {}
+.scroll-view.data-v-ce847184 {
+	/* padding-left: 40upx; */
+	/* padding-right: 40upx; */
+}
+.scroll-view-content.data-v-ce847184 {
+	padding-left: 40rpx;
+	padding-right: 40rpx;
+}
 .topic-type.data-v-ce847184 {
-	padding-top: 30rpx;
+	padding-top: 40rpx;
 }
 .content.data-v-ce847184 {
 	/* padding-top: 30upx; */
-	padding-left: 30rpx;
-	padding-right: 30rpx;
 	/* margin-bottom: 100upx; */
 }
 

@@ -22,6 +22,7 @@
 @font-face {
 	font-family: sanhucyyuan;
 	src: url(../../static/fonts/三极粗圆简体.8f6e2356.ttf);
+	/* src: url('https://raw.githubusercontent.com/DuanJiaNing/issue-ui/master/static/font/%E4%B8%89%E6%9E%81%E7%B2%97%E5%9C%86%E7%AE%80%E4%BD%93.ttf') */
 }
 page {
 	font-family: sanhucyyuan;

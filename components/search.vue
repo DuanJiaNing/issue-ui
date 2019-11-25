@@ -79,14 +79,14 @@
 		text-overflow: ellipsis;
 		-webkit-text-overflow: ellipsis;
 		overflow: hidden;
-		font-size: 25upx;
+		font-size: 35upx;
 	}
 
 	.search-content {
 		color: #777;
 		border-radius: 25upx;
 		padding: 10upx 20upx;
-		background-color: lightgray;
+		background-color: #E0E0E0;
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
@@ -97,7 +97,7 @@
 	}
 
 	.sort-type {
-		font-size: 20upx;
+		font-size: 25upx;
 	}
 
 	.separ-line {

@@ -175,7 +175,7 @@ const thems = {
 			//secondary: "#9C9C9C",
 			background: {
 				content: "#ffffff",
-				background: "#F5F5F5"
+				background: "#F1F0F5"
 			},
 			navigationBar: {
 				frontColor: "#000000", // #000000 or #ffffff

@@ -1,24 +1,26 @@
 <template>
 	<view>
 		<view class="content" :style="{'background-color': appThem.color.background.background}">
-			<scroll-view class="scroll-view" scroll-y :style="{height: scrollViewHeight}">
-				<block v-if="status.homeShow">
-					<topic-type class="topic-type" :topicType="types[status.topicTypeIndex]"></topic-type>
-					<view class="search-wrapper">
-						<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
-						 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord"></search>
-					</view>
-					<view class="topic-list">
-						<view v-for="(item, index) in topicList" :key="index">
-							<topic-item :item="item"></topic-item>
-							<view style="height: 20upx;"></view>
+			<scroll-view enable-back-to-top="true" show-scrollbar="false" class="scroll-view" scroll-y :style="{height: scrollViewHeight}">
+				<view class="scroll-view-content">
+					<block v-if="status.homeShow">
+						<topic-type class="topic-type" :topicType="types[status.topicTypeIndex]"></topic-type>
+						<view class="search-wrapper">
+							<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
+							 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord"></search>
 						</view>
-						<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
-					</view>
-				</block>
-				<block v-else>
-					me
-				</block>
+						<view class="topic-list">
+							<view v-for="(item, index) in topicList" :key="index">
+								<topic-item :item="item"></topic-item>
+								<view style="height: 20upx;"></view>
+							</view>
+							<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+						</view>
+					</block>
+					<block v-else>
+						me
+					</block>
+				</view>
 			</scroll-view>
 		</view>
 		<tab-bar @switchTab="switchTab" :tab="status.tab" :them="types[status.topicTypeIndex].them"></tab-bar>
@@ -210,16 +212,22 @@
 </script>
 
 <style scoped>
-	.scroll-view {}
+	.scroll-view {
+		/* padding-left: 40upx; */
+		/* padding-right: 40upx; */
+	}
+
+	.scroll-view-content {
+		padding-left: 40upx;
+		padding-right: 40upx;
+	}
 
 	.topic-type {
-		padding-top: 30upx;
+		padding-top: 40upx;
 	}
 
 	.content {
 		/* padding-top: 30upx; */
-		padding-left: 30upx;
-		padding-right: 30upx;
 		/* margin-bottom: 100upx; */
 	}
 

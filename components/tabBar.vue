@@ -2,15 +2,16 @@
 	<view class='tap-bar' :style="{'background-color': appThem.color.background.content}">
 		<view class='tap-bar-content'>
 			<view class='home' @click="switchTab('home')">
-				<uni-icons type="home" size="30" :color="tab === 'home' ? them.color.primary : 'gray'"></uni-icons>
+				<uni-icons type="home" size="35" :color="tab === 'home' ? them.color.primary : 'gray'"></uni-icons>
 			</view>
 			<navigator class="add" url="/pages/add/add" hover-class="add-hover" :style="{'background-image': 'linear-gradient('+them.color.primary+', '+them.color.secondary+')'}">
-				<uni-icons type="plusempty" size="30" color="white"></uni-icons>
+				<uni-icons type="plusempty" size="35" color="white"></uni-icons>
 			</navigator>
 			<view class='me' @click="switchTab('me')">
-				<uni-icons type="person" size="30" :color="tab === 'me' ? them.color.primary : 'gray'"></uni-icons>
+				<uni-icons type="person" size="35" :color="tab === 'me' ? them.color.primary : 'gray'"></uni-icons>
 			</view>
 		</view>
+		<view :style="{height: iphoneXSafeAreaHeight}"></view>
 	</view>
 </template>
 
@@ -25,6 +26,21 @@
 		computed: {
 			appThem() {
 				return config.appThem()
+			},
+			iphoneXSafeAreaHeight() {
+				let sinfo
+				uni.getSystemInfo({
+					success: function(res) {
+						sinfo = res
+					}
+				})
+
+				console.log(sinfo.model)
+				if (sinfo.model.startsWith('iPhone X')) {
+					return '35px'
+				}
+
+				return '0px'
 			}
 		},
 		name: "tab-bar",
@@ -53,11 +69,10 @@
 		width: 100%;
 		/* opacity: 0.9; */
 		box-shadow: 0px 15px 30px #4B4B4B;
-		height: 50px;
 	}
 
 	.tap-bar-content {
-		height: 100%;
+		height: 50px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -74,8 +89,8 @@
 
 	.add {
 		margin-top: -20px;
-		height: 55px;
-		width: 55px;
+		height: 60px;
+		width: 60px;
 		border-radius: 50%;
 		box-shadow: 0px 0px 10px #8D8D8D;
 	}
