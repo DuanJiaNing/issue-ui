@@ -180,6 +180,9 @@ var observer = null;var _default =
           contentnomore: '没有更多' } },
 
 
+      data: {
+        topics: [] },
+
       status: {
         homeShow: true,
         tab: 'home',
@@ -209,9 +212,6 @@ var observer = null;var _default =
     },
     sortTypes: function sortTypes() {
       return _config.default.sortTypes;
-    },
-    topicList: function topicList() {
-      return _config.default.topicList;
     },
     thems: function thems() {
       return _config.default.thems;
@@ -286,8 +286,25 @@ var observer = null;var _default =
     } else {
       this.status.topicTypeIndex = 0;
     }
+
+    this.loadTopic();
   },
   methods: {
+    loadTopic: function loadTopic() {var _this2 = this;
+      uni.request({
+        url: _config.default.api.issue.topic.list.path,
+        data: {},
+        method: _config.default.api.issue.topic.list.method,
+        success: function success(res) {
+          _this2.data.topics = res.data.data;
+          console.log(res.data.data);
+          console.log(res);
+        },
+        fail: function fail(err) {
+          console.log(err);
+        } });
+
+    },
     showComments: function showComments() {
       // TODO
       console.log("show comments");
@@ -298,7 +315,7 @@ var observer = null;var _default =
     clearSearchKeyWord: function clearSearchKeyWord() {
       this.status.search.keyWorld = "搜索";
     },
-    showSortOption: function showSortOption() {var _this2 = this;
+    showSortOption: function showSortOption() {var _this3 = this;
       var stypeName = new Array();
       _config.default.sortTypes.forEach(function (st) {
         stypeName.push(st.name);
@@ -308,7 +325,7 @@ var observer = null;var _default =
         title: '请选择排序方式',
         itemList: stypeName,
         success: function success(e) {
-          _this2.status.search.sortTypeIndex = e.tapIndex;
+          _this3.status.search.sortTypeIndex = e.tapIndex;
         } });
 
     },

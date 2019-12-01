@@ -1,5 +1,5 @@
 // api host
-let host = 'http://localhost:8181'
+let host = 'http://localhost:8079'
 
 const debug = true
 
@@ -235,6 +235,10 @@ const api = {
 			add: {
 				path: `${host}/api/topic`,
 				method: "POST"
+			},
+			list: {
+				path: `${host}/api/topic/list`,
+				method: "GET"
 			}
 		}
 	}

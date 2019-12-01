@@ -4,8 +4,8 @@
 			<view class='home' @click="switchTab('home')">
 				<uni-icons type="home" size="35" :color="tab === 'home' ? them.color.primary : 'gray'"></uni-icons>
 			</view>
-			<navigator class="add" url="/pages/add/add" hover-class="add-hover" :style="{'background-image': 'linear-gradient('+them.color.primary+', '+them.color.secondary+')'}">
-				<uni-icons type="plusempty" size="35" color="white"></uni-icons>
+			<navigator class="add" url="/pages/add/add" hover-class="add-hover" :style="{'background-color': them.color.primary}">
+				<uni-icons type="plusempty" size="34" color="white"></uni-icons>
 			</navigator>
 			<view class='me' @click="switchTab('me')">
 				<uni-icons type="person" size="35" :color="tab === 'me' ? them.color.primary : 'gray'"></uni-icons>
@@ -88,9 +88,9 @@
 	}
 
 	.add {
-		margin-top: -20px;
-		height: 60px;
-		width: 60px;
+		margin-top: -25px;
+		height: 65px;
+		width: 65px;
 		border-radius: 50%;
 		box-shadow: 0px 0px 10px #8D8D8D;
 	}

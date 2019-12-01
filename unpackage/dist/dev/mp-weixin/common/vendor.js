@@ -7705,7 +7705,7 @@ internalMixin(Vue);
 
 "use strict";
  // api host
-var host = 'http://localhost:8181';
+var host = 'http://localhost:8079';
 
 var debug = true;
 
@@ -7940,7 +7940,11 @@ var api = {
     topic: {
       add: {
         path: "".concat(host, "/api/topic"),
-        method: "POST" } } } };
+        method: "POST" },
+
+      list: {
+        path: "".concat(host, "/api/topic/list"),
+        method: "GET" } } } };
 
 
 

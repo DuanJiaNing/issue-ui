@@ -123,9 +123,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
-
 var _config = _interopRequireDefault(__webpack_require__(/*! ../config.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -143,10 +140,9 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../config.js */ 25)
 //
 //
 //
-//
-//
-//
-var _default = { name: "topic-item", computed: { appThem: function appThem() {return _config.default.appThem();} }, props: { item: { type: Object, required: true } }, data: function data() {return {};} };exports.default = _default;
+var _default = { name: "topic-item", computed: { appThem: function appThem() {return _config.default.appThem();} }, props: { item: { type: Object, required: true } }, data: function data() {return {};
+
+  } };exports.default = _default;
 
 /***/ }),
 

@@ -1,19 +1,16 @@
 <template>
-	<view>
-		<!-- {{item.title}} -->
-		<view class="uni-flex uni-row content" :style="{'background-color': appThem.color.background.content}">
-			<view class="text uni-flex" style="width: 200upx;height: 220upx;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;">
-				<image src="../../../static/plus.png" style="width: 150upx;height: 150upx;"></image>
+	<view class="content">
+		<view class="statistic-content">
+			<view class="statistic">
+				<text class="like">1234</text>
+				/
+				<text class="dislike">34</text>
 			</view>
-			<view class="uni-flex uni-column" style="-webkit-flex: 1;flex: 1;-webkit-justify-content: space-between;justify-content: space-between;">
-				<view class="text" style="height: 120upx;text-align: left;padding-left: 20upx;padding-top: 10upx;">
-					文字居左，留出左间距
-				</view>
-				<view class="uni-flex uni-row">
-					<view class="text" style="-webkit-flex: 1;flex: 1;">剩余数量</view>
-					<view class="text" style="-webkit-flex: 1;flex: 1;">立即购买</view>
-				</view>
-			</view>
+			<view class="count">12人</view>
+		</view>
+
+		<view class="topic-content">
+			<text>{{item.title}}</text>
 		</view>
 	</view>
 </template>
@@ -43,18 +40,59 @@
 </script>
 
 <style>
-	.content{
-		border-radius: 10upx;
+	.like {
+		color: #09BB07;
 	}
 	
-	.text {
-		margin: 15upx 10upx;
-		padding: 0 20upx;
-		background-color: #ebebeb;
-		height: 70upx;
-		line-height: 70upx;
+	.statistic {
+		font-size: 18upx;
+	}
+	
+	.dislike {
+		color: #DD524D;
+	}
+	
+	.count {
+		font-size: 18upx;
 		text-align: center;
-		color: #777;
-		font-size: 26upx;
+		color: #999999;
+	}
+	
+	.statistic-content {
+		height: 10upx;
+		width: 20%;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.topic-content {
+		width: 80%;
+		padding-left: 10upx;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 10upx 20upx;
+		height: 115upx;
+
+		/* background-color: #FFFFFF; */
+		border-radius: 10upx;
+	}
+
+	.topic-content text {
+		lines: 2;
+		color: black;
+		font-size: 30upx;
+
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		word-break: break-all;
+		overflow: hidden;
 	}
 </style>

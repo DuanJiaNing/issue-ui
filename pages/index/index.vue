@@ -10,7 +10,7 @@
 							 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord"></search>
 						</view>
 						<view class="topic-list">
-							<view v-for="(item, index) in topicList" :key="index">
+							<view v-for="(item, index) in data.topics.list" :key="index">
 								<topic-item :item="item"></topic-item>
 								<view style="height: 20upx;"></view>
 							</view>
@@ -56,6 +56,9 @@
 						contentnomore: '没有更多'
 					}
 				},
+				data: {
+					topics: []
+				},
 				status: {
 					homeShow: true,
 					tab: 'home',
@@ -85,9 +88,6 @@
 			},
 			sortTypes() {
 				return config.sortTypes
-			},
-			topicList() {
-				return config.topicList
 			},
 			thems() {
 				return config.thems
@@ -162,8 +162,25 @@
 			} else {
 				this.status.topicTypeIndex = 0
 			}
+
+			this.loadTopic();
 		},
 		methods: {
+			loadTopic() {
+				uni.request({
+					url: config.api.issue.topic.list.path,
+					data: {},
+					method: config.api.issue.topic.list.method,
+					success: (res) => {
+						this.data.topics = res.data.data
+						console.log(res.data.data)
+						console.log(res)
+					},
+					fail: function(err) {
+						console.log(err)
+					}
+				})
+			},
 			showComments() {
 				// TODO
 				console.log("show comments")
