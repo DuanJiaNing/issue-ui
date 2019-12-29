@@ -13,7 +13,6 @@
 			</block>
 
 			<block v-if="canClear">
-				<!-- <uni-icons type="closeempty" size="20"></uni-icons> -->
 				<text class="clear-key-word" @click="clearSearchKeyWord()">X</text>
 			</block>
 
@@ -79,14 +78,14 @@
 		text-overflow: ellipsis;
 		-webkit-text-overflow: ellipsis;
 		overflow: hidden;
-		font-size: 35upx;
+		font-size: 30upx;
 	}
 
 	.search-content {
-		color: #777;
+		color: #acacac;
 		border-radius: 25upx;
 		padding: 10upx 20upx;
-		background-color: #E0E0E0;
+		background-color: rgba(238,238,238,0.84);
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
@@ -97,6 +96,7 @@
 	}
 
 	.sort-type {
+		color: #acacac;
 		font-size: 25upx;
 	}
 

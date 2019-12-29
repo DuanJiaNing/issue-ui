@@ -77,10 +77,8 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		padding: 10upx 20upx;
 		height: 115upx;
 
-		/* background-color: #FFFFFF; */
 		border-radius: 10upx;
 	}
 

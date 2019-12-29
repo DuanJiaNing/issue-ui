@@ -1,1 +1,0 @@
-<view class="content"><view class="statistic-content"><view class="statistic"><text class="like">1234</text>/<text class="dislike">34</text></view><view class="count">12人</view></view><view class="topic-content"><text>{{item.title}}</text></view></view>

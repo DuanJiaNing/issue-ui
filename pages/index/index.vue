@@ -1,46 +1,36 @@
 <template>
-	<view>
-		<view class="content" :style="{'background-color': appThem.color.background.background}">
-			<scroll-view enable-back-to-top="true" show-scrollbar="false" class="scroll-view" scroll-y :style="{height: scrollViewHeight}">
-				<view class="scroll-view-content">
-					<block v-if="status.homeShow">
-						<topic-type class="topic-type" :topicType="types[status.topicTypeIndex]"></topic-type>
-						<view class="search-wrapper">
-							<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
-							 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord"></search>
-						</view>
-						<view class="topic-list">
-							<view v-for="(item, index) in data.topics.list" :key="index">
-								<topic-item :item="item"></topic-item>
-								<view style="height: 20upx;"></view>
-							</view>
-							<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
-						</view>
-					</block>
-					<block v-else>
-						me
-					</block>
-				</view>
-			</scroll-view>
+	<view class="content">
+		<topic-type class="topic-type" :topicType="types[status.topicTypeIndex]"></topic-type>
+
+		<view class="search-wrapper">
+			<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
+			 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord">
+			</search>
 		</view>
-		<tab-bar @switchTab="switchTab" :tab="status.tab" :them="types[status.topicTypeIndex].them"></tab-bar>
+		<view class="topic-list">
+			<view v-for="(item, index) in data.topics.list" :key="index" class="topic-list-item" hover-class="topic-list-item-hover">
+				<topic-item :item="item"></topic-item>
+			</view>
+			<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+		</view>
+
 	</view>
 </template>
 
 <script>
-	import tabBar from '@/components/tabBar.vue'
+	// 微信直接放在component上的style会增加换行
 	import topicType from '@/components/topicType.vue'
 	import search from '@/components/search.vue'
 	import topicItem from '@/components/topicItem.vue'
-	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 
-	import config from '../../config.js'
-
-	let observer = null;
+	import TopicService from '@/service/TopicService.js'
+	import {
+		api
+	} from '@/service/ApiService.js'
 
 	export default {
 		components: {
-			tabBar,
 			topicType,
 			search,
 			topicItem,
@@ -60,8 +50,6 @@
 					topics: []
 				},
 				status: {
-					homeShow: true,
-					tab: 'home',
 					topicTypeIndex: 0,
 					search: {
 						keyWorld: "搜索",
@@ -71,29 +59,11 @@
 			}
 		},
 		computed: {
-			scrollViewHeight() {
-				let sinfo
-				uni.getSystemInfo({
-					success: function(res) {
-						sinfo = res
-						console.log(res)
-					}
-				})
-				// 屏幕高度=状态栏高度+原生导航栏高度+可使用窗口高度+原生tabbar高度
-				let paddingTop_px = 20 // padding-top 30upx -> 20px
-				return sinfo.windowHeight - 20 + 'px'
-			},
 			types() {
-				return config.topicTypes
+				return TopicService.topicTypes
 			},
 			sortTypes() {
-				return config.sortTypes
-			},
-			thems() {
-				return config.thems
-			},
-			appThem() {
-				return config.appThem()
+				return TopicService.sortTypes
 			}
 		},
 		onPullDownRefresh() {
@@ -106,44 +76,8 @@
 			// TODO
 			console.log("onReachBottom")
 		},
-		onReady() {
-			observer = uni.createIntersectionObserver(this);
-			observer.relativeTo('.scroll-view').observe('.topic-type', (res) => {
-				console.log("sss " + res.intersectionRatio)
-				if (res.intersectionRatio > 0) {
-					uni.setNavigationBarTitle({
-						title: ''
-					});
-
-					uni.setNavigationBarColor({
-						frontColor: this.appThem.color.navigationBar.frontColor,
-						backgroundColor: this.appThem.color.background.background,
-						animation: {
-							duration: 400,
-							timingFunc: 'easeIn'
-						}
-					})
-				} else if (!res.intersectionRatio > 0) {
-					uni.setNavigationBarTitle({
-						title: this.types[this.status.topicTypeIndex].name
-					});
-
-					uni.setNavigationBarColor({
-						frontColor: this.appThem.color.navigationBar.frontColor,
-						backgroundColor: this.appThem.color.background.content,
-						animation: {
-							duration: 400,
-							timingFunc: 'easeIn'
-						}
-					})
-				}
-			})
-		},
-		onUnload() {
-			if (observer) {
-				observer.disconnect()
-			}
-		},
+		onReady() {},
+		onUnload() {},
 		onLoad(option) {
 			if (option.searchKeyWord) {
 				this.status.search.keyWorld = option.searchKeyWord
@@ -168,9 +102,12 @@
 		methods: {
 			loadTopic() {
 				uni.request({
-					url: config.api.issue.topic.list.path,
-					data: {},
-					method: config.api.issue.topic.list.method,
+					url: api.topic.list.path,
+					data: {
+						pageNum: 1,
+						pageSize: 20
+					},
+					method: api.topic.list.method,
 					success: (res) => {
 						this.data.topics = res.data.data
 						console.log(res.data.data)
@@ -193,7 +130,7 @@
 			},
 			showSortOption() {
 				let stypeName = new Array()
-				config.sortTypes.forEach(st => {
+				TopicService.sortTypes.forEach(st => {
 					stypeName.push(st.name)
 				})
 
@@ -205,58 +142,27 @@
 					}
 				})
 			},
-			switchTab(tab) {
-				this.status.tab = tab
-				console.log(this.status.tab)
-				switch (tab) {
-					case 'home':
-						if (!this.status.homeShow) {
-							this.status.homeShow = true
-						}
-						break
-					case 'me':
-						if (this.status.homeShow) {
-							this.status.homeShow = false
-						}
-						break
-					default:
-						// should not happen
-						break;
-				}
-			}
 		}
 	}
 </script>
 
 <style scoped>
-	.scroll-view {
-		/* padding-left: 40upx; */
-		/* padding-right: 40upx; */
-	}
-
-	.scroll-view-content {
-		padding-left: 40upx;
-		padding-right: 40upx;
-	}
-
-	.topic-type {
-		padding-top: 40upx;
-	}
-
-	.content {
-		/* padding-top: 30upx; */
-		/* margin-bottom: 100upx; */
-	}
-
-	// #ifdef MP-WEIXIN
 	.search-wrapper {
 		margin-top: 20upx;
 	}
+	
+	.content {
+		padding-left: 30upx;
+		padding-right: 30upx;
+	}
 
-	// #endif
+	.topic-list-item {
+		/* padding: 10upx 0upx; */
+		padding-bottom: 10upx;
+	}
 
-	.search {
-		margin-top: 20upx;
+	.topic-list-item-hover {
+		background-color: #eee;
 	}
 
 	.topic-list {

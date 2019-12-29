@@ -3,8 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				// "navigationBarTitleText": "uni-app"
-				"enablePullDownRefresh":true
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/home/home",
@@ -17,31 +16,52 @@
 			"style": {
 				"navigationBarTitleText": "添加主题"
 			}
-		}
-	    ,{
-            "path" : "pages/choiceTopicType/choiceTopicType",
-            "style" : {
-				"navigationStyle":"custom"
+		}, {
+			"path": "pages/choiceTopicType/choiceTopicType",
+			"style": {
+				"navigationStyle": "custom"
 				// "backgroundColor": "black"
 			}
-        }
-        ,{
-            "path" : "pages/search/search",
-            "style" : {
+		}, {
+			"path": "pages/search/search",
+			"style": {
 				"navigationBarTitleText": "搜索",
 				"app-plus": {
-				    "softinputNavBar": "none"
+					"softinputNavBar": "none"
 				}
 			}
-        }
-        ,{
-            "path" : "pages/comments/comments",
-            "style" : {}
-        }
+		}, {
+			"path": "pages/comments/comments",
+			"style": {}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#FFFFFF"
 		// "backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/component.png",
+				"selectedIconPath": "static/componentHL.png",
+				"text": "Home"
+			},
+			{
+				"pagePath": "pages/add/add",
+				"iconPath": "static/component.png",
+				"selectedIconPath": "static/componentHL.png",
+				"text": "New"
+			}, {
+				"pagePath": "pages/me/me",
+				"iconPath": "static/component.png",
+				"selectedIconPath": "static/componentHL.png",
+				"text": "My"
+			}
+		]
 	}
 }
