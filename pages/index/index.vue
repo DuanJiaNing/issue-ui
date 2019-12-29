@@ -1,10 +1,11 @@
 <template>
-	<view class="content">
-		<topic-type class="topic-type" :topicType="types[status.topicTypeIndex]"></topic-type>
+	<view>
+		<view class="content" @click="switchTopicType">
+			<topic-type class="topic-type" :topicType="topicType"></topic-type>
+		</view>
 
-		<view class="search-wrapper">
-			<search class="search" :sortName="sortTypes[status.search.sortTypeIndex].name" :searchKeyWord="status.search.keyWorld"
-			 @showSortOption="showSortOption" :sortShow="types[status.topicTypeIndex].code === 'all'" @clearSearchKeyWord="clearSearchKeyWord">
+		<view class="search-wrapper content">
+			<search class="search">
 			</search>
 		</view>
 		<view class="topic-list">
@@ -24,7 +25,12 @@
 	import topicItem from '@/components/topicItem.vue'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 
-	import TopicService from '@/service/TopicService.js'
+	import {
+		topicTypes
+	} from '@/service/TopicService.js'
+	import {
+		status
+	} from '@/service/StatusService.js'
 	import {
 		api
 	} from '@/service/ApiService.js'
@@ -49,21 +55,13 @@
 				data: {
 					topics: []
 				},
-				status: {
-					topicTypeIndex: 0,
-					search: {
-						keyWorld: "搜索",
-						sortTypeIndex: 0
-					}
-				}
+				status: status,
+				topicTypes: topicTypes,
 			}
 		},
 		computed: {
-			types() {
-				return TopicService.topicTypes
-			},
-			sortTypes() {
-				return TopicService.sortTypes
+			topicType() {
+				return this.topicTypes[this.status.topicTypeIndex]
 			}
 		},
 		onPullDownRefresh() {
@@ -76,27 +74,7 @@
 			// TODO
 			console.log("onReachBottom")
 		},
-		onReady() {},
-		onUnload() {},
 		onLoad(option) {
-			if (option.searchKeyWord) {
-				this.status.search.keyWorld = option.searchKeyWord
-			} else {
-				this.status.search.keyWorld = "搜索"
-			}
-
-			if (option.sortTypeIndex) {
-				this.status.search.sortTypeIndex = option.sortTypeIndex
-			} else {
-				this.status.search.sortTypeIndex = 0
-			}
-
-			if (option.topicTypeIndex) {
-				this.status.topicTypeIndex = option.topicTypeIndex
-			} else {
-				this.status.topicTypeIndex = 0
-			}
-
 			this.loadTopic();
 		},
 		methods: {
@@ -118,30 +96,17 @@
 					}
 				})
 			},
+			switchTopicType() {
+				uni.navigateTo({
+					url: `/pages/choiceTopicType/choiceTopicType`
+				});
+			},
 			showComments() {
 				// TODO
-				console.log("show comments")
 				uni.navigateTo({
 					url: `/pages/comments/comments`
 				});
-			},
-			clearSearchKeyWord() {
-				this.status.search.keyWorld = "搜索"
-			},
-			showSortOption() {
-				let stypeName = new Array()
-				TopicService.sortTypes.forEach(st => {
-					stypeName.push(st.name)
-				})
-
-				uni.showActionSheet({
-					title: '请选择排序方式',
-					itemList: stypeName,
-					success: (e) => {
-						this.status.search.sortTypeIndex = e.tapIndex
-					}
-				})
-			},
+			}
 		}
 	}
 </script>
@@ -150,19 +115,15 @@
 	.search-wrapper {
 		margin-top: 20upx;
 	}
-	
-	.content {
-		padding-left: 30upx;
-		padding-right: 30upx;
-	}
 
 	.topic-list-item {
-		/* padding: 10upx 0upx; */
+		padding-left: 40upx;
+		padding-right: 45upx;
 		padding-bottom: 10upx;
 	}
 
 	.topic-list-item-hover {
-		background-color: #eee;
+		background-color: #eeeeee;
 	}
 
 	.topic-list {

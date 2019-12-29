@@ -3,9 +3,9 @@
 		<view class="search-content">
 			<block v-if="sortShow">
 				<text class="sort-type" @click="showSortOption()">
-					{{sortName}}
+					{{sortTypeName}}
 				</text>
-				<uni-icons type="arrowdown" size="10"></uni-icons>
+				<uni-icons type="arrowdown" size="10" style="color: #999999;"></uni-icons>
 			</block>
 
 			<block v-if="canClear && sortShow">
@@ -25,25 +25,35 @@
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
+	import {topicTypes,sortTypes} from '@/service/TopicService.js'
+	import {status} from '@/service/StatusService.js'
+
 	export default {
 		components: {
 			uniIcons
 		},
-		name: "search",
-		props: {
-			sortName: {
-				type: String,
-				requied: true
+		data() {
+			return {
+				status: status,
+				topicTypes: topicTypes,
+				sortTypes: sortTypes
+			};
+		},
+		computed: {
+			sortShow() {
+				return this.topicTypes[this.status.topicTypeIndex].code === 'all'
 			},
-			searchKeyWord: {
-				type: String,
-				requied: true
+			sortTypeName() {
+				return this.sortTypes[this.status.search.sortTypeIndex].name
 			},
-			sortShow: {
-				type: Boolean,
-				requied: true
+			searchKeyWord() {
+				return this.status.search.keyWorld === '' ? '搜索' : this.status.search.keyWorld
+			},
+			canClear() {
+				return this.searchKeyWord !== '搜索'
 			}
 		},
+		name: "search",
 		methods: {
 			gotoSearch() {
 				uni.navigateTo({
@@ -51,21 +61,22 @@
 				});
 			},
 			showSortOption() {
-				this.$emit('showSortOption')
+				let stypeName = new Array()
+				this.sortTypes.forEach(st => {
+					stypeName.push(st.name)
+				})
+
+				uni.showActionSheet({
+					title: '请选择排序方式',
+					itemList: stypeName,
+					success: (e) => {
+						this.status.search.sortTypeIndex = e.tapIndex
+					}
+				})
 			},
 			clearSearchKeyWord() {
-				this.$emit('clearSearchKeyWord')
+				this.status.search.keyWorld = ''
 			}
-		},
-		computed: {
-			canClear() {
-				return this.searchKeyWord !== '搜索'
-			}
-		},
-		data() {
-			return {
-
-			};
 		}
 	}
 </script>
@@ -82,10 +93,10 @@
 	}
 
 	.search-content {
-		color: #acacac;
+		color: #999999;
 		border-radius: 25upx;
 		padding: 10upx 20upx;
-		background-color: rgba(238,238,238,0.84);
+		background-color: #f1f1f1;
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
@@ -96,7 +107,7 @@
 	}
 
 	.sort-type {
-		color: #acacac;
+		color: #999999;
 		font-size: 25upx;
 	}
 

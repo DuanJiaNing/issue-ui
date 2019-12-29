@@ -1,23 +1,27 @@
 <template>
 	<view>
-		<navigator class="navigator" url="/pages/choiceTopicType/choiceTopicType" animation-type="fade-in">
-			<uni-icons type="arrowdown" size="20" :color="topicTypeColor.secondary"></uni-icons>
-			<text :style="{color:topicTypeColor.primary}">
-				<!-- <text class="drop-down">o</text> -->
+		<view class="navigator">
+			<uni-icons type="arrowdown" size="20" color="#4d8ed7"></uni-icons>
+			<text style="color: #007AFF;">
 				{{topicType.name}}
 			</text>
-		</navigator>
+		</view>
 	</view>
 </template>
 
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
-	import {topicColor} from '@/service/ThemService.js'
-	
+	import config from '../config.js'
+
 	export default {
 		components: {
 			uniIcons
+		},
+		data() {
+			return {
+				color: config.color
+			}
 		},
 		computed: {
 			topicTypeColor() {
@@ -38,6 +42,8 @@
 </script>
 
 <style scoped>
+	uni-icons {}
+
 	text {
 		height: 100upx;
 		line-height: 100upx;

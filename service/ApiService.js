@@ -1,5 +1,5 @@
 // api host
-let host = 'http://localhost:8079'
+let host = 'http://123.57.237.176:8079'
 
 const api = {
 	topic: {

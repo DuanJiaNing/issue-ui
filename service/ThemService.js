@@ -37,13 +37,13 @@ function topicColor(topicCode) {
 	     case 'all':
 	        return thems.all.color
 		case 'hot':
-	        return thems.all.hot
+	        return thems.hot.color
 		case 'cool':
-	        return thems.all.cool
+	        return thems.cool.color
 		case 'latest':
-	        return thems.all.latest
+	        return thems.latest.color
 		case 'my':
-	        return thems.all.my
+	        return thems.my.color
 	     default:
 	        return thems.all.color
 	} 

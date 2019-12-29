@@ -1,23 +1,25 @@
 <template>
 	<view id="search">
-		<input type="text" class="uni-input" focus placeholder="搜索" confirm-type="search" @confirm="doSearch"/>
+		<input type="text" :value="keyWord" class="uni-input" focus placeholder="搜索" confirm-type="search" @confirm="doSearch"/>
 	</view>
 </template>
 
 <script>
+	import {status} from '@/service/StatusService.js'
+	
 	export default {
 		data() {
 			return {
-				
+				keyWord: status.search.keyWorld
 			}
 		},
 		methods: {
 			doSearch(e) {
 				let content = e.target.value.trim()
-				uni.reLaunch({
-					// TODO 其他状态恢复
-					url: `/pages/index/index?searchKeyWord=${content}`
-				});
+				status.search.keyWorld = content
+				uni.navigateBack({
+					delta:1
+				})
 			}
 		}
 	}

@@ -1,12 +1,12 @@
 <template>
-	<view class="content">
+	<view class="topic-item-content">
 		<view class="statistic-content">
 			<view class="statistic">
-				<text class="like">1234</text>
+				<text style="color: #09BB07;">1234</text>
 				/
-				<text class="dislike">34</text>
+				<text style="color: #DD524D;">34</text>
 			</view>
-			<view class="count">12人</view>
+			<view class="count" style="color: #999999;">12人</view>
 		</view>
 
 		<view class="topic-content">
@@ -17,13 +17,10 @@
 
 <script>
 	import config from '../config.js'
-
+	
 	export default {
 		name: "topic-item",
 		computed: {
-			appThem() {
-				return config.appThem()
-			}
 		},
 		props: {
 			item: {
@@ -33,29 +30,20 @@
 		},
 		data() {
 			return {
-
-			};
+				color: config.color
+			}
 		}
 	}
 </script>
 
 <style>
-	.like {
-		color: #09BB07;
-	}
-	
 	.statistic {
 		font-size: 18upx;
-	}
-	
-	.dislike {
-		color: #DD524D;
 	}
 	
 	.count {
 		font-size: 18upx;
 		text-align: center;
-		color: #999999;
 	}
 	
 	.statistic-content {
@@ -73,7 +61,7 @@
 		padding-left: 10upx;
 	}
 
-	.content {
+	.topic-item-content {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -85,7 +73,7 @@
 	.topic-content text {
 		lines: 2;
 		color: black;
-		font-size: 30upx;
+		font-size: 28upx;
 
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
