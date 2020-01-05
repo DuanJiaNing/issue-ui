@@ -13,19 +13,18 @@
 		</view>
 		<view class="btn-container content">
 			<view>
-				<button class="save-btn" hover-class="save-btn-hover">保存</button>
+				<button class="save-btn" size="mini" hover-class="save-btn-hover">保存</button>
 			</view>
 		</view>
 		<view class="add-history-container">
 			<view style="color: #999999;" class="content">
 				<view>添加历史</view>
-				<hr color="#D4D4D4" size="1px">
 			</view>
 			<view style="margin-top: 20upx;">
 				<view v-for="(item, index) in data.addTopicHistory" :key="index" class="add-topic-history-list-item" hover-class="add-topic-history-list-item-hover">
 					<time-title-item :item="item"></time-title-item>
 					<block v-if="index < data.addTopicHistory.length - 1">
-						<hr class="line" color="#D4D4D4" size="1px">
+						<view class="hr"></view>
 					</block>
 				</view>
 			</view>
@@ -39,8 +38,9 @@
 	import timeTitleItem from '@/components/list-item/time-title-item.vue'
 	import limitedTextInput from '@/components/limited-text-input/limited-text-input.vue'
 	import limitedTextTextarea from '@/components/limited-text-input/limited-text-textarea.vue'
+	
 	import topicService from '@/service/TopicService.js'
-
+	import toolsService from '@/service/ToolsService.js'
 	import {
 		api
 	} from '@/service/ApiService.js'
@@ -81,9 +81,14 @@
 					},
 					method: api.topic.list.method,
 					success: (res) => {
-						this.data.addTopicHistory = res.data.data.list
-						console.log(res.data.data)
-						console.log(res)
+						this.data.addTopicHistory = []
+						for (var v of res.data.data.list) {
+							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', v.insertTime)
+							this.data.addTopicHistory.push({
+								insertTime: toolsService.formatDate(ti,'yyyy/MM/dd hh:mm'),
+								title: v.title
+							})
+						}
 					},
 					fail: function(err) {
 						console.log(err)
@@ -131,14 +136,11 @@
 		color: #ffffff;
 		background-color: #09BB07;
 		margin-top: 30upx;
-		width: 200upx;
+		width: 150upx;
 	}
 
 	.save-btn-hover {
-		color: #ffffff;
 		background-color: #058D05;
-		margin-top: 30upx;
-		width: 200upx;
 	}
 
 	.add-history-container {

@@ -42,13 +42,13 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#F3F2F7"
+		"navigationBarBackgroundColor": "#F4F5FA"
 	},
 	"tabBar": {
 		"color": "#999999",
-		"selectedColor": "#007AFF",
-		"borderStyle": "white",
-		"backgroundColor": "#ffffff",
+		"selectedColor": "#2182ED",
+		"borderStyle": "black",
+		"backgroundColor": "#F4F5FA",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"iconPath": "static/home.png",
@@ -57,8 +57,8 @@
 			},
 			{
 				"pagePath": "pages/add/add",
-				"iconPath": "static/increase.png",
-				"selectedIconPath": "static/increaseFoucs.png",
+				"iconPath": "static/addto.png",
+				"selectedIconPath": "static/addtoFoucs.png",
 				"text": "新增"
 			}, {
 				"pagePath": "pages/me/me",

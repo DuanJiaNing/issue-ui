@@ -36,10 +36,9 @@
 	
 	textarea {
 		width: 100%;
-		margin-top: 20upx;
 		padding-top: 10upx;
 		padding-bottom: 10upx;
-		height: 180upx;
+		height: 150upx;
 	}
 	
 	.tip-container {

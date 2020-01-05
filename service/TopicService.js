@@ -39,7 +39,7 @@ const topicTypes = [{
 
 const config = {
 	maxlength: 40,
-	maxDeslength: 200
+	maxDeslength: 130
 }
 
 

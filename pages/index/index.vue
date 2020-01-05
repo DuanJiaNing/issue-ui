@@ -11,6 +11,9 @@
 		<view class="topic-list">
 			<view v-for="(item, index) in data.topics.list" :key="index" class="topic-list-item" hover-class="topic-list-item-hover">
 				<topic-item :item="item"></topic-item>
+				<block v-if="index < data.topics.list.length - 1">
+					<view class="hr"></view>
+				</block>
 			</view>
 			<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
 		</view>
@@ -23,8 +26,9 @@
 	import topicType from '@/components/topic-type.vue'
 	import search from '@/components/search.vue'
 	import topicItem from '@/components/topic-item.vue'
+	
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-
+	
 	import {
 		topicTypes
 	} from '@/service/TopicService.js'
@@ -44,6 +48,12 @@
 		},
 		data() {
 			return {
+				fabPattern: {
+					color: '#7A7E83',
+					backgroundColor: '#fff',
+					selectedColor: '#007AFF',
+					buttonColor: '#007AFF'
+				},
 				uniLoadMore: {
 					status: 'more',
 					contentText: {
@@ -117,13 +127,13 @@
 	}
 
 	.topic-list-item {
+		background-color: #ffffff;
 		padding-left: 40upx;
 		padding-right: 45upx;
-		padding-bottom: 10upx;
 	}
 
 	.topic-list-item-hover {
-		background-color: #ffffff;
+		background-color: #F4F5FA;
 	}
 
 	.topic-list {

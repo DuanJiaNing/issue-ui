@@ -27,8 +27,11 @@
 
 <style>
 	.time {
+		font-size: 20upx;
 		color: #999999;
 		width: 30%;
+		text-align: center;
+		vertical-align: middle;
 
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -43,9 +46,11 @@
 		white-space: nowrap;
 
 		width: 70%;
+		margin-left: 30upx;
 	}
 
 	.time-title-item {
+		align-items: center;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;

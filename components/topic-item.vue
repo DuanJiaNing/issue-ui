@@ -4,7 +4,7 @@
 			<view class="statistic">
 				<text style="color: #09BB07;">1234</text>
 				/
-				<text style="color: #DD524D;">34</text>
+				<text style="color: #EC559E;">34</text>
 			</view>
 			<view class="count" style="color: #999999;">12人</view>
 		</view>
@@ -62,7 +62,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		height: 120upx;
+		height: 140upx;
 
 		border-radius: 10upx;
 	}

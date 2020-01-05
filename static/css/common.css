@@ -7,10 +7,15 @@
 page {
 	font-family: sanhucyyuan;
 	letter-spacing: 1px;
-	background-color: #F3F2F7;
+	background-color: #F4F5FA;
 }
 
 .content {
 	padding-left: 30upx;
 	padding-right: 30upx;
+}
+
+.hr {
+	height: 1px;
+	background-color: #F4F5FA;
 }

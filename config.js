@@ -1,14 +1,14 @@
 const debug = true
 const color = {
-	primary: '#007AFF',
-	secondary: '#4d8ed7',
+	primary: '#2182ED',
+	secondary: '#54B1F7',
 
-	primaryBackground: '#F3F2F7',
-	secondaryBackground: '#ffffff',
+	primaryBackground: '#F4F5FA',
+	secondaryBackground: '#FFFFFF',
 	
 	secondaryText: '#999999',
 	like: '#09BB07',
-	dislike: '#DD524D',
+	dislike: '#EC559E',
 	
 	hover: '#eeeeee'
 }
