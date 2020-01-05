@@ -20,9 +20,9 @@
 
 <script>
 	// 微信直接放在component上的style会增加换行
-	import topicType from '@/components/topicType.vue'
+	import topicType from '@/components/topic-type.vue'
 	import search from '@/components/search.vue'
-	import topicItem from '@/components/topicItem.vue'
+	import topicItem from '@/components/topic-item.vue'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 
 	import {
@@ -123,7 +123,7 @@
 	}
 
 	.topic-list-item-hover {
-		background-color: #eeeeee;
+		background-color: #ffffff;
 	}
 
 	.topic-list {

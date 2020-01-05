@@ -37,8 +37,14 @@ const topicTypes = [{
 	}
 ]
 
+const config = {
+	maxlength: 40,
+	maxDeslength: 200
+}
+
 
 module.exports = {
 	topicTypes,
-	sortTypes
+	sortTypes,
+	config
 }

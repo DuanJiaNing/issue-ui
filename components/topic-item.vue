@@ -16,8 +16,6 @@
 </template>
 
 <script>
-	import config from '../config.js'
-	
 	export default {
 		name: "topic-item",
 		computed: {
@@ -30,7 +28,6 @@
 		},
 		data() {
 			return {
-				color: config.color
 			}
 		}
 	}
@@ -65,7 +62,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		height: 115upx;
+		height: 120upx;
 
 		border-radius: 10upx;
 	}
@@ -73,7 +70,7 @@
 	.topic-content text {
 		lines: 2;
 		color: black;
-		font-size: 28upx;
+		font-size: 30upx;
 
 		display: -webkit-box;
 		-webkit-box-orient: vertical;

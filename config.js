@@ -3,8 +3,8 @@ const color = {
 	primary: '#007AFF',
 	secondary: '#4d8ed7',
 
-	primaryBackground: '#FFFFFF',
-	secondaryBackground: '#f1f1f1',
+	primaryBackground: '#F3F2F7',
+	secondaryBackground: '#ffffff',
 	
 	secondaryText: '#999999',
 	like: '#09BB07',
