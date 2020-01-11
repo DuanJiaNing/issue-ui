@@ -13,7 +13,7 @@
 		</view>
 		<view class="btn-container content">
 			<view>
-				<button class="save-btn" size="mini" hover-class="save-btn-hover">保存</button>
+				<button @click="addTopic" class="save-btn" size="mini" hover-class="save-btn-hover">保存</button>
 			</view>
 		</view>
 		<view class="add-history-container">
@@ -42,7 +42,8 @@
 	import topicService from '@/service/TopicService.js'
 	import toolsService from '@/service/ToolsService.js'
 	import {
-		api
+		api,
+		request
 	} from '@/service/ApiService.js'
 	export default {
 		components: {
@@ -56,6 +57,8 @@
 		},
 		data() {
 			return {
+				newTopicTitle: "",
+				newTopicNotes: "",
 				desInputDisable: true,
 				topicTitleConfig: {
 					maxlength: topicService.config.maxlength,
@@ -71,6 +74,23 @@
 			}
 		},
 		methods: {
+			addTopic() {
+				request({
+					url: api.add_topic.path,
+					method: api.add_topic.method,
+					data: {
+						title: this.newTopicTitle,
+						notes: this.newTopicNotes
+					},
+					success: (res) => {
+						alert("新增成功")
+						console.log(res)
+					},
+					fail: function(err) {
+						console.log(err)
+					}
+				})
+			},
 			loadAddTopicHistory() {
 				// TODO
 				uni.request({
@@ -99,9 +119,11 @@
 				this.desInputDisable = false
 			},
 			topicTitleChanged: function(val) {
+				this.newTopicTitle = val
 				console.log(val)
 			},
 			topicDesChanged: function(val) {
+				this.newTopicNotes = val
 				console.log(val)
 			}
 		}

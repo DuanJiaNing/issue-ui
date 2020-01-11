@@ -1,4 +1,5 @@
 const status = {
+	userUid: "",
 	topicTypeIndex: 0,
 	search: {
 		keyWorld: '',

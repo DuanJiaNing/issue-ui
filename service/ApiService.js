@@ -1,20 +1,34 @@
 // api host
-let host = 'http://123.57.237.176:8079'
+// let host = 'http://123.57.237.176:8079'
+let host = 'http://localhost:8079'
+var StatusService = require('./StatusService.js');
 
 const api = {
-	topic: {
-		add: {
-			path: `${host}/api/topic`,
-			method: "POST"
-		},
-		list: {
-			path: `${host}/api/topic/list`,
-			method: "GET"
+	user_login: {
+		path: `${host}/user/login`,
+		method: 'POST'
+	},
+	add_topic: {
+		path: `${host}/topic/add`,
+		method: "POST"
+	}
+}
+
+function request(obj) {
+	if (obj.header) {
+		obj.header.push({
+			'uid': StatusService.status.userUid
+		})
+	} else {
+		obj.header = {
+			'uid': StatusService.status.userUid
 		}
 	}
+	uni.request(obj)
 }
 
 
 module.exports = {
-	api
+	api,
+	request
 }
