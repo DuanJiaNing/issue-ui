@@ -18,9 +18,9 @@
 				method: api.user_login.method,
 				data: "test_user",
 				success: (res) => {
-					status.userUid = res.data.data
+					status.userUid = res.data.data.uid
+					status.userId = res.data.data.id
 					console.log(res)
-					console.log(status.userUid)
 				},
 				fail: function(err) {
 					console.log(err)
