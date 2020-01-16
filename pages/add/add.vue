@@ -29,6 +29,15 @@
 				</view>
 			</view>
 		</view>
+
+		<block v-if="addTopicHistory.totalNum > addTopicHistory.showNum">
+			<view  class="content add-topic-history-tip-container">
+				<view>仅显示最近添加的{{addTopicHistory.showNum}}条(共{{addTopicHistory.totalNum}}条)，</view>
+				<navigator url="/pages/index/index" open-type="switchTab" hover-class="other-navigator-hover">
+					<view class="show-all-my-topic" hover-class="show-all-my-topic-hover">查看所有 ></view>
+				</navigator>
+			</view>
+		</block>
 	</view>
 </template>
 
@@ -38,7 +47,7 @@
 	import timeTitleItem from '@/components/list-item/time-title-item.vue'
 	import limitedTextInput from '@/components/limited-text-input/limited-text-input.vue'
 	import limitedTextTextarea from '@/components/limited-text-input/limited-text-textarea.vue'
-	
+
 	import topicService from '@/service/TopicService.js'
 	import toolsService from '@/service/ToolsService.js'
 	import {
@@ -60,6 +69,10 @@
 				newTopicTitle: "",
 				newTopicNotes: "",
 				desInputDisable: true,
+				addTopicHistory: {
+					showNum: 8,
+					totalNum: -1,
+				},
 				topicTitleConfig: {
 					maxlength: topicService.config.maxlength,
 					placeholder: "请输入主题"
@@ -83,35 +96,46 @@
 						notes: this.newTopicNotes
 					},
 					success: (res) => {
-						alert("新增成功")
+						if (res.data.code !== 200) {
+							alert(res.data.msg)
+							return
+						}
+						this.newTopicTitle = ''
+						this.newTopicNotes = ''
+						this.loadAddTopicHistory()
+						// alert("新增成功")
 						console.log(res)
 					},
 					fail: function(err) {
-						console.log(err)
+						alert("服务不可用")
 					}
 				})
 			},
 			loadAddTopicHistory() {
 				// TODO
-				uni.request({
-					url: api.topic.list.path,
+				request({
+					url: api.add_topic_history.path,
 					data: {
 						pageNum: 1,
-						pageSize: 8
+						pageSize: this.addTopicHistory.showNum
 					},
-					method: api.topic.list.method,
+					method: api.add_topic_history.method,
 					success: (res) => {
+						if (res.data.code !== 200) {
+							alert(res.data.msg)
+						}
+						this.addTopicHistory.totalNum = res.data.data.total
 						this.data.addTopicHistory = []
 						for (var v of res.data.data.list) {
 							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', v.insertTime)
 							this.data.addTopicHistory.push({
-								insertTime: toolsService.formatDate(ti,'yyyy/MM/dd hh:mm'),
+								insertTime: toolsService.formatDate(ti, 'yyyy/MM/dd hh:mm'),
 								title: v.title
 							})
 						}
 					},
 					fail: function(err) {
-						console.log(err)
+						alert("服务不可用")
 					}
 				})
 			},
@@ -131,6 +155,26 @@
 </script>
 
 <style>
+	.show-all-my-topic-hover{
+		background-color: #999999;
+		color: #FFFFFF;
+	}
+	
+	.show-all-my-topic {
+		padding: 0px 8px;
+		border-width: 1px;
+		border-radius: 10px;
+		border-color: #999999;
+		border-style: solid;
+		font-size: 12upx;
+	}
+	.add-topic-history-tip-container{
+		margin-top: 30upx;
+		color: #999999;
+		display: flex;
+		justify-content: space-between;
+	}
+	
 	.line {
 		margin-left: 30upx;
 		margin-right: 30upx;

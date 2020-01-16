@@ -11,6 +11,10 @@ const api = {
 	add_topic: {
 		path: `${host}/topic/add`,
 		method: "POST"
+	},
+	add_topic_history: {
+		path: `${host}/topic/list/my`,
+		method: "GET"
 	}
 }
 
