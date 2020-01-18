@@ -168,7 +168,7 @@
 		border-radius: 10px;
 		border-color: #999999;
 		border-style: solid;
-		font-size: 12upx;
+		font-size: 20upx;
 	}
 
 	.add-topic-history-tip-container {

@@ -27,7 +27,7 @@
 		},
 		methods: {
 			choiceType(topicTypeIndex) {
-				StatusService.status.topicTypeIndex = topicTypeIndex
+				StatusService.status.search.topicTypeIndex = topicTypeIndex
 				uni.navigateBack({
 					delta:1
 				})

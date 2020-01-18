@@ -6,15 +6,15 @@
 		<view class="statistic-container">
 			<view class="statistic">
 				<view class="stats-item">
-					<uni-icons type="star-filled" size="10" style="color: #54B1F7;"></uni-icons>
+					<uni-icons type="star-filled" size="13" style="color: #54B1F7;"></uni-icons>
 					<text style="color: #54B1F7;">{{item.interestUserCount}}</text>
 				</view>
 				<view class="stats-item">
-					<uni-icons type="checkmarkempty" size="10" style="color: #09BB07;"></uni-icons>
+					<uni-icons type="checkmarkempty" size="20" style="color: #09BB07;"></uni-icons>
 					<text style="color: #09BB07;">{{item.agree}}</text>
 				</view>
 				<view class="stats-item">
-					<uni-icons type="closeempty" size="10" style="color: #EC559E;"></uni-icons>
+					<uni-icons type="closeempty" size="20" style="color: #EC559E;"></uni-icons>
 					<text style="color: #EC559E;">{{item.disagree}}</text>
 				</view>
 			</view>
@@ -62,7 +62,7 @@
 
 	.topic-item-content {
 		/* background-color: #8A6DE9; */
-		height: 150upx;
+		height: 160upx;
 		
 		display: flex;
 		flex-direction: column;
@@ -78,14 +78,14 @@
 		justify-content: space-between;
 		opacity: 0.8;
 		width: 100%;
-		height: 30upx;
+		height: 35upx;
 	}
 
 	.statistic-container text {
 		color: #999999;
 		height: 30upx;
 		line-height: 30upx;
-		font-size: 8upx;
+		font-size: 20upx;
 
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
@@ -96,7 +96,7 @@
 
 	.topic-container {
 		/* background-color: #0A98D5; */
-		height: 120upx;
+		height: 125upx;
 
 		display: flex;
 		flex-direction: row;

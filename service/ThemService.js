@@ -6,22 +6,10 @@ const thems = {
 			secondary: "#84D9CA"
 		}
 	},
-	hot: {
+	interest: {
 		color: {
-			primary: "#F05151",
-			secondary: "#E39D9D"
-		}
-	},
-	cool: {
-		color: {
-			primary: "#24B4F1",
-			secondary: "#9EE2FF"
-		}
-	},
-	latest: {
-		color: {
-			primary: "#DA6565",
-			secondary: "#D29191"
+			primary: "#2182ED",
+			secondary: "#54B1F7"
 		}
 	},
 	my: {
@@ -36,12 +24,8 @@ function topicColor(topicCode) {
 	switch(topicCode) {
 	     case 'all':
 	        return thems.all.color
-		case 'hot':
-	        return thems.hot.color
-		case 'cool':
-	        return thems.cool.color
-		case 'latest':
-	        return thems.latest.color
+		case 'interest':
+	        return thems.interest.color
 		case 'my':
 	        return thems.my.color
 	     default:

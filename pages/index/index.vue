@@ -5,7 +5,7 @@
 		</view>
 
 		<view class="search-wrapper content">
-			<search class="search">
+			<search class="search" v-on:clearKeyWord="clearKeyWord">
 			</search>
 		</view>
 		<view class="topic-list">
@@ -75,21 +75,34 @@
 		},
 		computed: {
 			topicType() {
-				return this.topicTypes[this.status.topicTypeIndex]
+				return this.topicTypes[this.status.search.topicTypeIndex]
 			}
 		},
 		onPullDownRefresh() {
-			this.pullDownRefresh = true
-			this.uniLoadMore.pageNum = 0
-			this.loadTopic();
+			this.refresh(true)
 		},
 		onReachBottom() {
 			this.loadTopic();
+		},
+		onShow() {
+			if (this.status.search.refresh) {
+				this.refresh(true)
+			}
 		},
 		onLoad(option) {
 			this.loadTopic();
 		},
 		methods: {
+			clearKeyWord() {
+				this.refresh(true)
+			},
+			refresh(pullDown) {
+				if (pullDown) {
+					this.pullDownRefresh = true
+				}
+				this.uniLoadMore.pageNum = 0
+				this.loadTopic();
+			},
 			loadTopic() {
 				if (this.uniLoadMore.pageNum === this.uniLoadMore.totalPage) {
 					this.uniLoadMore.status = 'noMore'
@@ -101,7 +114,9 @@
 					url: api.topic_list.path,
 					data: {
 						pageNum: this.uniLoadMore.pageNum++,
-						pageSize: 20
+						pageSize: 4,
+						keyWord: this.status.search.keyWord,
+						keyWordType: this.status.search.keyWordType
 					},
 					method: api.topic_list.method,
 					success: (res) => {
@@ -114,13 +129,18 @@
 							uni.stopPullDownRefresh()
 							this.pullDownRefresh = false
 						}
-						this.uniLoadMore.totalPage = res.data.data.pages
-						res.data.data.list.forEach(e => {
-							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', e.insertTime)
-							e.insertTime = toolsService.formatDate(ti, 'yy/MM/dd hh:mm')
-							this.data.topics.push(e);
-						});
-						this.uniLoadMore.status = 'more'
+						if (res.data.data.list !== undefined) {
+							this.uniLoadMore.totalPage = res.data.data.pages
+							res.data.data.list.forEach(e => {
+								var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', e.insertTime)
+								e.insertTime = toolsService.formatDate(ti, 'yy/MM/dd hh:mm')
+								this.data.topics.push(e);
+							});
+							this.uniLoadMore.status = 'more'
+						} else {
+							this.uniLoadMore.status = 'noMore'
+						}
+
 					},
 					fail: function(err) {
 						console.log(err)

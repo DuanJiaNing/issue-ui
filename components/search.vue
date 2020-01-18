@@ -41,13 +41,13 @@
 		},
 		computed: {
 			sortShow() {
-				return this.topicTypes[this.status.topicTypeIndex].code === 'all'
+				return this.topicTypes[this.status.search.topicTypeIndex].code === 'all'
 			},
 			sortTypeName() {
 				return this.sortTypes[this.status.search.sortTypeIndex].name
 			},
 			searchKeyWord() {
-				return this.status.search.keyWorld === '' ? '搜索' : this.status.search.keyWorld
+				return this.status.search.keyWord === '' ? '搜索' : this.status.search.keyWord
 			},
 			canClear() {
 				return this.searchKeyWord !== '搜索'
@@ -75,7 +75,8 @@
 				})
 			},
 			clearSearchKeyWord() {
-				this.status.search.keyWorld = ''
+				this.status.search.keyWord = ''
+				this.$emit('clearKeyWord')
 			}
 		}
 	}

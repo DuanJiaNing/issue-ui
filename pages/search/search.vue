@@ -10,13 +10,15 @@
 	export default {
 		data() {
 			return {
-				keyWord: status.search.keyWorld
+				keyWord: status.search.keyWord
 			}
 		},
 		methods: {
 			doSearch(e) {
+				var oldkw = status.search.keyWord
 				let content = e.target.value.trim()
-				status.search.keyWorld = content
+				status.search.keyWord = content
+				status.search.refresh = oldkw != content
 				uni.navigateBack({
 					delta:1
 				})
