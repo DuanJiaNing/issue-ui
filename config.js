@@ -7,8 +7,8 @@ const color = {
 	secondaryBackground: '#FFFFFF',
 	
 	secondaryText: '#999999',
-	like: '#09BB07',
-	dislike: '#EC559E',
+	agree: '#09BB07',
+	disagre: '#EC559E',
 	
 	hover: '#eeeeee'
 }

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<limited-text-input @valueChanged="topicTitleChanged" :config="topicTitleConfig"></limited-text-input>
+		<limited-text-input ref="topicTitle" @valueChanged="topicTitleChanged" :config="topicTitleConfig"></limited-text-input>
 		<view class="desc-input-container">
 			<block v-if="desInputDisable">
 				<view @click="hideDescInput" class="content" style="color: #999999;">
@@ -8,7 +8,7 @@
 				</view>
 			</block>
 			<block v-else>
-				<limited-text-textarea @valueChanged="topicDesChanged" :config="topicDesConfig"></limited-text-textarea>
+				<limited-text-textarea ref="topicDes" @valueChanged="topicDesChanged" :config="topicDesConfig"></limited-text-textarea>
 			</block>
 		</view>
 		<view class="btn-container content">
@@ -31,7 +31,7 @@
 		</view>
 
 		<block v-if="addTopicHistory.totalNum > addTopicHistory.showNum">
-			<view  class="content add-topic-history-tip-container">
+			<view class="content add-topic-history-tip-container">
 				<view>仅显示最近添加的{{addTopicHistory.showNum}}条(共{{addTopicHistory.totalNum}}条)，</view>
 				<navigator url="/pages/index/index" open-type="switchTab" hover-class="other-navigator-hover">
 					<view class="show-all-my-topic" hover-class="show-all-my-topic-hover">查看所有 ></view>
@@ -97,22 +97,22 @@
 					},
 					success: (res) => {
 						if (res.data.code !== 200) {
-							alert(res.data.msg)
+							toolsService.showErrorToast('保存失败: ' + res.data.msg)
 							return
 						}
-						this.newTopicTitle = ''
-						this.newTopicNotes = ''
+						this.$refs.topicTitle.clearValue()
+						if (this.$refs.topicDes !== undefined) {
+							this.$refs.topicDes.clearValue()
+						}
 						this.loadAddTopicHistory()
-						// alert("新增成功")
-						console.log(res)
+						toolsService.showSuccessToast('保存成功')
 					},
 					fail: function(err) {
-						alert("服务不可用")
+						toolsService.showServerUnavlibleToast()
 					}
 				})
 			},
 			loadAddTopicHistory() {
-				// TODO
 				request({
 					url: api.add_topic_history.path,
 					data: {
@@ -122,20 +122,22 @@
 					method: api.add_topic_history.method,
 					success: (res) => {
 						if (res.data.code !== 200) {
-							alert(res.data.msg)
+							toolsService.showErrorToast('加载添加历史失败: ' + res.data.msg)
+							return
 						}
 						this.addTopicHistory.totalNum = res.data.data.total
 						this.data.addTopicHistory = []
 						for (var v of res.data.data.list) {
 							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', v.insertTime)
 							this.data.addTopicHistory.push({
-								insertTime: toolsService.formatDate(ti, 'yyyy/MM/dd hh:mm'),
+								insertTime: toolsService.formatDate(ti, 'MM/dd hh:mm'),
 								title: v.title
 							})
 						}
 					},
 					fail: function(err) {
-						alert("服务不可用")
+						console.log(err)
+						toolsService.showServerUnavlibleToast()
 					}
 				})
 			},
@@ -155,11 +157,11 @@
 </script>
 
 <style>
-	.show-all-my-topic-hover{
+	.show-all-my-topic-hover {
 		background-color: #999999;
 		color: #FFFFFF;
 	}
-	
+
 	.show-all-my-topic {
 		padding: 0px 8px;
 		border-width: 1px;
@@ -168,13 +170,14 @@
 		border-style: solid;
 		font-size: 12upx;
 	}
-	.add-topic-history-tip-container{
+
+	.add-topic-history-tip-container {
 		margin-top: 30upx;
 		color: #999999;
 		display: flex;
 		justify-content: space-between;
 	}
-	
+
 	.line {
 		margin-left: 30upx;
 		margin-right: 30upx;

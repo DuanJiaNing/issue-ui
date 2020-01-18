@@ -69,7 +69,35 @@ function parseByFormat(format, string) {
 	);
 }
 
+function showServerUnavlibleToast() {
+	uni.showToast({
+		mask: true,
+		icon: 'none',
+		title: '服务不可用'
+	})
+}
+
+function showSuccessToast(msg) {
+	uni.showToast({
+		icon: 'success',
+		mask: true,
+		title: msg
+	})
+}
+
+function showErrorToast(msg) {
+	uni.showToast({
+		icon: 'none',
+		mask: true,
+		title: msg
+	})
+}
+
 module.exports = {
 	formatDate,
-	parseByFormat
+	parseByFormat,
+	
+	showServerUnavlibleToast,
+	showSuccessToast,
+	showErrorToast
 }

@@ -29,6 +29,11 @@
 				required: false
 			}
 		},
+		methods: {
+			clearValue() {
+				this.inputContent = ''
+			}
+		}
 	}
 </script>
 

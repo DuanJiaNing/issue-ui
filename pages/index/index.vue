@@ -9,13 +9,18 @@
 			</search>
 		</view>
 		<view class="topic-list">
-			<view v-for="(item, index) in data.topics.list" :key="index" class="topic-list-item" hover-class="topic-list-item-hover">
+			<view v-for="(item, index) in data.topics" :key="index" class="topic-list-item" hover-class="topic-list-item-hover">
 				<topic-item :item="item"></topic-item>
-				<block v-if="index < data.topics.list.length - 1">
+				<block v-if="index < data.topics.length - 1">
 					<view class="hr"></view>
 				</block>
+				<block v-else>
+					<view style="height: 30upx;"></view>
+				</block>
 			</view>
-			<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+			<view @click="loadTopic">
+				<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+			</view>
 		</view>
 
 	</view>
@@ -26,9 +31,10 @@
 	import topicType from '@/components/topic-type.vue'
 	import search from '@/components/search.vue'
 	import topicItem from '@/components/topic-item.vue'
-	
+
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	
+
+	import toolsService from '@/service/ToolsService.js'
 	import {
 		topicTypes
 	} from '@/service/TopicService.js'
@@ -36,7 +42,8 @@
 		status
 	} from '@/service/StatusService.js'
 	import {
-		api
+		api,
+		request
 	} from '@/service/ApiService.js'
 
 	export default {
@@ -48,18 +55,15 @@
 		},
 		data() {
 			return {
-				fabPattern: {
-					color: '#7A7E83',
-					backgroundColor: '#fff',
-					selectedColor: '#007AFF',
-					buttonColor: '#007AFF'
-				},
+				pullDownRefresh: false,
 				uniLoadMore: {
+					pageNum: 0,
+					totalPage: -1,
 					status: 'more',
 					contentText: {
-						contentdown: '上拉加载更多',
+						contentdown: '加载更多',
 						contentrefresh: '加载中',
-						contentnomore: '没有更多'
+						contentnomore: '到底啦'
 					}
 				},
 				data: {
@@ -75,34 +79,56 @@
 			}
 		},
 		onPullDownRefresh() {
-			// TODO
-			// uni.stopPullDownRefresh();
-			console.log("onPullDownRefresh")
-
+			this.pullDownRefresh = true
+			this.uniLoadMore.pageNum = 0
+			this.loadTopic();
 		},
 		onReachBottom() {
-			// TODO
-			console.log("onReachBottom")
+			this.loadTopic();
 		},
 		onLoad(option) {
 			this.loadTopic();
 		},
 		methods: {
 			loadTopic() {
-				uni.request({
-					url: api.topic.list.path,
+				if (this.uniLoadMore.pageNum === this.uniLoadMore.totalPage) {
+					this.uniLoadMore.status = 'noMore'
+					return
+				} else {
+					this.uniLoadMore.status = 'loading'
+				}
+				request({
+					url: api.topic_list.path,
 					data: {
-						pageNum: 1,
+						pageNum: this.uniLoadMore.pageNum++,
 						pageSize: 20
 					},
-					method: api.topic.list.method,
+					method: api.topic_list.method,
 					success: (res) => {
-						this.data.topics = res.data.data
-						console.log(res.data.data)
-						console.log(res)
+						if (res.data.code !== 200) {
+							toolsService.showErrorToast('加载失败: ' + res.data.msg)
+							return
+						}
+						if (this.pullDownRefresh) {
+							this.data.topics = []
+							uni.stopPullDownRefresh()
+							this.pullDownRefresh = false
+						}
+						this.uniLoadMore.totalPage = res.data.data.pages
+						res.data.data.list.forEach(e => {
+							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', e.insertTime)
+							e.insertTime = toolsService.formatDate(ti, 'yy/MM/dd hh:mm')
+							this.data.topics.push(e);
+						});
+						this.uniLoadMore.status = 'more'
 					},
 					fail: function(err) {
 						console.log(err)
+						toolsService.showServerUnavlibleToast()
+						if (this.pullDownRefresh) {
+							uni.stopPullDownRefresh()
+							this.pullDownRefresh = false
+						}
 					}
 				})
 			},
