@@ -1,7 +1,9 @@
 // api host
 let host = 'http://123.57.237.176:8079'
 // let host = 'http://localhost:8079'
+
 var StatusService = require('./StatusService.js');
+var ToolsService = require('./ToolsService.js');
 
 const api = {
 	user_login: {
@@ -16,9 +18,25 @@ const api = {
 		path: `${host}/topic/list/my/history`,
 		method: "GET"
 	},
+	my_interest_topic_list: {
+		path: `${host}/topic/list/my/interest`,
+		method: "GET"
+	},
+	my_topic_list: {
+		path: `${host}/topic/list/my`,
+		method: "GET"
+	},
 	topic_list: {
 		path: `${host}/topic/list`,
 		method: "GET"
+	},
+	search_history: {
+		path: `${host}/search/history`,
+		method: "GET"
+	},
+	add_search_history: {
+		path: `${host}/search`,
+		method: "POST"
 	}
 }
 
@@ -35,8 +53,30 @@ function request(obj) {
 	uni.request(obj)
 }
 
+function login(user) {
+	StatusService.status.loginUser = user
+	request({
+		url: api.user_login.path,
+		method: api.user_login.method,
+		data: user,
+		success: (res) => {
+			StatusService.status.userUid = res.data.data.uid
+			StatusService.status.userId = res.data.data.id
+
+			ToolsService.showSuccessToast(user + ' 自动登陆成功')
+		},
+		fail: function(err) {
+			ToolsService.showErrorToast(user + ' 登陆失败')
+		}
+	})
+}
+
 
 module.exports = {
 	api,
-	request
+	request,
+	login,
+	
+	host
+	
 }

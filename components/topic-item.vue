@@ -6,16 +6,16 @@
 		<view class="statistic-container">
 			<view class="statistic">
 				<view class="stats-item">
-					<uni-icons type="star-filled" size="13" style="color: #54B1F7;"></uni-icons>
-					<text style="color: #54B1F7;">{{item.interestUserCount}}</text>
+					<!-- <uni-icons type="star-filled" size="13" style="color: #54B1F7;"></uni-icons> -->
+					<text style="color: #54B1F7;">{{item.interestUserCount}}关注</text>
 				</view>
 				<view class="stats-item">
-					<uni-icons type="checkmarkempty" size="20" style="color: #09BB07;"></uni-icons>
-					<text style="color: #09BB07;">{{item.agree}}</text>
+					<!-- <uni-icons type="checkmarkempty" size="20" style="color: #09BB07;"></uni-icons> -->
+					<text style="color: #09BB07;">{{item.agree}}赞同</text>
 				</view>
 				<view class="stats-item">
-					<uni-icons type="closeempty" size="20" style="color: #EC559E;"></uni-icons>
-					<text style="color: #EC559E;">{{item.disagree}}</text>
+					<!-- <uni-icons type="closeempty" size="20" style="color: #EC559E;"></uni-icons> -->
+					<text style="color: #EC559E;">{{item.disagree}}反对</text>
 				</view>
 			</view>
 			<view>

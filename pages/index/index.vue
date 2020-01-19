@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="content" @click="switchTopicType">
+		<view class="content" @click="switchTopicType" @longpress="switchUser">
 			<topic-type class="topic-type" :topicType="topicType"></topic-type>
 		</view>
 
@@ -34,6 +34,9 @@
 
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 
+	import {
+		testUser
+	} from '../../config.js'
 	import toolsService from '@/service/ToolsService.js'
 	import {
 		topicTypes
@@ -43,7 +46,8 @@
 	} from '@/service/StatusService.js'
 	import {
 		api,
-		request
+		request,
+		login
 	} from '@/service/ApiService.js'
 
 	export default {
@@ -79,29 +83,58 @@
 			}
 		},
 		onPullDownRefresh() {
-			this.refresh(true)
+			this.pullDownRefresh = true
+			this.status.search.keyWord = ''
+			this.status.search.keyWordType = 1
+			this.uniLoadMore.pageNum = 0
+			this.loadTopic()
 		},
 		onReachBottom() {
 			this.loadTopic();
 		},
 		onShow() {
-			if (this.status.search.refresh) {
-				this.refresh(true)
+			if (this.status.search.refreshType !== undefined && this.status.search.refreshType != 0) {
+				if (this.status.search.refreshType !== 3) {
+					this.status.search.keyWord = ''
+					this.status.search.keyWordType = 1
+				}
+				this.uniLoadMore.pageNum = 0
+				this.loadTopic()
 			}
 		},
 		onLoad(option) {
 			this.loadTopic();
 		},
 		methods: {
-			clearKeyWord() {
-				this.refresh(true)
+			// TODO 开发专用
+			switchUser() {
+				uni.showActionSheet({
+					title: '请选择测试用户',
+					itemList: testUser,
+					success: (e) => {
+						login(testUser[e.tapIndex])
+						uni.startPullDownRefresh()
+					}
+				})
 			},
-			refresh(pullDown) {
-				if (pullDown) {
-					this.pullDownRefresh = true
-				}
+			clearKeyWord() {
+				this.status.search.keyWord = ''
+				this.status.search.keyWordType = 1
 				this.uniLoadMore.pageNum = 0
-				this.loadTopic();
+				this.status.search.refreshType = 3
+				this.loadTopic()
+			},
+			decideTopicTypeDataUrl() {
+				switch (this.status.search.topicTypeIndex) {
+					case 0:
+						return api.topic_list.path;
+					case 1:
+						return api.my_interest_topic_list.path;
+					case 2:
+						return api.my_topic_list.path;
+					default:
+						return api.topic_list.path;
+				}
 			},
 			loadTopic() {
 				if (this.uniLoadMore.pageNum === this.uniLoadMore.totalPage) {
@@ -111,24 +144,31 @@
 					this.uniLoadMore.status = 'loading'
 				}
 				request({
-					url: api.topic_list.path,
+					url: this.decideTopicTypeDataUrl(),
 					data: {
-						pageNum: this.uniLoadMore.pageNum++,
+						pageNum: ++this.uniLoadMore.pageNum,
 						pageSize: 4,
 						keyWord: this.status.search.keyWord,
 						keyWordType: this.status.search.keyWordType
 					},
-					method: api.topic_list.method,
+					method: "GET",
 					success: (res) => {
-						if (res.data.code !== 200) {
+						if (res.data.code !== 0) {
 							toolsService.showErrorToast('加载失败: ' + res.data.msg)
 							return
 						}
+
 						if (this.pullDownRefresh) {
-							this.data.topics = []
 							uni.stopPullDownRefresh()
+							this.data.topics = []
 							this.pullDownRefresh = false
 						}
+
+						if (this.status.search.refreshType != 0) {
+							this.data.topics = []
+							this.status.search.refreshType = 0
+						}
+
 						if (res.data.data.list !== undefined) {
 							this.uniLoadMore.totalPage = res.data.data.pages
 							res.data.data.list.forEach(e => {

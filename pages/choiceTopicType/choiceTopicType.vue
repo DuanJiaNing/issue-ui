@@ -23,11 +23,14 @@
 			}
 		},
 		onLoad() {
-			console.log(StatusService.status)
 		},
 		methods: {
 			choiceType(topicTypeIndex) {
-				StatusService.status.search.topicTypeIndex = topicTypeIndex
+				var oldIndex = StatusService.status.search.topicTypeIndex
+				if (oldIndex != topicTypeIndex) {
+					StatusService.status.search.refreshType = 2
+					StatusService.status.search.topicTypeIndex = topicTypeIndex
+				}
 				uni.navigateBack({
 					delta:1
 				})

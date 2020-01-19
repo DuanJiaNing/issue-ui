@@ -2,30 +2,15 @@
 	import pageAnimation from './components/page-animation'
 
 	import {
-		status
-	} from '@/service/StatusService.js'
-	import {
-		api,
-		request
+		login
 	} from '@/service/ApiService.js'
+	import config from 'config.js'
 
 	export default {
 		mixins: [pageAnimation],
 		onLaunch: function() {
 			console.log('App Launch')
-			request({
-				url: api.user_login.path,
-				method: api.user_login.method,
-				data: "test_user",
-				success: (res) => {
-					status.userUid = res.data.data.uid
-					status.userId = res.data.data.id
-					console.log(res)
-				},
-				fail: function(err) {
-					console.log(err)
-				}
-			})
+			login(config.testUser[0])
 		},
 		onShow: function() {
 			console.log('App Show')

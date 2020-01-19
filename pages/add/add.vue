@@ -30,14 +30,14 @@
 			</view>
 		</view>
 
-		<block v-if="addTopicHistory.totalNum > addTopicHistory.showNum">
-			<view class="content add-topic-history-tip-container">
+		<view class="content add-topic-history-tip-container">
+			<block v-if="addTopicHistory.totalNum > addTopicHistory.showNum">
 				<view>仅显示最近添加的{{addTopicHistory.showNum}}条(共{{addTopicHistory.totalNum}}条)，</view>
-				<navigator url="/pages/index/index" open-type="switchTab" hover-class="other-navigator-hover">
-					<view class="show-all-my-topic" hover-class="show-all-my-topic-hover">查看所有 ></view>
-				</navigator>
-			</view>
-		</block>
+			</block>
+			<block v-if="addTopicHistory.totalNum > 0">
+				<view @click="showMyTopic" class="show-all-my-topic" hover-class="show-all-my-topic-hover">查看所有 ></view>
+			</block>
+		</view>
 	</view>
 </template>
 
@@ -51,6 +51,9 @@
 	import topicService from '@/service/TopicService.js'
 	import toolsService from '@/service/ToolsService.js'
 	import {
+		status
+	} from '@/service/StatusService.js'
+	import {
 		api,
 		request
 	} from '@/service/ApiService.js'
@@ -61,7 +64,7 @@
 			uniIcons,
 			timeTitleItem
 		},
-		onLoad(option) {
+		onShow() {
 			this.loadAddTopicHistory();
 		},
 		data() {
@@ -87,6 +90,13 @@
 			}
 		},
 		methods: {
+			showMyTopic() {
+				status.search.topicTypeIndex = 2
+				status.search.refreshType = 2
+				uni.switchTab({ 
+					url: '/pages/index/index',
+				})
+			},
 			addTopic() {
 				request({
 					url: api.add_topic.path,
@@ -96,7 +106,7 @@
 						notes: this.newTopicNotes
 					},
 					success: (res) => {
-						if (res.data.code !== 200) {
+						if (res.data.code !== 0) {
 							toolsService.showErrorToast('保存失败: ' + res.data.msg)
 							return
 						}
@@ -105,6 +115,7 @@
 							this.$refs.topicDes.clearValue()
 						}
 						this.loadAddTopicHistory()
+						status.search.refresh = 1
 						toolsService.showSuccessToast('保存成功')
 					},
 					fail: function(err) {
@@ -121,7 +132,7 @@
 					},
 					method: api.add_topic_history.method,
 					success: (res) => {
-						if (res.data.code !== 200) {
+						if (res.data.code !== 0) {
 							toolsService.showErrorToast('加载添加历史失败: ' + res.data.msg)
 							return
 						}
