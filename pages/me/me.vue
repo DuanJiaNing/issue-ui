@@ -3,7 +3,7 @@
 		<text>host: {{host}}</text>
 		
 		<br>
-		<text>{{status}}</text>
+		<text>{{statusStr}}</text>
 	</view>
 </template>
 
@@ -16,8 +16,12 @@
 	export default {
 		data() {
 			return {
-				status: status,
 				host: ApiService.host
+			}
+		},
+		computed: {
+			statusStr() {
+				return JSON.stringify(status)
 			}
 		},
 		methods: {

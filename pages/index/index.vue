@@ -147,7 +147,7 @@
 					url: this.decideTopicTypeDataUrl(),
 					data: {
 						pageNum: ++this.uniLoadMore.pageNum,
-						pageSize: 4,
+						pageSize: 10,
 						keyWord: this.status.search.keyWord,
 						keyWordType: this.status.search.keyWordType
 					},
