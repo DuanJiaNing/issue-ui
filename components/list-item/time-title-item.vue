@@ -32,7 +32,7 @@
 		/* width: 30%; */
 		text-align: center;
 		vertical-align: middle;
-		min-width: 130upx;
+		min-width: 140upx;
 		
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -41,6 +41,7 @@
 	}
 
 	.title {
+		color: #ffffff;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		-ms-text-overflow: ellipsis;

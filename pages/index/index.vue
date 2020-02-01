@@ -8,14 +8,14 @@
 		</view>
 
 		<view class="search-wrapper content">
-			<search class="search" v-on:clearKeyWord="clearKeyWord">
+			<search v-on:clearKeyWord="clearKeyWord">
 			</search>
 		</view>
 
 		<view class="topic-list">
 			<view class="topic-list-bg colorful-stripe"></view>
 			<view class="topics">
-				<view v-for="(item, index) in data.topics" :key="index" class="topic-item">
+				<view v-for="(item, index) in data.topics" :key="index" class="topic-item" hover-class="topic-item-hover">
 					<topic-item :item="item"></topic-item>
 					<block v-if="index < data.topics.length - 1">
 					</block>
@@ -231,11 +231,16 @@
 		margin-bottom: 12%;
 	}
 	
+	.topic-item-hover {
+		/* background-color: #007AFF; */
+	}
+	
 	.topic-item {
 		margin-top: 50upx;
 	}
 
 	.topic-type {
+		margin-top: 30upx;
 		height: 100upx;
 		line-height: 100upx;
 		font-size: 60upx;

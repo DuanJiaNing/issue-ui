@@ -48,7 +48,7 @@
 			},
 			color: {
 				type: String,
-				default: '#777777'
+				default: '#ffffff'
 			},
 			contentText: {
 				type: Object,

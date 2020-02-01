@@ -99,8 +99,8 @@
 
 	.search-content {
 		color: #999999;
-		border-radius: 25upx;
-		padding: 10upx 20upx;
+		border-radius: 30upx;
+		padding: 8upx 25upx;
 		background-color: #ffffff;
 		display: flex;
 		flex-direction: row-reverse;

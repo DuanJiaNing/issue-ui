@@ -57,7 +57,8 @@
 	.limited-text-input-content {
 		padding-top: 10upx;
 		padding-bottom: 10upx;
-		background-color: #ffffff;
+		color: #ffffff;
+		background-color: #363636;
 	}
 	
 </style>

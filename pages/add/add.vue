@@ -1,6 +1,8 @@
 <template>
-	<view>
-		<limited-text-input ref="topicTitle" @valueChanged="topicTitleChanged" :config="topicTitleConfig"></limited-text-input>
+	<view style="padding-bottom: 100upx;">
+		<view style="margin-top: 30upx;">
+			<limited-text-input ref="topicTitle" @valueChanged="topicTitleChanged" :config="topicTitleConfig"></limited-text-input>
+		</view>
 		<view class="desc-input-container">
 			<block v-if="desInputDisable">
 				<view @click="hideDescInput" class="content" style="color: #999999;">
@@ -13,7 +15,7 @@
 		</view>
 		<view class="btn-container content">
 			<view>
-				<button @click="addTopic" class="save-btn" size="mini" hover-class="save-btn-hover">保存</button>
+				<button @click="addTopic" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
 			</view>
 		</view>
 		<view class="add-history-container">
@@ -93,7 +95,7 @@
 			showMyTopic() {
 				status.search.topicTypeIndex = 2
 				status.search.refreshType = 2
-				uni.switchTab({ 
+				uni.switchTab({
 					url: '/pages/index/index',
 				})
 			},
@@ -168,12 +170,41 @@
 </script>
 
 <style>
+	/* colorful-stripe start*/
+	.colorful-stripe {
+		background:
+			linear-gradient(#54B1F7, transparent),
+			linear-gradient(90deg, #09BB07, transparent),
+			linear-gradient(-90deg, #EC559E, transparent);
+		background-blend-mode: screen;
+		-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
+		animation: colorfulStripeChange 5s infinite alternate linear;
+	}
+
+	@-webkit-keyframes colorfulStripeChange {
+		100% {
+			-webkit-filter: hue-rotate(360deg);
+			filter: hue-rotate(360deg);
+		}
+	}
+
+	@keyframes colorfulStripeChange {
+		100% {
+			-webkit-filter: hue-rotate(360deg);
+			filter: hue-rotate(360deg);
+		}
+	}
+
+	/* colorful-stripe end*/
 	.show-all-my-topic-hover {
 		background-color: #999999;
 		color: #FFFFFF;
 	}
 
 	.show-all-my-topic {
+		height: 50upx;
+		line-height: 50upx;
+
 		padding: 0px 8px;
 		border-width: 1px;
 		border-radius: 10px;
@@ -195,11 +226,11 @@
 	}
 
 	.add-topic-history-list-item {
-		background-color: #ffffff;
+		background-color: #363636;
 	}
 
 	.add-topic-history-list-item-hover {
-		background-color: #f1f1f1;
+		background-color: #464646;
 	}
 
 	.desc-input-container {
@@ -207,6 +238,7 @@
 	}
 
 	.btn-container {
+		margin-top: 30upx;
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
@@ -214,13 +246,10 @@
 
 	.save-btn {
 		color: #ffffff;
-		background-color: #09BB07;
-		margin-top: 30upx;
-		width: 150upx;
 	}
 
 	.save-btn-hover {
-		background-color: #058D05;
+		opacity: 0.5;
 	}
 
 	.add-history-container {
