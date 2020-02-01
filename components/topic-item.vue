@@ -61,7 +61,11 @@
 	}
 
 	.topic-item-content {
-		/* background-color: #8A6DE9; */
+		padding: 30upx;
+		border-top-left-radius: 5px;
+		box-shadow: 0 0 10px #646464;
+		
+		background-color: #ffffff;
 		height: 160upx;
 		
 		display: flex;

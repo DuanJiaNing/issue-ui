@@ -7,7 +7,9 @@
 page {
 	font-family: sanhucyyuan;
 	letter-spacing: 1px;
-	background-color: #F4F5FA;
+	/* background: linear-gradient(#000000, #3e3e3e, #636363); */
+	/* background-color: #F4F5FA; */
+	background-color: #000000;
 }
 
 .content {

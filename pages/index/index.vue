@@ -1,38 +1,43 @@
 <template>
 	<view>
-		<view class="content" @click="switchTopicType" @longpress="switchUser">
-			<topic-type class="topic-type" :topicType="topicType"></topic-type>
+		<view class="content topic-type" @click="switchTopicType" @longpress="switchUser">
+			<uni-icons type="arrowdown" size="20" color="#ffffff"></uni-icons>
+			<text style="color: #ffffff;">
+				{{topicType.name}}
+			</text>
 		</view>
 
 		<view class="search-wrapper content">
 			<search class="search" v-on:clearKeyWord="clearKeyWord">
 			</search>
 		</view>
+
 		<view class="topic-list">
-			<view v-for="(item, index) in data.topics" :key="index" class="topic-list-item" hover-class="topic-list-item-hover">
-				<topic-item :item="item"></topic-item>
-				<block v-if="index < data.topics.length - 1">
-					<view class="hr"></view>
-				</block>
-				<block v-else>
-					<view style="height: 30upx;"></view>
-				</block>
-			</view>
-			<view @click="loadTopic">
-				<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+			<view class="topic-list-bg colorful-stripe"></view>
+			<view class="topics">
+				<view v-for="(item, index) in data.topics" :key="index" class="topic-item">
+					<topic-item :item="item"></topic-item>
+					<block v-if="index < data.topics.length - 1">
+					</block>
+					<block v-else>
+						<view style="height: 30upx;"></view>
+					</block>
+				</view>
+				<view @click="loadTopic">
+					<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+				</view>
 			</view>
 		</view>
-
 	</view>
 </template>
 
 <script>
 	// 微信直接放在component上的style会增加换行
-	import topicType from '@/components/topic-type.vue'
 	import search from '@/components/search.vue'
 	import topicItem from '@/components/topic-item.vue'
 
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
 	import {
 		testUser
@@ -52,10 +57,10 @@
 
 	export default {
 		components: {
-			topicType,
 			search,
 			topicItem,
-			uniLoadMore
+			uniLoadMore,
+			uniIcons
 		},
 		data() {
 			return {
@@ -208,22 +213,64 @@
 </script>
 
 <style scoped>
+	.topic-list-bg {
+		position: fixed;
+		width: 82%;
+		height: 100%;
+		margin-left: 6%;
+		margin-right: 12%;
+		margin-top: 100upx;
+	}
+
+	.topic-list {}
+
+	.topics {
+		position: absolute;
+		width: 82%;
+		margin-left: 12%;
+		margin-bottom: 12%;
+	}
+	
+	.topic-item {
+		margin-top: 50upx;
+	}
+
+	.topic-type {
+		height: 100upx;
+		line-height: 100upx;
+		font-size: 60upx;
+	}
+
+	/* colorful-stripe start*/
+	.colorful-stripe {
+		background:
+			linear-gradient(#54B1F7, transparent),
+			linear-gradient(90deg, #09BB07, transparent),
+			linear-gradient(-90deg, #EC559E, transparent);
+		background-blend-mode: screen;
+		-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
+		animation: colorfulStripeChange 5s infinite alternate linear;
+	}
+
+	@-webkit-keyframes colorfulStripeChange {
+		100% {
+			-webkit-filter: hue-rotate(360deg);
+			filter: hue-rotate(360deg);
+		}
+	}
+
+	@keyframes colorfulStripeChange {
+		100% {
+			-webkit-filter: hue-rotate(360deg);
+			filter: hue-rotate(360deg);
+		}
+	}
+
+	/* colorful-stripe end*/
 	.search-wrapper {
+		margin-left: 30upx;
+		margin-right: 30upx;
 		margin-top: 20upx;
 	}
 
-	.topic-list-item {
-		background-color: #ffffff;
-		padding-left: 40upx;
-		padding-right: 45upx;
-	}
-
-	.topic-list-item-hover {
-		background-color: #F4F5FA;
-	}
-
-	.topic-list {
-		margin-top: 50upx;
-		margin-bottom: 50px;
-	}
 </style>

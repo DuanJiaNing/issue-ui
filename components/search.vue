@@ -19,14 +19,18 @@
 			<text class="key-word" @click="gotoSearch()">{{searchKeyWord}}</text>
 		</view>
 	</view>
-	</view>
 </template>
 
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
-	import {topicTypes,sortTypes} from '@/service/TopicService.js'
-	import {status} from '@/service/StatusService.js'
+	import {
+		topicTypes,
+		sortTypes
+	} from '@/service/TopicService.js'
+	import {
+		status
+	} from '@/service/StatusService.js'
 
 	export default {
 		components: {

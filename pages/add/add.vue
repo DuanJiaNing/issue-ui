@@ -4,7 +4,7 @@
 		<view class="desc-input-container">
 			<block v-if="desInputDisable">
 				<view @click="hideDescInput" class="content" style="color: #999999;">
-					<uni-icons type="plusempty" size="20" color="#999999"></uni-icons>对主体进行说明（可选）
+					<uni-icons type="plusempty" size="20" color="#999999"></uni-icons>对主题进行说明（可选）
 				</view>
 			</block>
 			<block v-else>

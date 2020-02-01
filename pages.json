@@ -42,13 +42,13 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#F4F5FA"
+		"navigationBarBackgroundColor": "#000000"
 	},
 	"tabBar": {
 		"color": "#999999",
 		"selectedColor": "#2182ED",
-		"borderStyle": "black",
-		"backgroundColor": "#F4F5FA",
+		"borderStyle": "white",
+		"backgroundColor": "#000000",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"iconPath": "static/home.png",
