@@ -165,6 +165,6 @@
 		padding-left: 10px;
 		line-height: 32px;
 		font-size: 14px;
-		color: #333;
+		color: #999999;
 	}
 </style>

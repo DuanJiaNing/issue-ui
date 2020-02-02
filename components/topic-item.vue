@@ -9,7 +9,7 @@
 					<text style="color: #54B1F7;">{{item.interestUserCount}} 关注</text>
 				</view>
 				<view class="stats-item">
-					<text>{{item.disagree}}+{{item.agree}} 次投票</text>
+					<text>{{item.disagree+item.agree}} 次投票</text>
 				</view>
 			</view>
 			<view>

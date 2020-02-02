@@ -110,6 +110,20 @@
 		onLoad(option) {
 			this.loadTopic();
 		},
+		onNavigationBarButtonTap(e) {
+			if (e.index === 1) { // me
+				uni.navigateTo({
+					url: '/pages/me/me'
+				});
+				return
+			}
+			if (e.index === 0) { // add
+				uni.navigateTo({
+					url: '/pages/add/add'
+				});
+				return
+			}
+		},
 		methods: {
 			// TODO 开发专用
 			switchUser() {
@@ -230,11 +244,11 @@
 		margin-left: 12%;
 		margin-bottom: 12%;
 	}
-	
+
 	.topic-item-hover {
 		/* background-color: #007AFF; */
 	}
-	
+
 	.topic-item {
 		margin-top: 50upx;
 	}
@@ -246,36 +260,9 @@
 		font-size: 60upx;
 	}
 
-	/* colorful-stripe start*/
-	.colorful-stripe {
-		background:
-			linear-gradient(#54B1F7, transparent),
-			linear-gradient(90deg, #09BB07, transparent),
-			linear-gradient(-90deg, #EC559E, transparent);
-		background-blend-mode: screen;
-		-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
-		animation: colorfulStripeChange 5s infinite alternate linear;
-	}
-
-	@-webkit-keyframes colorfulStripeChange {
-		100% {
-			-webkit-filter: hue-rotate(360deg);
-			filter: hue-rotate(360deg);
-		}
-	}
-
-	@keyframes colorfulStripeChange {
-		100% {
-			-webkit-filter: hue-rotate(360deg);
-			filter: hue-rotate(360deg);
-		}
-	}
-
-	/* colorful-stripe end*/
 	.search-wrapper {
 		margin-left: 30upx;
 		margin-right: 30upx;
 		margin-top: 20upx;
 	}
-
 </style>

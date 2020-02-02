@@ -13,7 +13,7 @@
 			</block>
 
 			<block v-if="canClear">
-				<text class="clear-key-word" @click="clearSearchKeyWord()">X</text>
+				<text class="clear-key-word" @click="clearSearchKeyWord()">x</text>
 			</block>
 
 			<text class="key-word" @click="gotoSearch()">{{searchKeyWord}}</text>
@@ -108,7 +108,7 @@
 	}
 
 	.clear-key-word {
-		font-size: 25upx;
+		font-size: 30upx;
 	}
 
 	.sort-type {

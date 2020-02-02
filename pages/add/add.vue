@@ -23,11 +23,13 @@
 				<view>添加历史</view>
 			</view>
 			<view style="margin-top: 20upx;">
-				<view v-for="(item, index) in data.addTopicHistory" :key="index" class="add-topic-history-list-item" hover-class="add-topic-history-list-item-hover">
-					<time-title-item :item="item"></time-title-item>
-					<block v-if="index < data.addTopicHistory.length - 1">
-						<view class="hr"></view>
-					</block>
+				<view v-for="(item, index) in data.addTopicHistory" :key="index" class="content add-topic-history-list-item" hover-class="add-topic-history-list-item-hover">
+					<view class="time">
+						{{item.insertTime}}
+					</view>
+					<view class="title">
+						{{item.title}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -46,7 +48,6 @@
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
-	import timeTitleItem from '@/components/list-item/time-title-item.vue'
 	import limitedTextInput from '@/components/limited-text-input/limited-text-input.vue'
 	import limitedTextTextarea from '@/components/limited-text-input/limited-text-textarea.vue'
 
@@ -63,8 +64,7 @@
 		components: {
 			limitedTextInput,
 			limitedTextTextarea,
-			uniIcons,
-			timeTitleItem
+			uniIcons
 		},
 		onShow() {
 			this.loadAddTopicHistory();
@@ -95,8 +95,11 @@
 			showMyTopic() {
 				status.search.topicTypeIndex = 2
 				status.search.refreshType = 2
-				uni.switchTab({
-					url: '/pages/index/index',
+				// uni.switchTab({
+					// url: '/pages/index/index',
+				// })
+				uni.navigateBack({
+					delta: 1
 				})
 			},
 			addTopic() {
@@ -170,32 +173,37 @@
 </script>
 
 <style>
-	/* colorful-stripe start*/
-	.colorful-stripe {
-		background:
-			linear-gradient(#54B1F7, transparent),
-			linear-gradient(90deg, #09BB07, transparent),
-			linear-gradient(-90deg, #EC559E, transparent);
-		background-blend-mode: screen;
-		-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
-		animation: colorfulStripeChange 5s infinite alternate linear;
+	.time {
+		border-style: solid;
+		border-width: 0 1px 0 0;
+		border-right-color: #000000;
+		padding-right: 10upx;
+		
+		font-size: 20upx;
+		color: #999999;
+		/* width: 30%; */
+		text-align: center;
+		vertical-align: middle;
+		min-width: 140upx;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-ms-text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
-	@-webkit-keyframes colorfulStripeChange {
-		100% {
-			-webkit-filter: hue-rotate(360deg);
-			filter: hue-rotate(360deg);
-		}
+	.title {
+		color: #ffffff;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-ms-text-overflow: ellipsis;
+		white-space: nowrap;
+
+		/* width: 70%; */
+		font-size: 25upx;
+		margin-left: 30upx;
 	}
 
-	@keyframes colorfulStripeChange {
-		100% {
-			-webkit-filter: hue-rotate(360deg);
-			filter: hue-rotate(360deg);
-		}
-	}
-
-	/* colorful-stripe end*/
 	.show-all-my-topic-hover {
 		background-color: #999999;
 		color: #FFFFFF;
@@ -226,6 +234,14 @@
 	}
 
 	.add-topic-history-list-item {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		padding-top: 18upx;
+		padding-bottom: 18upx;
+		margin-top: 5upx;
+		
 		background-color: #363636;
 	}
 

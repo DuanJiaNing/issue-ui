@@ -23,3 +23,30 @@ page {
 	height: 1px;
 	background-color: #464646;
 }
+
+/* colorful-stripe start*/
+.colorful-stripe {
+	background:
+		linear-gradient(#54B1F7, transparent),
+		linear-gradient(90deg, #09BB07, transparent),
+		linear-gradient(-90deg, #EC559E, transparent);
+	background-blend-mode: screen;
+	-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
+	animation: colorfulStripeChange 5s infinite alternate linear;
+}
+
+@-webkit-keyframes colorfulStripeChange {
+	100% {
+		-webkit-filter: hue-rotate(360deg);
+		filter: hue-rotate(360deg);
+	}
+}
+
+@keyframes colorfulStripeChange {
+	100% {
+		-webkit-filter: hue-rotate(360deg);
+		filter: hue-rotate(360deg);
+	}
+}
+
+/* colorful-stripe end*/

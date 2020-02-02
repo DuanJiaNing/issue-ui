@@ -77,7 +77,7 @@
 					method: api.add_search_history.method,
 					success: (res) => {
 						if (res.data.code !== 0) {
-							console.log('添加搜索历史失败: ' + res.data.msg)
+							toolsService.showErrorToast('添加搜索历史失败: ' + res.data.msg)
 							return
 						}
 						this.loadSearchHistory()
