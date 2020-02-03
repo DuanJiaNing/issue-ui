@@ -8,7 +8,8 @@ const status = {
 		keyWord: '',
 		keyWordType: 1, // 1 关键字 2 userId 3 topicId
 		sortTypeIndex: 0
-	}
+	},
+	currentTopicId: 0
 }
 
 module.exports = {

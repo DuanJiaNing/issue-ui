@@ -3,17 +3,12 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "  ",
+				"navigationBarTitleText": " ",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {
+						// "type": "float",
 						"buttons": [
-							{
-									"type": "share"
-								},
-								{
-									"type": "person"
-								},
 							{
 								"text": "\ue468",
 								"fontSrc": "/static/font/uni.ttf",
@@ -63,7 +58,13 @@
 			"path": "pages/comments/comments",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "pages/topic/topic",
+            "style" : {
+				"navigationBarTitleText": "主题"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarBackgroundColor": "#000000"

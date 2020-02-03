@@ -1,5 +1,10 @@
 <template>
 	<view>
+		<!-- #ifdef MP -->
+		<uni-fab ref="fab" :pattern="uniFab.pattern" :content="uniFab.content" :horizontal="uniFab.horizontal" :vertical="uniFab.vertical"
+		 :direction="uniFab.direction" @trigger="uniFabTrigger" />
+		<!-- #endif -->
+
 		<view class="content topic-type" @click="switchTopicType" @longpress="switchUser">
 			<uni-icons type="arrowdown" size="20" color="#ffffff"></uni-icons>
 			<text style="color: #ffffff;">
@@ -15,13 +20,15 @@
 		<view class="topic-list">
 			<view class="topic-list-bg colorful-stripe"></view>
 			<view class="topics">
-				<view v-for="(item, index) in data.topics" :key="index" class="topic-item" hover-class="topic-item-hover">
-					<topic-item :item="item"></topic-item>
-					<block v-if="index < data.topics.length - 1">
-					</block>
-					<block v-else>
-						<view style="height: 30upx;"></view>
-					</block>
+				<view v-for="(item, index) in data.topics" :key="index">
+					<view @click="gotoTopicDetail(item.topicId)" class="topic-item" hover-class="topic-item-hover">
+						<topic-item :item="item"></topic-item>
+						<block v-if="index < data.topics.length - 1">
+						</block>
+						<block v-else>
+							<view style="height: 30upx;"></view>
+						</block>
+					</view>
 				</view>
 				<view @click="loadTopic">
 					<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
@@ -38,6 +45,7 @@
 
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
+	import uniFab from '@/components/uni-fab/uni-fab.vue'
 
 	import {
 		testUser
@@ -60,10 +68,35 @@
 			search,
 			topicItem,
 			uniLoadMore,
-			uniIcons
+			uniIcons,
+			uniFab
 		},
 		data() {
 			return {
+				uniFab: {
+					pattern: {
+						color: '#7A7E83',
+						backgroundColor: '#fff',
+						// selectedColor: '#007AFF',
+						// buttonColor: '#007AFF'
+					},
+					direction: 'horizontal',
+					horizontal: 'right',
+					vertical: 'bottom',
+					content: [{
+							iconPath: '/static/addto.png',
+							selectedIconPath: '/static/addtoFoucs.png',
+							text: '新增',
+							active: false
+						},
+						{
+							iconPath: '/static/my.png',
+							selectedIconPath: '/static/myFoucs.png',
+							text: '我的',
+							active: false
+						}
+					]
+				},
 				pullDownRefresh: false,
 				uniLoadMore: {
 					pageNum: 0,
@@ -125,6 +158,26 @@
 			}
 		},
 		methods: {
+			gotoTopicDetail(topicId) {
+				status.currentTopicId = topicId
+				uni.navigateTo({
+					url: '/pages/topic/topic'
+				});
+			},
+			uniFabTrigger(e) {
+				if (e.index === 1) { // me
+					uni.navigateTo({
+						url: '/pages/me/me'
+					});
+					return
+				}
+				if (e.index === 0) { // add
+					uni.navigateTo({
+						url: '/pages/add/add'
+					});
+					return
+				}
+			},
 			// TODO 开发专用
 			switchUser() {
 				uni.showActionSheet({

@@ -23,12 +23,14 @@
 				<view>添加历史</view>
 			</view>
 			<view style="margin-top: 20upx;">
-				<view v-for="(item, index) in data.addTopicHistory" :key="index" class="content add-topic-history-list-item" hover-class="add-topic-history-list-item-hover">
-					<view class="time">
-						{{item.insertTime}}
-					</view>
-					<view class="title">
-						{{item.title}}
+				<view v-for="(item, index) in data.addTopicHistory" :key="index">
+					<view @click="gotoTopicDetail(item.id)" class="content add-topic-history-list-item" hover-class="add-topic-history-list-item-hover">
+						<view class="time">
+							{{item.insertTime}}
+						</view>
+						<view class="title">
+							{{item.title}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -80,7 +82,7 @@
 				},
 				topicTitleConfig: {
 					maxlength: topicService.config.maxlength,
-					placeholder: "请输入主题"
+					placeholder: "请输入标题"
 				},
 				topicDesConfig: {
 					maxlength: topicService.config.maxDeslength,
@@ -92,11 +94,17 @@
 			}
 		},
 		methods: {
+			gotoTopicDetail(topicId) {
+				status.currentTopicId = topicId
+				uni.navigateTo({
+					url: '/pages/topic/topic'
+				});
+			},
 			showMyTopic() {
 				status.search.topicTypeIndex = 2
 				status.search.refreshType = 2
 				// uni.switchTab({
-					// url: '/pages/index/index',
+				// url: '/pages/index/index',
 				// })
 				uni.navigateBack({
 					delta: 1
@@ -147,7 +155,8 @@
 							var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', v.insertTime)
 							this.data.addTopicHistory.push({
 								insertTime: toolsService.formatDate(ti, 'MM/dd hh:mm'),
-								title: v.title
+								title: v.title,
+								id: v.id
 							})
 						}
 					},
@@ -178,7 +187,7 @@
 		border-width: 0 1px 0 0;
 		border-right-color: #000000;
 		padding-right: 10upx;
-		
+
 		font-size: 20upx;
 		color: #999999;
 		/* width: 30%; */
@@ -241,7 +250,7 @@
 		padding-top: 18upx;
 		padding-bottom: 18upx;
 		margin-top: 5upx;
-		
+
 		background-color: #363636;
 	}
 
