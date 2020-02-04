@@ -19,6 +19,13 @@ page {
 	padding-right: 30upx;
 }
 
+.padding-hr {
+	height: 1px;
+	background-color: #e3e3e3;
+	margin-left: 30upx;
+	margin-right: 30upx;
+}
+
 .hr {
 	height: 1px;
 	background-color: #464646;

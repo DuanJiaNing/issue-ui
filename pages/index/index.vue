@@ -22,7 +22,7 @@
 			<view class="topics">
 				<view v-for="(item, index) in data.topics" :key="index">
 					<view @click="gotoTopicDetail(item.topicId)" class="topic-item" hover-class="topic-item-hover">
-						<topic-item :item="item"></topic-item>
+						<topic-item :item="item" :showNotice="false"></topic-item>
 						<block v-if="index < data.topics.length - 1">
 						</block>
 						<block v-else>

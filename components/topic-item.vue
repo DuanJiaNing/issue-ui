@@ -9,7 +9,7 @@
 					<text style="color: #54B1F7;">{{item.interestUserCount}} 关注</text>
 				</view>
 				<view class="stats-item">
-					<text>{{item.voteCount}} 次投票</text>
+					<text>{{item.voteCount}} 次参与</text>
 				</view>
 			</view>
 			<view class="statistic">
@@ -24,6 +24,12 @@
 				</block>
 			</view>
 		</view>
+		<block v-if="showNotice && item.notes !== undefined">
+			<view class="topic-notes">
+				{{item.notes}}
+			</view>
+		</block>
+		<block v-else></block>
 	</view>
 </template>
 
@@ -40,6 +46,10 @@
 			item: {
 				type: Object,
 				required: true
+			},
+			showNotice: {
+				type: Boolean,
+				required: false
 			}
 		},
 		data() {
@@ -49,6 +59,15 @@
 </script>
 
 <style>
+	.topic-notes {
+		border-top-style: solid;
+		border-top-color: #e3e3e3;
+		border-top-width: 1px;
+		
+		font-size: 26upx;
+		padding-top: 20upx;
+		margin-top: 40upx;
+	}
 	.stats-item {
 		display: flex;
 		flex-direction: row;
@@ -64,12 +83,12 @@
 
 	.topic-item-content {
 		padding: 30upx;
-		/* border-radius: 5px; */
+		/* border-radius: 15upx; */
 		/* border-top-left-radius: 5px; */
 		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
 
 		background-color: #ffffff;
-		height: 180upx;
+		/* min-height: 180upx; */
 
 		display: flex;
 		flex-direction: column;
@@ -80,6 +99,7 @@
 
 	.statistic-container {
 		/* background-color: #007AFF; */
+		margin-top: 10upx;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -103,7 +123,7 @@
 
 	.topic-container {
 		/* background-color: #0A98D5; */
-		height: 125upx;
+		min-height: 125upx;
 
 		display: flex;
 		flex-direction: row;
