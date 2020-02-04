@@ -10,6 +10,10 @@ const api = {
 		path: `${host}/user/login`,
 		method: 'POST'
 	},
+	topic: {
+		path: `${host}/topic/`,
+		method: "GET"
+	},
 	add_topic: {
 		path: `${host}/topic/add`,
 		method: "POST"

@@ -9,11 +9,19 @@
 					<text style="color: #54B1F7;">{{item.interestUserCount}} 关注</text>
 				</view>
 				<view class="stats-item">
-					<text>{{item.disagree+item.agree}} 次投票</text>
+					<text>{{item.voteCount}} 次投票</text>
 				</view>
 			</view>
-			<view>
+			<view class="statistic">
 				<text>{{item.insertTime}}</text>
+				<block v-if="item.vote > 0">
+					<uni-icons type="checkmarkempty" size="25" style="color: #09BB07; margin-left: 20upx;"></uni-icons>
+				</block>
+				<block v-else-if="item.vote < 0">
+					<uni-icons type="closeempty" size="25" style="color: #EC559E; margin-left: 20upx;"></uni-icons>
+				</block>
+				<block v-else>
+				</block>
 			</view>
 		</view>
 	</view>
@@ -104,15 +112,8 @@
 
 	.topic-container text {
 		/* background-color: #2C405A; */
-		lines: 2;
 		color: black;
 		font-size: 28upx;
 		vertical-align: middle;
-
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		word-break: break-all;
-		overflow: hidden;
 	}
 </style>
