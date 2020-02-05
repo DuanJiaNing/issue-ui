@@ -61,7 +61,7 @@
 	    ,{
             "path" : "pages/topic/topic",
             "style" : {
-				"navigationBarTitleText": "主题",
+				"navigationBarTitleText": "投票详情",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {

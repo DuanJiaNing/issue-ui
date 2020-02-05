@@ -19,6 +19,10 @@ page {
 	padding-right: 30upx;
 }
 
+.hover-for-white-bg {
+	background-color: #e3e3e3;
+}
+
 .padding-hr {
 	height: 1px;
 	background-color: #e3e3e3;

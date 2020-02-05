@@ -3,22 +3,36 @@
 		<block v-if="commentInfoShow">
 			<view class="selected-comment-info-container">
 				<view class="selected-comment-info">
-					<text class="selected-comment-id" :style="{
-					color: selectedCommentInfo.vote === 1 ? '#09BB07' : (selectedCommentInfo.vote === -1 ? '#EC559E' : '#999999')}">{{selectedCommentInfo.id}}</text>
-					<text class="selected-comment-subinfo">{{selectedCommentInfo.insertTime}}</text>
+					<view style="display: flex;flex-direction: row;align-items: center;">
+						<text class="selected-comment-id" :style="{
+							color: selectedCommentInfo.vote === 1 ? '#09BB07' : (selectedCommentInfo.vote === -1 ? '#EC559E' : '#999999')}">{{selectedCommentInfo.id}}</text>
+						<view class="selected-comment-subinfo">
+							<text class="selected-comment-insertTime">发表于 {{selectedCommentInfo.insertTime}}</text>
+							<view class="selected-comment-vote">
+								{{selectedCommentInfo.agree}} 赞同 {{selectedCommentInfo.disagree}} 反对
+								<block v-if="selectedCommentInfo.myVote !== 0">
+									{{selectedCommentInfo.myVote === -1 ? '(已投反对票)' : '(已投赞同票)'}}
+								</block>
+							</view>
+						</view>
+					</view>
 
-					<uni-icons class="selectd-commit-vote" type="checkmarkempty" size="20" style="color: #09BB07; margin-left: 20upx;"></uni-icons>
-					<text class="selected-comment-subinfo">{{selectedCommentInfo.agree}}</text>
-
-					<uni-icons class="selectd-commit-vote" type="closeempty" size="20" style="color: #EC559E; margin-left: 20upx;"></uni-icons>
-					<text class="selected-comment-subinfo">{{selectedCommentInfo.disagree}}</text>
-				</view>
-				<view @click="hideSelectCommentInfo">
-					<uni-icons type="arrowdown" size="25" style="color: #54B1F7; margin-left: 20upx;"></uni-icons>
+					<view style="display: flex;flex-direction: row;align-items: center;">
+						<block v-if="selectedCommentInfo.myVote === 0">
+							<view hover-class="hover-for-white-bg" class="select-comment-vote-btn">
+								<uni-icons type="checkmarkempty" size="28" style="color: #09BB07;"></uni-icons>
+							</view>
+							<view style="margin-right: 20upx;" hover-class="hover-for-white-bg" class="select-comment-vote-btn">
+								<uni-icons type="closeempty" size="28" style="color: #EC559E;"></uni-icons>
+							</view>
+						</block>
+						<view @click="hideSelectCommentInfo">
+							<uni-icons type="arrowdown" size="15" style="color: #999999; margin-left: 20upx;"></uni-icons>
+						</view>
+					</view>
 				</view>
 			</view>
 		</block>
-
 		<view class="content" style="margin-top: 30upx;">
 			<topic-item :item="topicSummary" :showNotice="true"></topic-item>
 		</view>
@@ -43,7 +57,7 @@
 					</view>
 					<view>
 						<view v-for="(item, index) in comments" :key="index">
-							<view @click="selectComment(index)" class="content comment-container" hover-class="comment-container-hover">
+							<view @click="selectComment(index)" class="content comment-container" hover-class="hover-for-white-bg">
 								<view class="comment-part-1">
 									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.id}}</text>
 									<text class="comment-content" :style="{
@@ -148,7 +162,8 @@
 			loadCommentInfo(commentId) {
 				this.selectedCommentInfo = {
 					id: commentId,
-					vote: -1,
+					myVote: 0, // 0 1 -1
+					vote: 1,
 					agree: 21,
 					disagree: 23,
 					insertTime: '20/02/01 21:50'
@@ -199,9 +214,10 @@
 <style>
 	.selected-comment-info {
 		display: flex;
+		width: 100%;
 		flex-direction: row;
-		justify-content: flex-start;
-		align-items: flex-end;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.selected-comment-info-container {
@@ -229,20 +245,24 @@
 		overflow: hidden;
 	}
 
-	.selectd-commit-vote {
-		margin-left: 20upx;
-		border-color: #e3e3e3;
-		height: 70upx;
-		width: 70upx;
-		border-radius: 1000upx;
-		border-width: 2px;
-		border-style: solid;
+	.selected-comment-vote {
+		font-size: 12upx;
+		color: #999999;
+	}
+
+	.select-comment-vote-btn {
+		padding-left: 10upx;
+		padding-right: 10upx;
+	}
+
+	.selected-comment-insertTime {
+		font-size: 27upx;
 	}
 
 	.selected-comment-subinfo {
-		padding-left: 10upx;
-		font-size: 20upx;
-		color: #999999;
+		display: flex;
+		flex-direction: column;
+		margin-left: 30upx;
 	}
 
 	.selected-comment-id {
@@ -271,10 +291,6 @@
 		flex-direction: row;
 		justify-content: start;
 		align-items: baseline;
-	}
-
-	.comment-container-hover {
-		background-color: #e3e3e3;
 	}
 
 	.comment-container {

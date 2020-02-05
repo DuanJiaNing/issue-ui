@@ -21,7 +21,7 @@
 			<view class="topic-list-bg colorful-stripe"></view>
 			<view class="topics">
 				<view v-for="(item, index) in data.topics" :key="index">
-					<view @click="gotoTopicDetail(item.topicId)" class="topic-item" hover-class="topic-item-hover">
+					<view @click="gotoTopicDetail(item.topicId)" class="topic-item">
 						<topic-item :item="item" :showNotice="false"></topic-item>
 						<block v-if="index < data.topics.length - 1">
 						</block>
@@ -296,10 +296,6 @@
 		width: 82%;
 		margin-left: 12%;
 		margin-bottom: 12%;
-	}
-
-	.topic-item-hover {
-		/* background-color: #007AFF; */
 	}
 
 	.topic-item {
