@@ -93,9 +93,15 @@ function showErrorToast(msg) {
 	})
 }
 
+function isIphoneX() {
+	var res = uni.getSystemInfoSync()
+	return res.model.startsWith("iPhone X")
+}
+
 module.exports = {
 	formatDate,
 	parseByFormat,
+	isIphoneX,
 	
 	showServerUnavlibleToast,
 	showSuccessToast,

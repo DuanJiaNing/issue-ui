@@ -1,5 +1,7 @@
 <template>
-	<view class="topic-item-content">
+	<view class="topic-item-content" :style="{
+		'border-radius': radius ? '8px' : '0'
+	}">
 		<view class="topic-container">
 			<text>{{item.title}}</text>
 		</view>
@@ -50,6 +52,10 @@
 			showNotice: {
 				type: Boolean,
 				required: false
+			},
+			radius: {
+				type: Boolean,
+				required: false
 			}
 		},
 		data() {
@@ -83,7 +89,6 @@
 
 	.topic-item-content {
 		padding: 30upx;
-		/* border-radius: 15upx; */
 		/* border-top-left-radius: 5px; */
 		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
 

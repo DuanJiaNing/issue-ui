@@ -1,7 +1,8 @@
 <template>
-	<view style="padding-bottom: 100upx;">
+	<view style="padding-bottom: 100upx;" >
 		<block v-if="commentInfoShow">
-			<view class="selected-comment-info-container">
+			<view class="selected-comment-info-container" :style="{
+		'padding-bottom': isIphoneX() ? '25px' : '0'}">
 				<view class="selected-comment-info">
 					<view style="display: flex;flex-direction: row;align-items: center;">
 						<text class="selected-comment-id" :style="{
@@ -34,7 +35,7 @@
 			</view>
 		</block>
 		<view class="content" style="margin-top: 30upx;">
-			<topic-item :item="topicSummary" :showNotice="true"></topic-item>
+			<topic-item :radius="true" :item="topicSummary" :showNotice="true"></topic-item>
 		</view>
 
 		<view class="content">
@@ -62,7 +63,7 @@
 									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.id}}</text>
 									<text class="comment-content" :style="{
 										'-webkit-line-clamp': item.selected ? 20 : 2, 
-										'font-size': item.selected ? '30upx' : '27upx'}">{{item.content}}</text>
+										'font-size': item.selected ? '1.2em' : '0.9em'}">{{item.content}}</text>
 								</view>
 							</view>
 							<block v-if="index != comments.length - 1">
@@ -155,6 +156,9 @@
 			}
 		},
 		methods: {
+			isIphoneX() {
+				return toolsService.isIphoneX()
+			},
 			hideSelectCommentInfo() {
 				this.comments[this.selectedCommentIndex].selected = false
 				this.commentInfoShow = false
@@ -246,7 +250,7 @@
 	}
 
 	.selected-comment-vote {
-		font-size: 12upx;
+		font-size: 18upx;
 		color: #999999;
 	}
 
@@ -323,7 +327,7 @@
 	.comments-container {
 		background-color: #ffffff;
 
-		border-radius: 15upx;
+		border-radius: 8px;
 		padding-top: 30upx;
 		padding-bottom: 60upx;
 		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
