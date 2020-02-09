@@ -54,9 +54,6 @@
 					"softinputNavBar": "none"
 				}
 			}
-		}, {
-			"path": "pages/comments/comments",
-			"style": {}
 		}
 	    ,{
             "path" : "pages/topic/topic",
@@ -82,6 +79,12 @@
 						]
 					}
 				}
+			}
+        }
+        ,{
+            "path" : "pages/vote/vote",
+            "style" : {
+				"navigationBarTitleText": "投票"
 			}
         }
     ],

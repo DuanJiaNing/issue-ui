@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-bottom: 100upx;" >
+	<view style="padding-bottom: 100upx;">
 		<block v-if="commentInfoShow">
 			<view class="selected-comment-info-container" :style="{
 		'padding-bottom': isIphoneX() ? '25px' : '0'}">
@@ -8,7 +8,12 @@
 						<text class="selected-comment-id" :style="{
 							color: selectedCommentInfo.vote === 1 ? '#09BB07' : (selectedCommentInfo.vote === -1 ? '#EC559E' : '#999999')}">{{selectedCommentInfo.id}}</text>
 						<view class="selected-comment-subinfo">
-							<text class="selected-comment-insertTime">发表于 {{selectedCommentInfo.insertTime}}</text>
+							<text class="selected-comment-insertTime">
+								<block v-if="selectedCommentInfo.voteByMe">
+									我
+								</block>
+								发表于 {{selectedCommentInfo.insertTime}}
+							</text>
 							<view class="selected-comment-vote">
 								{{selectedCommentInfo.agree}} 赞同 {{selectedCommentInfo.disagree}} 反对
 								<block v-if="selectedCommentInfo.myVote !== 0">
@@ -20,10 +25,10 @@
 
 					<view style="display: flex;flex-direction: row;align-items: center;">
 						<block v-if="selectedCommentInfo.myVote === 0">
-							<view hover-class="hover-for-white-bg" class="select-comment-vote-btn">
+							<view @click="doVote(1)" hover-class="hover-for-white-bg" class="select-comment-vote-btn">
 								<uni-icons type="checkmarkempty" size="28" style="color: #09BB07;"></uni-icons>
 							</view>
-							<view style="margin-right: 20upx;" hover-class="hover-for-white-bg" class="select-comment-vote-btn">
+							<view @click="doVote(-1)" style="margin-right: 20upx;" hover-class="hover-for-white-bg" class="select-comment-vote-btn">
 								<uni-icons type="closeempty" size="28" style="color: #EC559E;"></uni-icons>
 							</view>
 						</block>
@@ -58,8 +63,12 @@
 					</view>
 					<view>
 						<view v-for="(item, index) in comments" :key="index">
-							<view @click="selectComment(index)" class="content comment-container" hover-class="hover-for-white-bg">
-								<view class="comment-part-1">
+							<view @click="selectComment(index)">
+								<view :style="{
+									color: item.selected ? '#ffffff' : '#000000',
+									'background-color': item.selected ? '#3a3a3a' : (item.voteByMe ? '#fff7d3' : '#ffffff')
+								}"
+								 class="content comment-container" hover-class="hover-for-white-bg">
 									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.id}}</text>
 									<text class="comment-content" :style="{
 										'-webkit-line-clamp': item.selected ? 20 : 2, 
@@ -111,38 +120,42 @@
 						// userId: "12121", // userId === uid ? My : notShow
 						// agree: 12,
 						// disagree: 23,
-						vote: 1, // 1 -1 0.5
-						// voteByMe: 1, // 1 agree 2 disagree 0 none
+						vote: 1, // 1 -1 0.5 -0.5
+						voteByMe: false,
 					},
 					{
 						id: 101,
 						selected: false,
 						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 0.5, // 1 -1 0.5
+						vote: 0.5, // 1 -1 0.5 -0.5
+						voteByMe: true,
 					},
 					{
 						id: 98,
 						selected: false,
 						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: -1, // 1 -1 0.5
+						vote: -1, // 1 -1 0.5 -0.5
+						voteByMe: false,
 					},
 					{
 						id: 9822,
 						selected: false,
 						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5
+						vote: 1, // 1 -1 0.5 -0.5
+						voteByMe: true,
 					},
 					{
 						id: 922,
 						selected: false,
 						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5
+						vote: 1, // 1 -1 0.5 -0.5
 					},
 					{
 						id: 42,
 						selected: false,
 						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5
+						vote: 1, // 1 -1 0.5 -0.5
+						voteByMe: false,
 					},
 				]
 			}
@@ -155,7 +168,24 @@
 				return 20
 			}
 		},
+		onNavigationBarButtonTap(e) {
+			if (e.index === 1) { // agree
+				uni.navigateTo({
+					url: '/pages/vote/vote?vote=1'
+				});
+				return
+			}
+			if (e.index === 0) { // disagree
+				uni.navigateTo({
+					url: '/pages/vote/vote?vote=-1'
+				});
+				return
+			}
+		},
 		methods: {
+			doVote(vote) {
+				toolsService.showSuccessToast('vote: ' + vote)
+			},
 			isIphoneX() {
 				return toolsService.isIphoneX()
 			},
@@ -170,7 +200,8 @@
 					vote: 1,
 					agree: 21,
 					disagree: 23,
-					insertTime: '20/02/01 21:50'
+					insertTime: '20/02/01 21:50',
+					voteByMe: true
 				}
 			},
 			selectComment(index) {
@@ -290,16 +321,14 @@
 		justify-content: flex-end;
 	}
 
-	.comment-part-1 {
+	.comment-container {
+		padding-top: 25upx;
+		padding-bottom: 25upx;
+
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
 		align-items: baseline;
-	}
-
-	.comment-container {
-		padding-top: 25upx;
-		padding-bottom: 25upx;
 	}
 
 	.comments-vote-bar {

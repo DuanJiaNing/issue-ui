@@ -71,7 +71,7 @@ function parseByFormat(format, string) {
 
 function showServerUnavlibleToast() {
 	uni.showToast({
-		mask: true,
+		mask: false,
 		icon: 'none',
 		title: '服务不可用'
 	})
@@ -80,7 +80,7 @@ function showServerUnavlibleToast() {
 function showSuccessToast(msg) {
 	uni.showToast({
 		icon: 'success',
-		mask: true,
+		mask: false,
 		title: msg
 	})
 }
@@ -88,7 +88,7 @@ function showSuccessToast(msg) {
 function showErrorToast(msg) {
 	uni.showToast({
 		icon: 'none',
-		mask: true,
+		mask: false,
 		title: msg
 	})
 }
