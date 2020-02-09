@@ -26,11 +26,6 @@
 				}
 			}
 		}, {
-			"path": "pages/home/home",
-			"style": {
-				// "navigationBarTitleText": "首页",
-			}
-		}, {
 			"path": "pages/me/me",
 			"style": {
 				"navigationBarTitleText": "我的"

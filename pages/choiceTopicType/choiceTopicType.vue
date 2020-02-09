@@ -26,10 +26,10 @@
 		},
 		methods: {
 			choiceType(topicTypeIndex) {
-				var oldIndex = StatusService.status.search.topicTypeIndex
+				var oldIndex = StatusService.status.topicTypeIndex
 				if (oldIndex != topicTypeIndex) {
-					StatusService.status.search.refreshType = 2
-					StatusService.status.search.topicTypeIndex = topicTypeIndex
+					StatusService.status.refreshType = 2
+					StatusService.status.topicTypeIndex = topicTypeIndex
 				}
 				uni.navigateBack({
 					delta:1

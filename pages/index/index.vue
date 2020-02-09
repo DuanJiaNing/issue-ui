@@ -117,26 +117,30 @@
 		},
 		computed: {
 			topicType() {
-				return this.topicTypes[this.status.search.topicTypeIndex]
+				return this.topicTypes[this.status.topicTypeIndex]
 			}
 		},
 		onPullDownRefresh() {
 			this.pullDownRefresh = true
 			this.status.search.keyWord = ''
 			this.status.search.keyWordType = 1
+			
 			this.uniLoadMore.pageNum = 0
+			this.uniLoadMore.totalPage = -1
 			this.loadTopic()
 		},
 		onReachBottom() {
 			this.loadTopic();
 		},
 		onShow() {
-			if (this.status.search.refreshType !== undefined && this.status.search.refreshType != 0) {
-				if (this.status.search.refreshType !== 3) {
+			if (this.status.refreshType !== undefined && this.status.refreshType != 0) {
+				if (this.status.refreshType !== 3) {
 					this.status.search.keyWord = ''
 					this.status.search.keyWordType = 1
 				}
+				
 				this.uniLoadMore.pageNum = 0
+				this.uniLoadMore.totalPage = -1
 				this.loadTopic()
 			}
 		},
@@ -192,12 +196,14 @@
 			clearKeyWord() {
 				this.status.search.keyWord = ''
 				this.status.search.keyWordType = 1
+				this.status.refreshType = 3
+				
 				this.uniLoadMore.pageNum = 0
-				this.status.search.refreshType = 3
+				this.uniLoadMore.totalPage = -1
 				this.loadTopic()
 			},
 			decideTopicTypeDataUrl() {
-				switch (this.status.search.topicTypeIndex) {
+				switch (this.status.topicTypeIndex) {
 					case 0:
 						return api.topic_list.path;
 					case 1:
@@ -236,9 +242,9 @@
 							this.pullDownRefresh = false
 						}
 
-						if (this.status.search.refreshType != 0) {
+						if (this.status.refreshType != 0) {
 							this.data.topics = []
-							this.status.search.refreshType = 0
+							this.status.refreshType = 0
 						}
 
 						if (res.data.data.list !== undefined) {

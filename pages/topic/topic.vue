@@ -359,6 +359,7 @@
 		border-radius: 8px;
 		padding-top: 30upx;
 		padding-bottom: 60upx;
+		margin-bottom: 100upx;
 		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
 	}
 </style>

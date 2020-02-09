@@ -94,7 +94,7 @@
 				var oldkw = status.search.keyWord
 				let content = this.keyWord.trim()
 				status.search.keyWord = content
-				status.search.refreshType = oldkw != content ? 3 : 0
+				status.refreshType = oldkw != content ? 3 : 0
 				uni.navigateBack({
 					delta: 1
 				})

@@ -101,11 +101,8 @@
 				});
 			},
 			showMyTopic() {
-				status.search.topicTypeIndex = 2
-				status.search.refreshType = 2
-				// uni.switchTab({
-				// url: '/pages/index/index',
-				// })
+				status.topicTypeIndex = 2
+				status.refreshType = 2
 				uni.navigateBack({
 					delta: 1
 				})
@@ -128,7 +125,7 @@
 							this.$refs.topicDes.clearValue()
 						}
 						this.loadAddTopicHistory()
-						status.search.refresh = 1
+						status.refreshType = 1
 						toolsService.showSuccessToast('保存成功')
 					},
 					fail: function(err) {

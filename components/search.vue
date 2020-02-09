@@ -45,10 +45,10 @@
 		},
 		computed: {
 			sortShow() {
-				return this.topicTypes[this.status.search.topicTypeIndex].code === 'all'
+				return this.topicTypes[this.status.topicTypeIndex].code === 'all'
 			},
 			sortTypeName() {
-				return this.sortTypes[this.status.search.sortTypeIndex].name
+				return this.sortTypes[this.status.sortTypeIndex].name
 			},
 			searchKeyWord() {
 				return this.status.search.keyWord === '' ? '搜索' : this.status.search.keyWord
@@ -74,7 +74,7 @@
 					title: '请选择排序方式',
 					itemList: stypeName,
 					success: (e) => {
-						this.status.search.sortTypeIndex = e.tapIndex
+						this.status.sortTypeIndex = e.tapIndex
 					}
 				})
 			},
