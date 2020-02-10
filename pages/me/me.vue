@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<text>host: {{host}}</text>
+		<text style="color: #ffffff;">host: {{host}}</text>
 		
 		<br>
-		<text>{{statusStr}}</text>
+		<text style="color: #ffffff;">{{statusStr}}</text>
 	</view>
 </template>
 

@@ -242,7 +242,7 @@
 							this.pullDownRefresh = false
 						}
 
-						if (this.status.refreshType != 0) {
+						if (this.status.refreshType !== 0) {
 							this.data.topics = []
 							this.status.refreshType = 0
 						}

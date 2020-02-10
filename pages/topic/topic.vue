@@ -6,25 +6,25 @@
 				<view class="selected-comment-info">
 					<view style="display: flex;flex-direction: row;align-items: center;">
 						<text class="selected-comment-id" :style="{
-							color: selectedCommentInfo.vote === 1 ? '#09BB07' : (selectedCommentInfo.vote === -1 ? '#EC559E' : '#999999')}">{{selectedCommentInfo.id}}</text>
+							color: selectedComment.vote === 1 ? '#09BB07' : (selectedComment.vote === -1 ? '#EC559E' : '#999999')}">{{selectedComment.commentId}}</text>
 						<view class="selected-comment-subinfo">
 							<text class="selected-comment-insertTime">
-								<block v-if="selectedCommentInfo.voteByMe">
+								<block v-if="selectedComment.userId === status.userId">
 									我
 								</block>
-								发表于 {{selectedCommentInfo.insertTime}}
+								发表于 {{selectedComment.insertTime}}
 							</text>
 							<view class="selected-comment-vote">
-								{{selectedCommentInfo.agree}} 赞同 {{selectedCommentInfo.disagree}} 反对
-								<block v-if="selectedCommentInfo.myVote !== 0">
-									{{selectedCommentInfo.myVote === -1 ? '(已投反对票)' : '(已投赞同票)'}}
+								{{selectedComment.agreeVoteCount}} 赞同 {{selectedComment.disagreeVoteCount}} 反对
+								<block v-if="selectedComment.myCommentVote !== 0">
+									{{selectedComment.myCommentVote === -1 ? '(已投反对票)' : '(已投赞同票)'}}
 								</block>
 							</view>
 						</view>
 					</view>
 
 					<view style="display: flex;flex-direction: row;align-items: center;">
-						<block v-if="selectedCommentInfo.myVote === 0">
+						<block v-if="selectedComment.myCommentVote === 0">
 							<view @click="doVote(1)" hover-class="hover-for-white-bg" class="select-comment-vote-btn">
 								<uni-icons type="checkmarkempty" size="28" style="color: #09BB07;"></uni-icons>
 							</view>
@@ -66,10 +66,10 @@
 							<view @click="selectComment(index)">
 								<view :style="{
 									color: item.selected ? '#ffffff' : '#000000',
-									'background-color': item.selected ? '#3a3a3a' : (item.voteByMe ? '#fff7d3' : '#ffffff')
+									'background-color': item.selected ? '#3a3a3a' : (item.userId === status.userId ? '#fff7d3' : '#ffffff')
 								}"
 								 class="content comment-container" hover-class="hover-for-white-bg">
-									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.id}}</text>
+									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.commentId}}</text>
 									<text class="comment-content" :style="{
 										'-webkit-line-clamp': item.selected ? 20 : 2, 
 										'font-size': item.selected ? '1.2em' : '0.9em'}">{{item.content}}</text>
@@ -78,6 +78,9 @@
 							<block v-if="index != comments.length - 1">
 								<view class="padding-hr"></view>
 							</block>
+						</view>
+						<view @click="loadComments">
+							<uni-load-more :color="'#999999'" :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
 						</view>
 					</view>
 				</block>
@@ -90,7 +93,8 @@
 	import topicItem from '@/components/topic-item.vue'
 
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
-
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	
 	import toolsService from '@/service/ToolsService.js'
 	import {
 		status
@@ -102,62 +106,28 @@
 	export default {
 		components: {
 			topicItem,
-			uniIcons
+			uniIcons,
+			uniLoadMore
 		},
 		data() {
 			return {
 				status: status,
 				topicSummary: {},
-				comments_: [],
 				commentInfoShow: false,
-				selectedCommentInfo: {},
+				selectedComment: {},
 				selectedCommentIndex: -1,
-				comments: [{
-						id: 1,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						// insertTime: "2小时前",
-						// userId: "12121", // userId === uid ? My : notShow
-						// agree: 12,
-						// disagree: 23,
-						vote: 1, // 1 -1 0.5 -0.5
-						voteByMe: false,
-					},
-					{
-						id: 101,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 0.5, // 1 -1 0.5 -0.5
-						voteByMe: true,
-					},
-					{
-						id: 98,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: -1, // 1 -1 0.5 -0.5
-						voteByMe: false,
-					},
-					{
-						id: 9822,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5 -0.5
-						voteByMe: true,
-					},
-					{
-						id: 922,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5 -0.5
-					},
-					{
-						id: 42,
-						selected: false,
-						content: "树型结构的设计我们需要考虑的是次级评论的展示问题。因为次级评论是依附于一级评论的，所以一些产品会将次级评论“收起来”放到二级页面进行展示。以微博为例，其评论区只会展示一级评论，所有的二级评论，哪怕获得的点赞量再高，都必须要进入二级页面才可以查看。",
-						vote: 1, // 1 -1 0.5 -0.5
-						voteByMe: false,
-					},
-				]
+				pullDownRefresh: false,
+				uniLoadMore: {
+					pageNum: 0,
+					totalPage: -1,
+					status: 'more',
+					contentText: {
+						contentdown: '加载更多',
+						contentrefresh: '加载中',
+						contentnomore: '到底啦'
+					}
+				},
+				comments: []
 			}
 		},
 		computed: {
@@ -168,19 +138,29 @@
 				return 20
 			}
 		},
+		onReachBottom() {
+			this.loadComments();
+		},
 		onNavigationBarButtonTap(e) {
-			if (e.index === 1) { // agree
-				uni.navigateTo({
-					url: '/pages/vote/vote?vote=1'
-				});
-				return
-			}
-			if (e.index === 0) { // disagree
+			if (e.index === 1) { // disagree
 				uni.navigateTo({
 					url: '/pages/vote/vote?vote=-1'
 				});
 				return
 			}
+			if (e.index === 0) { // agree
+				uni.navigateTo({
+					url: '/pages/vote/vote?vote=1'
+				});
+				return
+			}
+		},
+		onPullDownRefresh() {
+			this.pullDownRefresh = true
+			
+			this.uniLoadMore.pageNum = 0
+			this.uniLoadMore.totalPage = -1
+			this.loadComments()
 		},
 		methods: {
 			doVote(vote) {
@@ -192,17 +172,6 @@
 			hideSelectCommentInfo() {
 				this.comments[this.selectedCommentIndex].selected = false
 				this.commentInfoShow = false
-			},
-			loadCommentInfo(commentId) {
-				this.selectedCommentInfo = {
-					id: commentId,
-					myVote: 0, // 0 1 -1
-					vote: 1,
-					agree: 21,
-					disagree: 23,
-					insertTime: '20/02/01 21:50',
-					voteByMe: true
-				}
 			},
 			selectComment(index) {
 				if (this.commentInfoShow && index === this.selectedCommentIndex) {
@@ -216,8 +185,63 @@
 					this.comments[index].selected = true
 					this.selectedCommentIndex = index
 					this.commentInfoShow = true
-					this.loadCommentInfo(this.comments[index].id)
+					this.selectedComment = this.comments[index]
 				}
+			},
+			loadComments() {
+				if (this.uniLoadMore.pageNum === this.uniLoadMore.totalPage) {
+					this.uniLoadMore.status = 'noMore'
+					return
+				} else {
+					this.uniLoadMore.status = 'loading'
+				}
+				request({
+					url: api.comment_list.path,
+					data: {
+						pageNum: ++this.uniLoadMore.pageNum,
+						pageSize: 10,
+						topicId: status.currentTopicId
+					},
+					method: api.comment_list.method,
+					success: (res) => {
+						if (res.data.code !== 0) {
+							toolsService.showErrorToast('加载失败: ' + res.data.msg)
+							return
+						}
+				
+						if (this.pullDownRefresh) {
+							uni.stopPullDownRefresh()
+							this.comments = []
+							this.pullDownRefresh = false
+						}
+				
+						if (status.topic_refreshType !== 0) {
+							this.comments = []
+							status.topic_refreshType = 0
+						}
+				
+						if (res.data.data.list !== undefined) {
+							this.uniLoadMore.totalPage = res.data.data.pages
+							res.data.data.list.forEach(e => {
+								var ti = toolsService.parseByFormat('yyyy-MM-dd hh:mm:ss', e.insertTime)
+								e.insertTime = toolsService.formatDate(ti, 'yy/MM/dd hh:mm')
+								this.comments.push(e);
+							});
+							this.uniLoadMore.status = 'more'
+						} else {
+							this.uniLoadMore.status = 'noMore'
+						}
+				
+					},
+					fail: function(err) {
+						console.log(err)
+						toolsService.showServerUnavlibleToast()
+						if (this.pullDownRefresh) {
+							uni.stopPullDownRefresh()
+							this.pullDownRefresh = false
+						}
+					}
+				})
 			},
 			loadTopic() {
 				request({
@@ -240,8 +264,18 @@
 				})
 			}
 		},
-		onShow() {
+		onLoad() {
 			this.loadTopic()
+			this.loadComments()
+		},
+		onShow() {
+			if (status.topic_refreshType !== undefined && status.topic_refreshType !== 0) {
+				this.uniLoadMore.pageNum = 0
+				this.uniLoadMore.totalPage = -1
+				
+				this.loadTopic()
+				this.loadComments()
+			}
 		}
 	}
 </script>

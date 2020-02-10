@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<limited-text-textarea style="margin-top: 30upx;" @valueChanged="topicDesChanged" :config="topicDesConfig"></limited-text-textarea>
+		<limited-text-textarea ref="voteComment" style="margin-top: 30upx;" @valueChanged="commentChanged" :config="commentInputConfig"></limited-text-textarea>
 		<view class="btn-container content">
 			<view>
-				<button @click="addTopic" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
+				<button @click="addVoteComment" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
 			</view>
 		</view>
 	</view>
@@ -14,6 +14,9 @@
 
 	import toolsService from '@/service/ToolsService.js'
 	import {
+		status
+	} from '@/service/StatusService.js'
+	import {
 		api,
 		request
 	} from '@/service/ApiService.js'
@@ -23,46 +26,50 @@
 		},
 		data() {
 			return {
+				vote: 0,
 				voteComment: '',
-				topicDesConfig: {
+				commentInputConfig: {
 					maxlength: 100,
 					placeholder: "请输入投票说明"
 				}
 			}
 		},
+		onLoad(option) {
+			this.vote = option.vote
+		},
 		methods: {
-			addTopic() {
+			addVoteComment() {
 				if (this.voteComment.length === 0) {
 					toolsService.showErrorToast('请输入投票说明')
 					return
 				}
 				
 				request({
-					url: api.add_topic.path,
-					method: api.add_topic.method,
+					url: api.add_comment.path,
+					method: api.add_comment.method,
 					data: {
-						title: this.newTopicTitle,
-						notes: this.newTopicNotes
+						content: this.voteComment,
+						topicId: status.currentTopicId,
+						vote: this.vote
 					},
 					success: (res) => {
 						if (res.data.code !== 0) {
 							toolsService.showErrorToast('保存失败: ' + res.data.msg)
 							return
 						}
-						this.$refs.topicTitle.clearValue()
-						if (this.$refs.topicDes !== undefined) {
-							this.$refs.topicDes.clearValue()
-						}
-						this.loadAddTopicHistory()
-						status.search.refresh = 1
+						this.$refs.voteComment.clearValue()
+						status.topic_refreshType = 1
 						toolsService.showSuccessToast('保存成功')
+						uni.navigateBack({
+							delta: 1
+						})
 					},
 					fail: function(err) {
 						toolsService.showServerUnavlibleToast()
 					}
 				})
 			},
-			topicDesChanged: function(val) {
+			commentChanged: function(val) {
 				this.voteComment = val
 				console.log(val)
 			}

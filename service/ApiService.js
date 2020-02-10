@@ -1,6 +1,6 @@
 // api host
-let host = 'http://123.57.237.176:8079'
-// let host = 'http://localhost:8079'
+// let host = 'http://123.57.237.176:8079'
+let host = 'http://localhost:8079'
 
 var StatusService = require('./StatusService.js');
 var ToolsService = require('./ToolsService.js');
@@ -34,12 +34,20 @@ const api = {
 		path: `${host}/topic/list`,
 		method: "GET"
 	},
+	comment_list: {
+		path: `${host}/comment/list`,
+		method: "GET"
+	},
 	search_history: {
 		path: `${host}/search/history`,
 		method: "GET"
 	},
 	add_search_history: {
 		path: `${host}/search`,
+		method: "POST"
+	},
+	add_comment: {
+		path: `${host}/comment`,
 		method: "POST"
 	}
 }

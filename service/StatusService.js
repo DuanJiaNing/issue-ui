@@ -7,6 +7,8 @@ const status = {
 	topicTypeIndex: 0, // 0 all 1 interest 2 my
 	sortTypeIndex: 0,
 	
+	topic_refreshType: 0, // 0 no need 1 after new vote
+	
 	search: {
 		keyWord: '',
 	},
