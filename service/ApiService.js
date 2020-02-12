@@ -49,6 +49,10 @@ const api = {
 	add_comment: {
 		path: `${host}/comment`,
 		method: "POST"
+	},
+	vote: {
+		path: `${host}/comment/vote`,
+		method: "POST"
 	}
 }
 

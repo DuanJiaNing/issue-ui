@@ -54,26 +54,7 @@
             "path" : "pages/topic/topic",
             "style" : {
 				"navigationBarTitleText": "投票详情",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						// "type": "float",
-						"buttons": [
-							{
-								"text": "\ue472",
-								"fontSrc": "/static/font/uni.ttf",
-								"fontSize": "22px",
-								"color": "#FFFFFF"
-							},
-							{
-								"text": "\ue460",
-								"fontSrc": "/static/font/uni.ttf",
-								"fontSize": "22px",
-								"color": "#FFFFFF"
-							}
-						]
-					}
-				}
+				"enablePullDownRefresh": true
 			}
         }
         ,{

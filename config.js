@@ -9,6 +9,14 @@ const testUser = [
 ]
 
 const color = {
+	p: '#4BC1FF',
+	p_: '#13A7E7',
+	
+	a: '#ffda42',
+	a_: '#efc94c',
+	
+	c: '#C34CFE',
+	
 	primary: '#2182ED',
 	secondary: '#54B1F7',
 
@@ -17,7 +25,7 @@ const color = {
 	
 	secondaryText: '#999999',
 	agree: '#09BB07',
-	disagre: '#EC559E',
+	disagre: '#fe5bad',
 	
 	hover: '#eeeeee'
 }
