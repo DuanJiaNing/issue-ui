@@ -53,7 +53,7 @@
 	    ,{
             "path" : "pages/topic/topic",
             "style" : {
-				"navigationBarTitleText": "投票详情",
+				"navigationBarTitleText": " ",
 				"enablePullDownRefresh": true
 			}
         }
@@ -65,8 +65,8 @@
         }
     ],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#000000"
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#ffffff"
 	}
 	// "tabBar": {
 	// 	"color": "#999999",

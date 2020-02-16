@@ -17,15 +17,14 @@ const color = {
 	
 	c: '#C34CFE',
 	
-	primary: '#2182ED',
-	secondary: '#54B1F7',
-
-	primaryBackground: '#F4F5FA',
+	primary: '#256CFF',
+	secondary: '#E6EFFF',
+	primaryBackground: '#F3F6FA',
 	secondaryBackground: '#FFFFFF',
 	
 	secondaryText: '#999999',
 	agree: '#09BB07',
-	disagre: '#fe5bad',
+	disagre: '#F61759',
 	
 	hover: '#eeeeee'
 }

@@ -1,47 +1,12 @@
 <template>
 	<view style="padding-bottom: 100upx;">
-		<!-- 过渡 -->
-		<uni-transition :duration="1000" :mode-class="['slide-bottom']" :styles="transfromClass" :show="commentInfoShow">
-			<view class="selected-comment-info-container" :style="{
-			'padding-bottom': isIphoneX() ? '25px' : '0'}">
-				<view class="selected-comment-info">
-					<view style="display: flex;flex-direction: row;align-items: center;">
-						<text class="selected-comment-id" :style="{
-								color: selectedComment.vote === 1 ? '#09BB07' : (selectedComment.vote === -1 ? '#F61759' : '#999999')}">{{selectedComment.commentId}}</text>
-						<view class="selected-comment-subinfo">
-							<text class="selected-comment-insertTime">
-								<block v-if="selectedComment.userId === status.userId">
-									我
-								</block>
-								发表于 {{selectedComment.insertTime}}
-							</text>
-							<view class="selected-comment-vote">
-								{{selectedComment.agreeVoteCount}} 赞同 {{selectedComment.disagreeVoteCount}} 反对
-								<block v-if="selectedComment.myCommentVote !== 0">
-									{{selectedComment.myCommentVote === -1 ? '(已投反对票)' : '(已投赞同票)'}}
-								</block>
-							</view>
-						</view>
-					</view>
-
-					<view style="display: flex;flex-direction: row;align-items: center;">
-						<block v-if="selectedComment.myCommentVote === 0">
-							<image @click="doVoteComment(1)" class="select-comment-vote-btn-image" mode="aspectFit" src="../../static/check-line.png" />
-							<image @click="doVoteComment(-1)" class="select-comment-vote-btn-image" mode="aspectFit" src="../../static/close-line.png" />
-						</block>
-						<image @click="hideSelectCommentInfo" class="select-comment-vote-btn-image" mode="aspectFit" src="../../static/arrow-down-s-line.png" />
-					</view>
-				</view>
-			</view>
-		</uni-transition>
-
 		<block v-if="commentInfoShow">
 			<view class="selected-comment-info-container" :style="{
 		'padding-bottom': isIphoneX() ? '25px' : '0'}">
 				<view class="selected-comment-info">
 					<view style="display: flex;flex-direction: row;align-items: center;">
 						<text class="selected-comment-id" :style="{
-							color: selectedComment.vote === 1 ? '#09BB07' : (selectedComment.vote === -1 ? '#F61759' : '#999999')}">{{selectedComment.commentId}}</text>
+							color: selectedComment.vote === 1 ? '#09BB07' : (selectedComment.vote === -1 ? '#EC559E' : '#999999')}">{{selectedComment.commentId}}</text>
 						<view class="selected-comment-subinfo">
 							<text class="selected-comment-insertTime">
 								<block v-if="selectedComment.userId === status.userId">
@@ -69,7 +34,11 @@
 			</view>
 		</block>
 
-		<view>
+		<view class="content" style="margin-top: 30upx;">
+			<view class="card-title">
+				<view class="line"></view>
+				<text>主题</text>
+			</view>
 			<view class="topic-summary-container">
 				<view class="topic-summary-title">
 					<text>{{topicSummary.title}}</text>
@@ -81,7 +50,7 @@
 							<text>{{topicSummary.voteCount}} 次参与</text>
 						</view>
 						<view class="statistic">
-							{{topicSummary.insertTime}}
+							<text>{{topicSummary.insertTime}}</text>
 						</view>
 					</view>
 				</view>
@@ -104,7 +73,11 @@
 			</view>
 		</view>
 
-		<view style="margin-top: 60upx;">
+		<view class="content" style="margin-top: 60upx;">
+			<view class="card-title">
+				<view class="line"></view>
+				<text>投票</text>
+			</view>
 			<view class="comments-container">
 				<block v-if="comments.length === 0">
 					<view class="content no-comment-tip">
@@ -114,36 +87,30 @@
 				<block v-else>
 					<view class="content comments-stats-container">
 						<view>
-							<text style="color: #09BB07; margin-right: 10upx;">23</text>票赞同 <text style="color: #F61759;margin-left: 20upx;margin-right: 10upx;">40.5</text>票反对
+							<text style="color: #09BB07; margin-right: 10upx;">23</text>票赞同 <text style="color: #EC559E;margin-left: 20upx;margin-right: 10upx;">40.5</text>票反对
 						</view>
-						<image @click="showVoteCalcIntro" class="vote-calc-tip" mode="aspectFit" src="../../static/question-fill.png" />
+						<image class="vote-calc-tip" mode="aspectFit" src="../../static/question-fill.png" />
 					</view>
 					<view class="comments-vote-bar">
 						<progress style="transform: rotateY(180deg)" :percent="agree" activeColor="#09BB07" stroke-width="3" />
-						<progress :percent="disagree" activeColor="#F61759" stroke-width="3" />
+						<progress :percent="disagree" activeColor="#EC559E" stroke-width="3" />
 					</view>
 					<view>
 						<view v-for="(item, index) in comments" :key="index">
-							<view @click="selectComment(index)" hover-class="hover-for-white-bg" style="min-height: 120upx;">
-								<block v-if="item.userId === status.userId">
-									<view class="comment-tags">
-										<view class="comment-tag">我的</view>
-									</view>
-								</block>
-								<view class="content comment-container">
-									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#F61759' : '#999999')}">{{item.commentId}}</text>
+							<view @click="selectComment(index)">
+								<view :style="{
+									color: item.selected ? '#ffffff' : '#000000',
+									'background-color': item.selected ? '#3a3a3a' : (item.userId === status.userId ? '#fff7d3' : '#ffffff')
+								}"
+								 class="content comment-container" hover-class="hover-for-white-bg">
+									<text class="comment-id" :style="{color: item.vote === 1 ? '#09BB07' : (item.vote === -1 ? '#EC559E' : '#999999')}">{{item.commentId}}</text>
 									<text class="comment-content" :style="{
 										'-webkit-line-clamp': item.selected ? 20 : 2, 
-										'font-size': item.selected ? '1em' : '0.9em'}">{{item.content}}</text>
+										'font-size': item.selected ? '1.2em' : '0.9em'}">{{item.content}}</text>
 								</view>
 							</view>
 							<block v-if="index != comments.length - 1">
-								<block v-if="item.selected">
-									<view class="padding-hr-selected"></view>
-								</block>
-								<block v-else>
-									<view class="padding-hr"></view>
-								</block>
+								<view class="padding-hr"></view>
 							</block>
 						</view>
 						<view @click="loadComments">
@@ -159,7 +126,6 @@
 <script>
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import uniTransition from '@/components/uni-transition/uni-transition.vue'
 
 	import toolsService from '@/service/ToolsService.js'
 	import {
@@ -172,7 +138,6 @@
 	export default {
 		components: {
 			uniIcons,
-			uniTransition,
 			uniLoadMore
 		},
 		data() {
@@ -183,18 +148,6 @@
 				selectedComment: {},
 				selectedCommentIndex: -1,
 				pullDownRefresh: false,
-				transfromClass: {
-					'position': 'fixed',
-					'bottom': 0,
-					'top': 0,
-					'left': 0,
-					'right': 0,
-					/* #ifndef APP-NVUE */
-					'display': 'flex',
-					/* #endif */
-					'justify-content': 'center',
-					'align-items': 'center'
-				},
 				uniLoadMore: {
 					pageNum: 0,
 					totalPage: -1,
@@ -388,21 +341,6 @@
 </script>
 
 <style>
-	.padding-hr {
-		height: 1px;
-		background-color: #e3e3e3;
-		margin-left: 90upx;
-		margin-right: 30upx;
-	}
-
-	.padding-hr-selected {
-		height: 2px;
-		background-color: #ff0000;
-		opacity: 0.8;
-		margin-left: 30upx;
-		margin-right: 30upx;
-	}
-
 	.vote-calc-tip {
 		width: 40upx;
 		height: 40upx;
@@ -413,18 +351,12 @@
 		border-top-color: #e3e3e3;
 		border-top-width: 1px;
 
-		padding-top: 30upx;
-		padding-bottom: 30upx;
-		margin-left: 30upx;
-		margin-right: 30upx;
+		padding: 30upx;
 		font-size: 26upx;
 	}
 
 	.statistic text {
 		margin-right: 10upx;
-		padding: 0 10upx;
-		color: #256CFF;
-		background-color: #E6EFFF;
 	}
 
 	.statistic {
@@ -438,9 +370,9 @@
 	.topic-summary-container {
 		background-color: white;
 		border-radius: 10px;
-		/* margin-top: 20upx; */
+		margin-top: 20upx;
 		padding-bottom: 10upx;
-		/* box-shadow: 0 0 40px rgba(118, 118, 118, 7); */
+		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -517,7 +449,6 @@
 	}
 
 	.selected-comment-info-container {
-		z-index: 1;
 		background-color: #ffffff;
 		position: fixed;
 		bottom: 0;
@@ -586,33 +517,8 @@
 		justify-content: flex-end;
 	}
 
-	.comment-tags {
-		z-index: 0;
-		z-index: initial;
-		position: absolute;
-		right: 0;
-		margin-right: 30upx;
-		height: 120upx;
-		width: 200upx;
-		opacity: 0.7;
-		overflow: hidden;
-	}
-
-	.comment-tag {
-		transform: rotate(45deg) scale(0.8);
-		background-color: #ff0000;
-		text-align: center;
-		width: 180upx;
-		height: 40upx;
-		font-size: 20upx;
-		color: white;
-
-		margin-top: 10upx;
-		margin-left: 80upx;
-	}
-
 	.comment-container {
-		padding-top: 20upx;
+		padding-top: 25upx;
 		padding-bottom: 25upx;
 
 		display: flex;
@@ -629,7 +535,6 @@
 	}
 
 	.comments-stats-container {
-		padding-bottom: 20upx;
 		display: flex;
 		justify-content: space-between;
 	}
@@ -647,11 +552,11 @@
 	.comments-container {
 		background-color: #ffffff;
 
-		/* border-radius: 8px; */
+		border-radius: 8px;
 		padding-top: 30upx;
 		padding-bottom: 60upx;
 		margin-bottom: 100upx;
 		margin-top: 20upx;
-		/* box-shadow: 0 0 40px rgba(118, 118, 118, 7); */
+		box-shadow: 0 0 40px rgba(118, 118, 118, 7);
 	}
 </style>
