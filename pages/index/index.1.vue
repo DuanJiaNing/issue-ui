@@ -1,8 +1,14 @@
 <template>
 	<view>
-		<view class="content main-title" @longpress="switchUser">
-			<text>
-				话题
+		<!-- #ifdef MP -->
+		<uni-fab ref="fab" :pattern="uniFab.pattern" :content="uniFab.content" :horizontal="uniFab.horizontal" :vertical="uniFab.vertical"
+		 :direction="uniFab.direction" @trigger="uniFabTrigger" />
+		<!-- #endif -->
+
+		<view class="content topic-type" @click="switchTopicType" @longpress="switchUser">
+			<uni-icons type="arrowdown" size="20" color="#ffffff"></uni-icons>
+			<text style="color: #ffffff;">
+				{{topicType.name}}
 			</text>
 		</view>
 
@@ -10,8 +16,6 @@
 			<search v-on:clearKeyWord="clearKeyWord">
 			</search>
 		</view>
-
-你可能感兴趣 -> 查看全部
 
 		<view class="topic-list">
 			<view class="topic-list-bg colorful-stripe"></view>
@@ -304,7 +308,7 @@
 		margin-top: 50upx;
 	}
 
-	.main-title {
+	.topic-type {
 		margin-top: 30upx;
 		height: 100upx;
 		line-height: 100upx;

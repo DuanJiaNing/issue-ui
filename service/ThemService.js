@@ -1,39 +1,49 @@
 // import config from '../config.js'
 const thems = {
-	all: {
-		color: {
-			primary: "#05DEB7",
-			secondary: "#84D9CA"
-		}
+	defaulz: {
+		primary: '#256CFF',
+		secondary: '#E6EFFF',
+		
+		primaryBackground: '#FFFFFF',
+		secondaryBackground: '#F3F6FA',
+		
+		primaryText: '#2C3640',
+		secondaryText: '#999999',
+		
+		agree: '#599A46',
+		disagree: '#FEC43E',
+		
+		hover: '#eeeeee',
+		
+		sperLine: '#E7CFB6',
+		
+		c1: '#EE5301'
 	},
-	interest: {
-		color: {
-			primary: "#2182ED",
-			secondary: "#54B1F7"
-		}
-	},
-	my: {
-		color: {
-			primary: "#F3972B",
-			secondary: "#E5BD8D"
-		}
+	defaulz_: {
+		primary: '#256CFF',
+		secondary: '#E6EFFF',
+		
+		primaryBackground: '#FFFFFF',
+		secondaryBackground: '#F3F6FA',
+		
+		primaryText: '#000000',
+		secondaryText: '#999999',
+		
+		agree: '#09BB07',
+		disagree: '#F61759',
+		
+		hover: '#eeeeee',
+		
+		sperLine: '#e3e3e3',
+		
+		c1: '#ff0000'
 	}
 }
 
-function topicColor(topicCode) {
-	switch(topicCode) {
-	     case 'all':
-	        return thems.all.color
-		case 'interest':
-	        return thems.interest.color
-		case 'my':
-	        return thems.my.color
-	     default:
-	        return thems.all.color
-	} 
+function them() {
+	return thems.defaulz
 }
 
-
 module.exports = {
-	topicColor
+	them
 }
