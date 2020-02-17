@@ -1,4 +1,4 @@
 # Vote-ui
 ![](https://raw.githubusercontent.com/DuanJiaNing/Vote/master/other/main.png)
-<br>
+<hr>
 ![](https://raw.githubusercontent.com/DuanJiaNing/Vote/master/other/topic.png)
