@@ -1,35 +1,69 @@
 <template>
-	<view>
-		<view class="content main-title" @longpress="switchUser">
-			<text>
-				话题
-			</text>
-		</view>
-
-		<view class="search-wrapper content">
-			<search v-on:clearKeyWord="clearKeyWord">
-			</search>
-		</view>
-
-你可能感兴趣 -> 查看全部
-
-		<view class="topic-list">
-			<view class="topic-list-bg colorful-stripe"></view>
-			<view class="topics">
-				<view v-for="(item, index) in data.topics" :key="index">
-					<view @click="gotoTopicDetail(item.topicId)" class="topic-item">
-						<topic-item :item="item" :showNotice="false"></topic-item>
-						<block v-if="index < data.topics.length - 1">
-						</block>
-						<block v-else>
-							<view style="height: 30upx;"></view>
-						</block>
-					</view>
-				</view>
-				<view @click="loadTopic">
-					<uni-load-more :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+	<view style="padding-bottom: 60upx;">
+		<view class="main-title-container" :style="{'background-color': them.primaryBackground}">
+			<view class="main-title" @longpress="switchUser">
+				<text class="main-title-">
+					话题
+				</text>
+				<view class="main-options">
+					<image @click="gotoAdd" class="main-option-image" mode="aspectFit" src="../../static/add-line.png" />
+					<image @click="gotoMe" class="main-option-image" mode="aspectFit" src="../../static/user-line.png" />
 				</view>
 			</view>
+
+			<view class="search-wrapper">
+				<search v-on:clearKeyWord="clearKeyWord">
+				</search>
+			</view>
+		</view>
+
+		<!-- 你可能感兴趣 -> 查看全部 -->
+
+		<view>
+			<view v-for="(item, index) in data.topics" :key="index">
+				<view @click="gotoTopicDetail(item.topicId)" class="topic-item" :style="{'background-color': them.primaryBackground}">
+					<view class="topic-item-title-container">
+						<view class="topic-item-title" :style="{color: them.primaryText}">
+							<text>{{item.title}}</text>
+						</view>
+						<view class="topic-item-vote-progress-container">
+							<view>
+								<progress :backgroundColor="them.primaryBackground" :percent="60" :activeColor="them.agree" stroke-width="5" />
+								<progress :backgroundColor="them.primaryBackground" :percent="100" :activeColor="them.disagree" stroke-width="5" />
+							</view>
+						</view>
+					</view>
+					<view class="topic-item-vote">
+						<view class="agree" :style="{color: them.primarySecondaryText}">
+							<view class="dot" :style="{'background-color': them.agree}"></view>
+							<text>和新疆生产建设兵团报告新增确诊病例2048例，累计治愈出院病例10844例，累计死亡病例1770例，累计报告确诊病例70548例。</text>
+						</view>
+						<view class="disagree" :style="{color: them.primarySecondaryText}">
+							<view class="dot" :style="{'background-color': them.disagree}"></view>
+							<text>当日新增治愈出院病例1425例，解除医学观察的密切接触者28179人，重症病例减少628例。</text>
+						</view>
+					</view>
+					<view style="width: 100%;">
+						<view class="topic-item-statistic-container">
+							<view class="statistic">
+								<view class="statistic-item" :style="{color: them.primary, 'background-color': them.secondary}">{{item.interestUserCount}}
+									关注</view>
+								<view class="statistic-item" :style="{color: them.primary, 'background-color': them.secondary}">{{item.voteCount}}
+									次参与</view>
+							</view>
+							<view class="statistic" :style="{color: them.secondaryText}">
+								{{item.insertTime}}
+							</view>
+						</view>
+					</view>
+				</view>
+				<block v-if="index != data.topics.length - 1">
+					<view class="padding-hr" :style="{'background-color': them.sperLine}"></view>
+				</block>
+			</view>
+		</view>
+		<view @click="loadTopic">
+			<uni-load-more :color="them.secondaryText" :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
 		</view>
 	</view>
 </template>
@@ -43,6 +77,9 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniFab from '@/components/uni-fab/uni-fab.vue'
 
+	import {
+		them
+	} from '@/service/ThemService.js'
 	import {
 		testUser
 	} from '../../config.js'
@@ -69,6 +106,7 @@
 		},
 		data() {
 			return {
+				them: them(),
 				uniFab: {
 					pattern: {
 						color: '#7A7E83',
@@ -120,7 +158,7 @@
 			this.pullDownRefresh = true
 			this.status.search.keyWord = ''
 			this.status.search.keyWordType = 1
-			
+
 			this.uniLoadMore.pageNum = 0
 			this.uniLoadMore.totalPage = -1
 			this.loadTopic()
@@ -134,7 +172,7 @@
 					this.status.search.keyWord = ''
 					this.status.search.keyWordType = 1
 				}
-				
+
 				this.uniLoadMore.pageNum = 0
 				this.uniLoadMore.totalPage = -1
 				this.loadTopic()
@@ -143,21 +181,17 @@
 		onLoad(option) {
 			this.loadTopic();
 		},
-		onNavigationBarButtonTap(e) {
-			if (e.index === 1) { // me
-				uni.navigateTo({
-					url: '/pages/me/me'
-				});
-				return
-			}
-			if (e.index === 0) { // add
+		methods: {
+			gotoAdd() {
 				uni.navigateTo({
 					url: '/pages/add/add'
 				});
-				return
-			}
-		},
-		methods: {
+			},
+			gotoMe() {
+				uni.navigateTo({
+					url: '/pages/me/me'
+				});
+			},
 			gotoTopicDetail(topicId) {
 				status.currentTopicId = topicId
 				uni.navigateTo({
@@ -193,7 +227,7 @@
 				this.status.search.keyWord = ''
 				this.status.search.keyWordType = 1
 				this.status.refreshType = 3
-				
+
 				this.uniLoadMore.pageNum = 0
 				this.uniLoadMore.totalPage = -1
 				this.loadTopic()
@@ -282,6 +316,107 @@
 </script>
 
 <style scoped>
+	.padding-hr {
+		height: 1px;
+	}
+
+	.statistic-item {
+		font-size: 25upx;
+		margin-right: 10upx;
+		padding: 0 10upx;
+	}
+
+	.statistic {
+		font-size: 25upx;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
+	.topic-item-statistic-container {
+		margin-top: 30upx;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.topic-item-vote .dot {
+		padding: 5px;
+		transform: scale(0.5);
+	}
+
+	.topic-item-vote text {
+		font-size: 25upx;
+		margin-left: 20upx;
+
+		-webkit-line-clamp: 1;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.topic-item-vote .agree .dot {
+		width: 1px;
+		height: 1px;
+		border-radius: 50%;
+	}
+
+	.topic-item-vote .disagree .dot {
+		width: 1px;
+		height: 1px;
+		border-radius: 50%;
+	}
+
+	.topic-item-vote .disagree {
+		margin-top: 10upx;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.topic-item-vote .agree {
+
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.topic-item-vote {
+		margin-top: 20upx;
+		margin-left: 20upx;
+	}
+
+	.topic-item-vote-progress-container view {
+		transform: rotate(90deg);
+		margin-top: -15upx;
+		margin-left: 30upx;
+		width: 30upx;
+	}
+
+	.topic-item-vote-progress-container {
+		/* background-color: #007AFF; */
+		width: 10%;
+		height: 100upx;
+	}
+
+	.topic-item-title-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		min-height: 100upx;
+		width: 100%;
+	}
+
+	.topic-item-title {
+		width: 90%;
+	}
+
 	.topic-list-bg {
 		position: fixed;
 		width: 82%;
@@ -291,29 +426,52 @@
 		margin-top: 100upx;
 	}
 
-	.topic-list {}
-
-	.topics {
-		position: absolute;
-		width: 82%;
-		margin-left: 12%;
-		margin-bottom: 12%;
+	.topic-item {
+		margin-top: 30upx;
+		padding: 20upx 30upx;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
 	}
 
-	.topic-item {
-		margin-top: 50upx;
+	.main-title-container {
+		padding: 30upx;
+		padding-bottom: 60upx;
+	}
+	
+	.main-option-image {
+		width: 35upx;
+		height: 100%;
+		padding: 20upx;
+		margin-right: 10upx;
+	}
+	
+	.main-options {
+		width: 50%;
+		height: 100%;
+		
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	
+	.main-title- {
+		width: 50%;
 	}
 
 	.main-title {
-		margin-top: 30upx;
 		height: 100upx;
 		line-height: 100upx;
 		font-size: 60upx;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 	}
 
 	.search-wrapper {
-		margin-left: 30upx;
-		margin-right: 30upx;
 		margin-top: 20upx;
 	}
 </style>

@@ -1,23 +1,43 @@
 // import config from '../config.js'
 const thems = {
-	defaulz: {
-		primary: '#256CFF',
-		secondary: '#E6EFFF',
+	defaulz_dark: {
+		primary: '#071818',
+		secondary: '#EEF2FF',
 		
 		primaryBackground: '#FFFFFF',
 		secondaryBackground: '#F3F6FA',
 		
-		primaryText: '#2C3640',
-		secondaryText: '#999999',
+		// icon color
+		primaryText: '#071818',
+		secondaryText: '#A3ABA8',
 		
-		agree: '#599A46',
-		disagree: '#FEC43E',
+		agree: '#a5a5a5',
+		// heart selected icon color
+		disagree: '#071818',
 		
-		hover: '#eeeeee',
+		sperLine: '#EEEEEE',
 		
-		sperLine: '#E7CFB6',
+		c1: '#071818'
+	},
+	defaulz: {
+		primary: '#2C4EDC',
+		secondary: '#EEF2FF',
 		
-		c1: '#EE5301'
+		primaryBackground: '#FFFFFF',
+		secondaryBackground: '#F3F6FA',
+		
+		// icon color
+		primaryText: '#071818',
+		primarySecondaryText: '#565656',
+		secondaryText: '#A3ABA8',
+		
+		agree: '#2C4EDC',
+		// heart selected icon color
+		disagree: '#E44559',
+		
+		sperLine: '#EEEEEE',
+		
+		c1: '#ff5601'
 	},
 	defaulz_: {
 		primary: '#256CFF',

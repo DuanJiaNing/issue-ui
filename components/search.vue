@@ -1,6 +1,6 @@
 <template>
 	<view class="search">
-		<view class="search-content">
+		<view class="search-content" :style="{'background-color': them.secondaryBackground}">
 			<block v-if="sortShow">
 				<text class="sort-type" @click="showSortOption()">
 					{{sortTypeName}}
@@ -25,6 +25,9 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 
 	import {
+		them
+	} from '@/service/ThemService.js'
+	import {
 		topicTypes,
 		sortTypes
 	} from '@/service/TopicService.js'
@@ -38,6 +41,7 @@
 		},
 		data() {
 			return {
+				them: them(),
 				status: status,
 				topicTypes: topicTypes,
 				sortTypes: sortTypes
@@ -101,7 +105,6 @@
 		color: #999999;
 		border-radius: 30upx;
 		padding: 8upx 25upx;
-		background-color: #ffffff;
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
