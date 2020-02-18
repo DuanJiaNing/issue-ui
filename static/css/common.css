@@ -39,9 +39,9 @@ page {
 /* colorful-stripe start*/
 .colorful-stripe {
 	background:
-		linear-gradient(#57b9ff, transparent),
-		linear-gradient(90deg, #09BB07, transparent),
-		linear-gradient(-90deg, #EC559E, transparent);
+		linear-gradient(#2C4EDC, transparent),
+		linear-gradient(90deg, #E44559, transparent),
+		linear-gradient(-90deg, #ff5601, transparent);
 	background-blend-mode: screen;
 	-webkit-animation: colorfulStripeChange 5s infinite alternate linear;
 	animation: colorfulStripeChange 5s infinite alternate linear;

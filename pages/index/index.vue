@@ -441,7 +441,7 @@
 	}
 	
 	.main-option-image {
-		width: 35upx;
+		width: 40upx;
 		height: 100%;
 		padding: 20upx;
 		margin-right: 10upx;

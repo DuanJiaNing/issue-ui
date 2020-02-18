@@ -1,7 +1,10 @@
 <template>
-	<view class="content limited-text-textarea-content">
-		<textarea v-model="inputContent" :maxlength="config.maxlength" :placeholder="config.placeholder" />
-		<view class="tip-container">
+	<view class="limited-text-textarea-content">
+		<view class="input-container" :style="{'border-bottom-color': them.sperLine}">
+			<textarea :placeholder-style="{color: them.secondaryText}" :style="{color: them.primaryText}" v-model="inputContent"
+			 :maxlength="config.maxlength" :placeholder="config.placeholder" />
+			</view>
+		<view :style="{color: them.secondaryText}"  class="tip-container">
 			<view>{{config.errorMsg}}</view>
 			<view>{{currentLength}}/{{config.maxlength}}</view>
 		</view>
@@ -9,10 +12,14 @@
 </template>
 
 <script>
+	import {
+		them
+	} from '@/service/ThemService.js'
 	export default {
 		name: "limited-text-input",
 		data() {
 			return {
+				them: them(),
 				inputContent: "",
 				currentLength: 0,
 			};
@@ -41,9 +48,9 @@
 	
 	textarea {
 		width: 100%;
-		padding-top: 10upx;
-		padding-bottom: 10upx;
 		height: 150upx;
+		padding-top: 5upx;
+		padding-bottom: 5upx;
 	}
 	
 	.tip-container {
@@ -51,15 +58,15 @@
 		flex-direction: row;
 		justify-content: space-between;
 		
-		color: #999999;
 		font-size: 18upx;
 	}
 	
+	.input-container {
+		border-bottom: solid 1px;
+	}
+	
 	.limited-text-textarea-content {
-		padding-top: 10upx;
-		padding-bottom: 10upx;
-		color: #ffffff;
-		background-color: #363636;
+		/* background-color: #09BB07; */
 	}
 	
 </style>
