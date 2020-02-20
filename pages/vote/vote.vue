@@ -1,9 +1,11 @@
 <template>
 	<view>
-		<limited-text-textarea ref="voteComment" style="margin-top: 30upx;" @valueChanged="commentChanged" :config="commentInputConfig"></limited-text-textarea>
-		<view class="btn-container content">
-			<view>
-				<button @click="addVoteComment" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
+		<view class="content top-panel" :style="{'background-color': them.primaryBackground}">
+			<limited-text-textarea ref="voteComment" @valueChanged="commentChanged" :config="commentInputConfig"></limited-text-textarea>
+			<view class="btn-container content">
+				<view>
+					<button @click="addVoteComment" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -13,6 +15,9 @@
 	import limitedTextTextarea from '@/components/limited-text-input/limited-text-textarea.vue'
 
 	import toolsService from '@/service/ToolsService.js'
+	import {
+		them
+	} from '@/service/ThemService.js'
 	import {
 		status
 	} from '@/service/StatusService.js'
@@ -26,6 +31,7 @@
 		},
 		data() {
 			return {
+				them: them(),
 				vote: 0,
 				voteComment: '',
 				commentInputConfig: {
@@ -43,7 +49,7 @@
 					toolsService.showErrorToast('请输入投票说明')
 					return
 				}
-				
+
 				request({
 					url: api.add_comment.path,
 					method: api.add_comment.method,
@@ -78,6 +84,11 @@
 </script>
 
 <style>
+	.top-panel {
+		padding-top: 30upx;
+		padding-bottom: 20upx;
+	}
+
 	.btn-container {
 		margin-top: 30upx;
 		display: flex;

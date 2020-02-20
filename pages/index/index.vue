@@ -2,9 +2,12 @@
 	<view style="padding-bottom: 60upx;">
 		<view class="main-title-container" :style="{'background-color': them.primaryBackground}">
 			<view class="main-title" @longpress="switchUser">
-				<text class="main-title-">
-					话题
-				</text>
+				<view class="main-title-part1" @click="switchTopicType">
+					<image @click="gotoAdd" class="main-title-part1-image" mode="aspectFit" src="../../static/arrow-drop-down-line.png" />
+					<text style="font-size: 60upx;">
+						{{topicType.name}}
+					</text>
+				</view>
 				<view class="main-options">
 					<image @click="gotoAdd" class="main-option-image" mode="aspectFit" src="../../static/add-line.png" />
 					<image @click="gotoMe" class="main-option-image" mode="aspectFit" src="../../static/user-line.png" />
@@ -439,32 +442,41 @@
 		padding: 30upx;
 		padding-bottom: 60upx;
 	}
-	
+
 	.main-option-image {
 		width: 40upx;
 		height: 100%;
 		padding: 20upx;
 		margin-right: 10upx;
 	}
-	
+
 	.main-options {
 		width: 50%;
 		height: 100%;
-		
+
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: center;
 	}
 	
-	.main-title- {
+	.main-title-part1-image {
+		width: 50upx;
+		height: 50upx;
+		/* background-color: #007AFF; */
+	}
+
+	.main-title-part1 {
 		width: 50%;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
 	}
 
 	.main-title {
 		height: 100upx;
 		line-height: 100upx;
-		font-size: 60upx;
 
 		display: flex;
 		flex-direction: row;

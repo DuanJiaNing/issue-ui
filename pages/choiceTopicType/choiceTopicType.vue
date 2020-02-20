@@ -1,6 +1,6 @@
 <template>
 	<view class="choice-topic-type">
-		<text v-for="(ttype,index) in types" :style="{color:topicTypeColor(ttype.code)}" @click="choiceType(index)" :key="index">
+		<text v-for="(ttype,index) in types" @click="choiceType(index)" :key="index" :style="{color: them.primaryText}">
 			{{ttype.name}}
 		</text>
 	</view>
@@ -10,20 +10,20 @@
 	import TopicService from '@/service/TopicService.js'
 	import StatusService from '@/service/StatusService.js'
 	import {
-		topicColor
+		them
 	} from '@/service/ThemService.js'
-
 	export default {
 		data() {
-			return {}
+			return {
+				them: them()
+			}
 		},
 		computed: {
 			types() {
 				return TopicService.topicTypes
 			}
 		},
-		onLoad() {
-		},
+		onLoad() {},
 		methods: {
 			choiceType(topicTypeIndex) {
 				var oldIndex = StatusService.status.topicTypeIndex
@@ -32,11 +32,8 @@
 					StatusService.status.topicTypeIndex = topicTypeIndex
 				}
 				uni.navigateBack({
-					delta:1
+					delta: 1
 				})
-			},
-			topicTypeColor(topicCode) {
-				return topicColor(topicCode).primary
 			}
 		}
 	}

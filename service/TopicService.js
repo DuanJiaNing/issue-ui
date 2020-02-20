@@ -1,30 +1,29 @@
-const sortTypes = [{
-		name: "随机"
+const sortTypes = [
+	{
+		name: "最新"
 	},
 	{
-		name: "最新发布"
+		name: "最多参与"
 	},
 	{
-		name: "参与人数最多"
-	},
-	{
-		name: "最不受推荐"
-	},
-	{
-		name: "最受喜爱"
+		name: "最多关注"
 	}
 ]
 
 const topicTypes = [{
-		name: "全部",
+		name: "话题",
 		code: "all"
 	},
 	{
-		name: "我关注的",
+		name: "关注",
 		code: "interest"
 	},
 	{
-		name: "我发布的",
+		name: "参与",
+		code: "————"
+	},
+	{
+		name: "我的",
 		code: "my"
 	}
 ]

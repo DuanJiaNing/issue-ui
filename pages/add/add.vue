@@ -18,26 +18,28 @@
 				</view>
 			</view>
 		</view>
-		<view class="add-history-container">
-			<view :style="{color: them.primarySecondaryText}" class="content">
-				<view>添加历史</view>
-			</view>
-			<view style="margin-top: 20upx;">
-				<view v-for="(item, index) in data.addTopicHistory" :key="index">
-					<view :style="{'background-color': them.primaryBackground}" @click="gotoTopicDetail(item.id)" class="content add-topic-history-list-item">
-						<view class="time" :style="{color: them.secondaryText, 'border-right-color': them.sperLine}">
-							{{item.insertTime}}
+		<block v-if="data.addTopicHistory.length > 0">
+			<view class="add-history-container">
+				<view :style="{color: them.primarySecondaryText}" class="content">
+					<view>添加历史</view>
+				</view>
+				<view style="margin-top: 20upx;">
+					<view v-for="(item, index) in data.addTopicHistory" :key="index">
+						<view :style="{'background-color': them.primaryBackground}" @click="gotoTopicDetail(item.id)" class="content add-topic-history-list-item">
+							<view class="time" :style="{color: them.secondaryText, 'border-right-color': them.sperLine}">
+								{{item.insertTime}}
+							</view>
+							<view class="title" :style="{color: them.primaryText}">
+								{{item.title}}
+							</view>
 						</view>
-						<view class="title" :style="{color: them.primaryText}">
-							{{item.title}}
-						</view>
+						<block v-if="index != data.addTopicHistory.length - 1">
+							<view class="padding-hr" :style="{'background-color': them.sperLine}"></view>
+						</block>
 					</view>
-					<block v-if="index != data.addTopicHistory.length - 1">
-						<view class="padding-hr" :style="{'background-color': them.sperLine}"></view>
-					</block>
 				</view>
 			</view>
-		</view>
+		</block>
 
 		<view class="content add-topic-history-tip-container" :style="{color: them.primarySecondaryText}">
 			<block v-if="addTopicHistory.totalNum > addTopicHistory.showNum">
@@ -93,7 +95,7 @@
 				},
 				topicDesConfig: {
 					maxlength: topicService.config.maxDeslength,
-					placeholder: "主题说明（可选）"
+					placeholder: "话题说明（可选）"
 				},
 				data: {
 					addTopicHistory: []
@@ -266,13 +268,14 @@
 	}
 
 	.save-btn {
+		/* border-radius: 10upx; */
 		color: #ffffff;
 	}
 
 	.save-btn-hover {
 		opacity: 0.5;
 	}
-	
+
 	.padding-hr {
 		height: 1px;
 		margin-left: 90upx;
