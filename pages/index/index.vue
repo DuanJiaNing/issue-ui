@@ -3,7 +3,7 @@
 		<view class="main-title-container" :style="{'background-color': them.primaryBackground}">
 			<view class="main-title" @longpress="switchUser">
 				<view class="main-title-part1" @click="switchTopicType">
-					<image @click="gotoAdd" class="main-title-part1-image" mode="aspectFit" src="../../static/arrow-drop-down-line.png" />
+					<image class="main-title-part1-image" mode="aspectFit" src="../../static/arrow-down-s-line.png" />
 					<text style="font-size: 60upx;">
 						{{topicType.name}}
 					</text>
