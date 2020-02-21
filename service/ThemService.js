@@ -37,7 +37,8 @@ const thems = {
 		
 		sperLine: '#EEEEEE',
 		
-		c1: '#ff5601'
+		c1: '#ff5601',
+		c2: '#ffcb9d'
 	},
 	defaulz_: {
 		primary: '#256CFF',
