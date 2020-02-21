@@ -213,7 +213,7 @@
 	}
 
 	.part2-item .count {
-		font-size: 40upx;
+		font-size: 35upx;
 	}
 
 	.part2-item {
@@ -225,8 +225,8 @@
 
 	.top-part2 {
 		border-top: solid 1px #dcdcdc;
-		height: 150upx;
-		box-shadow: 0px 10px 20px #dedede;
+		height: 120upx;
+		box-shadow: 0px 10px 20px #e7e7e7;
 
 		display: flex;
 		flex-direction: row;
