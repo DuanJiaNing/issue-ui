@@ -1,5 +1,6 @@
 <template>
-	<view style="padding-bottom: 100upx;">
+	<view :style="{'padding-bottom': '60upx',
+	'background-color':them.secondaryBackground}">
 		<view class="content input-container" :style="{'background-color': them.primaryBackground}">
 			<limited-text-input ref="topicTitle" @valueChanged="topicTitleChanged" :config="topicTitleConfig"></limited-text-input>
 			<view class="desc-input-container">
@@ -13,9 +14,8 @@
 				</block>
 			</view>
 			<view class="btn-container content">
-				<view>
-					<button @click="addTopic" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
-				</view>
+				<view @click="addTopic" class="btn-min" hover-class="btn-hover"
+				:style="{color: them.primarySecondaryText,'border-color': them.secondaryText}">保存</view>
 			</view>
 		</view>
 		<block v-if="data.addTopicHistory.length > 0">
@@ -265,15 +265,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
-	}
-
-	.save-btn {
-		/* border-radius: 10upx; */
-		color: #ffffff;
-	}
-
-	.save-btn-hover {
-		opacity: 0.5;
 	}
 
 	.padding-hr {

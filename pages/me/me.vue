@@ -17,7 +17,7 @@
 					</block>
 					<view>
 						<view class="part1-item-cal" :style="{'background-color': them.secondaryBackground}">
-							<view :style="{'background-color': isToday(index) ? them.c2 : them.primaryBackground}" class="part1-item-item"
+							<view :style="{'background-color': isToday(index) ? them.currentDate : them.primaryBackground}" class="part1-item-item"
 							 v-for="(item, index) in voteReco" :key="index">
 								<block v-if="item == 1">
 									<image :style="{'background-color': them.agree}" class="part1-item-item-image" mode="aspectFit" src="../../static/check-line-white.png" />
@@ -28,7 +28,7 @@
 							</view>
 						</view>
 						<view class="part1-item-time" :style="{color: them.secondaryText}">
-							今天是2020年2月21号 <text :style="{color: them.c2}">星期五</text></view>
+							今天是2020年2月21号 <text :style="{color: them.currentDate}">星期五</text></view>
 					</view>
 				</view>
 			</view>

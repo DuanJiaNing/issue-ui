@@ -2,21 +2,21 @@
 	<view class="search">
 		<view class="search-content" :style="{'background-color': them.secondaryBackground}">
 			<block v-if="sortShow">
-				<text class="sort-type" @click="showSortOption()">
+				<text class="sort-type" @click="showSortOption()" :style="{color: them.secondaryBackgroundText}">
 					{{sortTypeName}}
 				</text>
-				<uni-icons type="arrowdown" size="10" style="color: #999999;"></uni-icons>
+				<uni-icons type="arrowdown" size="10" :style="{color: them.secondaryBackgroundText}"></uni-icons>
 			</block>
 
 			<block v-if="canClear && sortShow">
-				<text class="separ-line">|</text>
+				<text class="separ-line" :style="{color: them.secondaryBackgroundText}">|</text>
 			</block>
 
 			<block v-if="canClear">
-				<text class="clear-key-word" @click="clearSearchKeyWord()">x</text>
+				<text :style="{color: them.secondaryBackgroundText}" class="clear-key-word" @click="clearSearchKeyWord()">x</text>
 			</block>
 
-			<text class="key-word" @click="gotoSearch()">{{searchKeyWord}}</text>
+			<text :style="{color: them.secondaryBackgroundText}" class="key-word" @click="gotoSearch()">{{searchKeyWord}}</text>
 		</view>
 	</view>
 </template>
@@ -102,7 +102,6 @@
 	}
 
 	.search-content {
-		color: #999999;
 		border-radius: 30upx;
 		padding: 8upx 25upx;
 		display: flex;
@@ -115,7 +114,6 @@
 	}
 
 	.sort-type {
-		color: #999999;
 		font-size: 25upx;
 	}
 

@@ -1,7 +1,10 @@
 <template>
-	<view style="padding-bottom: 100upx;">
+	<view :style="{'padding-bottom': '60upx',
+	'background-color':them.secondaryBackground}">
+	
 		<block v-if="commentInfoShow">
 			<view class="selected-comment-info-container" :style="{
+		'box-shadow': ('0 0 20px '+them.sperLine),
 		'padding-bottom': isIphoneX() ? '25px' : '0',
 		'background-color': them.primaryBackground}">
 				<view class="selected-comment-info">
@@ -36,7 +39,7 @@
 		</block>
 
 		<view>
-			<view class="topic-summary-container">
+			<view class="topic-summary-container" :style="{'background-color':them.primaryBackground}">
 				<view class="topic-summary-title" :style="{color: them.primaryText}">
 					<text>{{topicSummary.title}}</text>
 				</view>
@@ -54,7 +57,7 @@
 					</view>
 				</view>
 				<block v-if="topicSummary.notes !== undefined">
-					<view class="topic-notes" :style="{color: them.primaryText, 'border-top-color': them.sperLine}">
+					<view class="topic-notes" :style="{color: them.primarySecondaryText, 'border-top-color': them.sperLine}">
 						{{topicSummary.notes}}
 					</view>
 				</block>
@@ -81,7 +84,7 @@
 				</block>
 				<block v-else>
 					<view class="content comments-stats-container">
-						<view :style="{color: them.primaryText}">
+						<view :style="{color: them.primarySecondaryText}">
 							<text :style="{color: them.agree, 'margin-right': '10upx'}">23</text>票赞同 <text :style="{color: them.disagree, 'margin-left': '20upx','margin-right': '10upx'}">40.5</text>票反对
 						</view>
 						<image @click="showVoteCalcIntro" class="vote-calc-tip" mode="aspectFit" src="../../static/question-fill.png" />
@@ -96,32 +99,29 @@
 							<view @click="selectComment(index)" hover-class="hover-for-white-bg" style="min-height: 120upx;">
 								<block v-if="item.userId === status.userId">
 									<view class="comment-tags">
-										<view class="comment-tag" :style="{'background-color': them.c1}">我的</view>
+										<view class="comment-tag" :style="{'background-color': them.tag}">我的</view>
 									</view>
 								</block>
-								<view class="content comment-container">
+								<view class="content comment-container" :style="{'background-color': item.selected ? them.hightlightBackground: them.primaryBackground}">
 									<text class="comment-id" :style="{color: item.vote === 1 ? them.agree : (item.vote === -1 ? them.disagree : them.secondaryText)}">{{item.commentId}}</text>
 									<text class="comment-content" :style="{
-										color: them.primaryText,
+										color: them.primarySecondaryText,
 										'-webkit-line-clamp': item.selected ? 20 : 2, 
 										'font-size': item.selected ? '1em' : '0.9em'}">{{item.content}}</text>
 								</view>
 							</view>
 							<block v-if="index != comments.length - 1">
-								<block v-if="item.selected">
-									<view class="padding-hr-selected" :style="{'background-color': them.c1}"></view>
-								</block>
-								<block v-else>
-									<view class="padding-hr" :style="{'background-color': them.sperLine}"></view>
-								</block>
+								<view class="padding-hr" :style="{'background-color': them.sperLine}"></view>
 							</block>
-						</view>
-						<view @click="loadComments">
-							<uni-load-more :color="them.secondaryText" :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
 						</view>
 					</view>
 				</block>
 			</view>
+			<block v-if="comments.length > 0">
+				<view @click="loadComments">
+					<uni-load-more :color="them.secondaryBackgroundText" :status="uniLoadMore.status" :size="16" :content-text="uniLoadMore.contentText" />
+				</view>
+			</block>
 		</view>
 	</view>
 </template>
@@ -360,16 +360,10 @@
 </script>
 
 <style>
+	
 	.padding-hr {
 		height: 1px;
 		margin-left: 90upx;
-		margin-right: 30upx;
-	}
-
-	.padding-hr-selected {
-		height: 2px;
-		opacity: 0.8;
-		margin-left: 30upx;
 		margin-right: 30upx;
 	}
 
@@ -404,7 +398,6 @@
 
 	.topic-summary-container {
 		background-color: white;
-		border-radius: 10px;
 		padding-bottom: 10upx;
 		display: flex;
 		flex-direction: column;
@@ -470,7 +463,6 @@
 		width: 94%;
 		padding-left: 3%;
 		padding-right: 3%;
-		box-shadow: 0 0 20px rgba(163, 163, 163, 7);
 
 		display: flex;
 		flex-direction: row;
@@ -570,7 +562,7 @@
 	.comments-container {
 		padding-top: 30upx;
 		padding-bottom: 60upx;
-		margin-bottom: 100upx;
+		margin-bottom: 20upx;
 		margin-top: 20upx;
 	}
 </style>

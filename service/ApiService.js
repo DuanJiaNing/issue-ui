@@ -1,6 +1,7 @@
 // api host
-let host = 'http://123.57.237.176:8079'
-// let host = 'http://localhost:8079'
+// let host = 'http://123.57.237.176:8079'
+// let host = 'http://vote.duanjn.com'
+let host = 'http://localhost:8079'
 
 var StatusService = require('./StatusService.js');
 var ToolsService = require('./ToolsService.js');

@@ -3,9 +3,8 @@
 		<view class="content top-panel" :style="{'background-color': them.primaryBackground}">
 			<limited-text-textarea ref="voteComment" @valueChanged="commentChanged" :config="commentInputConfig"></limited-text-textarea>
 			<view class="btn-container content">
-				<view>
-					<button @click="addVoteComment" class="save-btn colorful-stripe" size="mini" hover-class="save-btn-hover">保存</button>
-				</view>
+					<view@click="addVoteComment" class="btn-min" hover-class="btn-hover"
+				:style="{color: them.primarySecondaryText,'border-color': them.secondaryText}">保存</view>
 			</view>
 		</view>
 	</view>

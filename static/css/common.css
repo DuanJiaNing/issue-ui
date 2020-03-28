@@ -7,12 +7,16 @@
 page {
 	font-family: sanhucyyuan;
 	letter-spacing: 1px;
-	ackground-position: center center;
-	background-attachment: fixed;
-	background-size: cover;
+	/* background-position: center center; */
+	/* background-attachment: fixed; */
+	/* background-size: cover; */
 
-	background: linear-gradient(#F3F6FA, #F3F6FA);
+	/* background: linear-gradient(#00ff00, #00ff00); */
 	/* background-color: ##0000ff; */
+}
+
+.fillpage {
+	height: 10000px;
 }
 
 .info-popup {
@@ -62,3 +66,14 @@ page {
 }
 
 /* colorful-stripe end*/
+
+.btn-min {
+	padding: 3upx 30upx;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 6upx;
+}
+
+.btn-hover {
+	opacity: 0.5;
+}

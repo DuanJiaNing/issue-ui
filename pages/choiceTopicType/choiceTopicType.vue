@@ -1,5 +1,5 @@
 <template>
-	<view class="choice-topic-type">
+	<view class="choice-topic-type" :style="{'background-color':them.secondaryBackground}">
 		<text v-for="(ttype,index) in types" @click="choiceType(index)" :key="index" :style="{color: them.primaryText}">
 			{{ttype.name}}
 		</text>

@@ -22,27 +22,27 @@
 			</view>
 		</view>
 
-		<view style="margin-top: 60upx;">
+		<view>
 			<view v-for="(item, index) in data.topics" :key="index">
 				<view @click="gotoTopicDetail(item.topicId)" class="topic-item" :style="{'background-color': them.primaryBackground}">
 					<view class="topic-item-title-container">
 						<view class="topic-item-title" :style="{color: them.primaryText}">
 							<text>{{item.title}}</text>
 						</view>
-						<!-- <view class="topic-item-vote-progress-container">
+						<view class="topic-item-vote-progress-container">
 							<view>
 								<progress :backgroundColor="them.primaryBackground" :percent="60" :activeColor="them.agree" stroke-width="5" />
 								<progress :backgroundColor="them.primaryBackground" :percent="100" :activeColor="them.disagree" stroke-width="5" />
 							</view>
-						</view> -->
+						</view>
 					</view>
 					<view class="topic-item-vote">
 						<view class="agree" :style="{color: them.primarySecondaryText}">
-							<!-- <view class="dot" :style="{'background-color': them.agree}"></view> -->
+							<view class="dot" :style="{'background-color': them.agree}"></view>
 							<text>和新疆生产建设兵团报告新增确诊病例2048例，累计治愈出院病例10844例，累计死亡病例1770例，累计报告确诊病例70548例。</text>
 						</view>
 						<view class="disagree" :style="{color: them.primarySecondaryText}">
-							<!-- <view class="dot" :style="{'background-color': them.disagree}"></view> -->
+							<view class="dot" :style="{'background-color': them.disagree}"></view>
 							<text>当日新增治愈出院病例1425例，解除医学观察的密切接触者28179人，重症病例减少628例。</text>
 						</view>
 					</view>
@@ -412,7 +412,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 
-		/* min-height: 100upx; */
+		min-height: 100upx;
 		width: 100%;
 	}
 
@@ -430,12 +430,8 @@
 	}
 
 	.topic-item {
-		/* margin-top: 30upx; */
-		padding-left: 30upx;
-		padding-right: 30upx;
-		padding-top: 40upx;
-		padding-bottom: 40upx;
-		/* padding: 20upx 30upx; */
+		margin-top: 30upx;
+		padding: 20upx 30upx;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

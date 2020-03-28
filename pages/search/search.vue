@@ -1,11 +1,11 @@
 <template>
-	<view id="search" class="content">
+	<view id="search" class="content fillpage" :style="{'background-color':them.secondaryBackground}">
 		<br>
 		<uni-search-bar ref="search" radius="100" clearButton="always" @confirm="doSearch" @input="input" @cancel="doSearch" />
 
 		<br>
 		<block v-if="searchHistory.length > 0 ">
-			<view style="color: #999999;margin: 10upx 0;">
+			<view :style="{margin: '10upx','background-color': them.secondaryBackgroundText}">
 				<view>搜索历史</view>
 			</view>
 			<view class="search-history-container">
@@ -29,6 +29,9 @@
 		api,
 		request
 	} from '@/service/ApiService.js'
+	import {
+		them
+	} from '@/service/ThemService.js'
 	export default {
 		components: {
 			uniSearchBar
@@ -36,7 +39,8 @@
 		data() {
 			return {
 				keyWord: status.search.keyWord,
-				searchHistory: []
+				searchHistory: [],
+				them: them()
 			}
 		},
 		onShow() {
